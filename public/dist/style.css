@@ -81,6 +81,7 @@
 
 .content {
     margin-left: 250px;
+    margin-bottom:25px;
     min-height: 100vh;
     background: var(--dark);
     transition: 0.5s;

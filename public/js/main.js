@@ -108,6 +108,49 @@
         }
     });
 
+    // source sales
+    var ctx1 = $("#source-sales").get(0).getContext("2d");
+    var myChart1 = new Chart(ctx1, {
+        type: "bar",
+        data: {
+            labels: ["Tokopedia", "Shopee", "COD"],
+            datasets: [{
+                    data: [100, 50, 30],
+                    backgroundColor: "rgba(235, 22, 22, .7)"
+                }
+            ]
+            },
+        options: {
+            plugins: {
+                legend: {
+                   display: false
+                }
+             },
+            responsive: true
+        }
+    });
+
+    // source sales
+    var ctx1 = $("#product-sales").get(0).getContext("2d");
+    var myChart1 = new Chart(ctx1, {
+        type: "bar",
+        data: {
+            labels: ["A", "B", "C", "D", "E", "F"],
+            datasets: [{
+                    data: [50, 40, 30, 25, 20, 15],
+                    backgroundColor: "rgba(235, 22, 22, .7)"
+                }
+            ]
+            },
+        options: {
+            plugins: {
+                legend: {
+                   display: false
+                }
+             },
+            responsive: true
+        }
+    });
 
     // Salse & Revenue Chart
     var ctx2 = $("#salse-revenue").get(0).getContext("2d");

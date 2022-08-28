@@ -23,7 +23,7 @@
                             <div class="ms-3">
                                 <p class="mb-2">Total Profit</p>
                                 <div class="d-flex">
-                                    <i class="fa fa-arrow-up text-primary" style='margin-right:10px;color:green !important;'></i>
+                                    <i class="fa fa-arrow-up text-primary" style='margin-right:10px;color:green !important;margin-top:2px;'></i>
                                     <h6 class="mb-0">Rp.500.000.000,-</h6>
                                 </div>
                             </div>
@@ -34,7 +34,10 @@
                             <i class="fa fa-dollar-sign fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Latest Profit</p>
-                                <h6 class="mb-0">Rp.200.000.000,-</h6>
+                                <div class="d-flex">
+                                    <i class="fa fa-arrow-down text-primary" style='margin-right:10px;margin-top:5px'></i>   
+                                    <h6 class="mb-0">Rp.200.000.000,-</h6>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -85,6 +88,26 @@
                                 <h6 class="mb-0">Sales Profit by Month of The Year </h6>
                             </div>
                             <canvas id="month-sales"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Most Sales by Source</h6>
+                            </div>
+                            <canvas id="source-sales"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Best Selling Product </h6>
+                            </div>
+                            <canvas id="product-sales"></canvas>
                         </div>
                     </div>
                 </div>

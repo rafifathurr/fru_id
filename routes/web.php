@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// halaman dashboard
 Route::get('/', function () {
-    return view('dashboard');
+    return view('dashboard', [
+        "title" => "Dashboard"
+    ]);
+});
+
+// halaman order list
+Route::get('/order-list', function () {
+    return view('order', [
+        "title" => "Dashboard"
+    ]);
 });
