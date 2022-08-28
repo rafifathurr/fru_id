@@ -291,3 +291,13 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+.light-mode {
+    background-color: white;
+    color: black;
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
+}
