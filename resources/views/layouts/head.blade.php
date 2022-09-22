@@ -1,29 +1,26 @@
+
 <head>
-    <meta charset="utf-8">
-    <title>RFU.ID | {{$title}}</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>FRU.ID - Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+	<link rel="icon" href="{{asset('img/fru.png')}}" type="image/x-icon"/>
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+	<!-- Fonts and icons -->
+	<script src="{{asset('js/plugin/webfont/webfont.min.js')}}"></script>
+	<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['{{asset("fonts.min.css")}}']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
-    
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="{{asset('dist/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{asset('dist/atlantis.min.css')}}">
 
-    <!-- Libraries Stylesheet -->
-    <link href="{{asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
-    <link href="{{asset('lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css')}}" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{asset('dist/bootstrap.min.css')}}" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="{{asset('dist/style.css')}}" rel="stylesheet">
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link rel="stylesheet" href="{{asset('dist/demo.css')}}">
 </head>
