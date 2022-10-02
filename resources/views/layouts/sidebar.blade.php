@@ -9,7 +9,7 @@
                 <div class="info">
                     <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                         <span>
-                            Hizrian
+                            Admin
                             <span class="user-level">Administrator</span>
                             <span class="caret"></span>
                         </span>
@@ -20,37 +20,43 @@
                         <ul class="nav">
                             <li>
                                 <a href="#profile">
-                                    <span class="link-collapse">My Profile</span>
+                                    <span class="link-collapse">Settings</span>
                                 </a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="#edit">
-                                    <span class="link-collapse">Edit Profile</span>
+                                    <span class="link-collapse">Reset Password</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#settings">
-                                    <span class="link-collapse">Settings</span>
+                                    <span class="link-collapse">Log Out</span>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>
             </div>
             <ul class="nav nav-primary">
-                <li class="nav-item active">
-                    <a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+                <li class="nav-item {{ ($title ==="Dashboard") ? 'active' : '' }}">
+                    <a href="/" aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
+                <li class="nav-item {{ ($title ==="Order Menu") ? 'active' : '' }}">
+                    <a href="/order-menu" aria-expanded="false">
                         <i class="fas fa-clipboard-list"></i>
-                        <p>Order</p>
+                        <p>Order Menu</p>
                     </a>
                 </li>
-                <li class="nav-section">
+                <li class="nav-item">
+                    <a href="/product-menu" aria-expanded="false">
+                    <i class="fas fa-boxes"></i>
+                        <p>Product Menu</p>
+                    </a>
+                </li>
+                <!-- <li class="nav-section">
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
                     </span>
@@ -58,26 +64,20 @@
                 </li>
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
-                        <i class="fas fa-boxes"></i>
-                        <p>Product</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
                         <i class="fas fas fa-warehouse"></i>
-                        <p>Supplier</p>
+                        <p>Master Supplier</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
                         <i class="fas fa-th"></i>
-                        <p>Category</p>
+                        <p>Master Category</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
                         <i class="fas fa-wallet"></i>
-                        <p>Payment</p>
+                        <p>Master Payment</p>
                     </a>
                 </li>
                 <li class="nav-section">
@@ -88,10 +88,16 @@
                 </li>
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
-                        <i class="fas fa-user-cog"></i>
-                        <p>User Config</p>
+                        <i class="fa fa-user-plus"></i>
+                        <p>Create User</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
+                        <i class="fas fa-user-cog"></i>
+                        <p>User Role</p>
+                    </a>
+                </li> -->
             </ul>
         </div>
     </div>

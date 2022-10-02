@@ -20,9 +20,16 @@ Route::get('/', function () {
     ]);
 });
 
-// halaman order list
-Route::get('/order-list', function () {
-    return view('order', [
-        "title" => "Dashboard"
+// halaman order menu
+Route::get('/order-menu', function () {
+    return view('order_menu', [
+        "title" => "Order Menu"
+    ]);
+});
+
+// halaman order menu
+Route::get('/product-menu', function () {
+    return view('product_menu', [
+        "title" => "Product Menu"
     ]);
 });

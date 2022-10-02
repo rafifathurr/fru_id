@@ -1,6 +1,6 @@
 <!-- Logo Header -->
 <div class="logo-header" data-background-color="blue">
-    <a href="index.html" class="logo mt-2">
+    <a href="/" class="logo mt-2">
         <span style="display:flex;">
             <img src="{{ asset('img/fru-white.png') }}" width="50" alt="navbar brand" class="navbar-brand">
             <h1 class="text-light ml-1" style="margin:auto;">fru.id</h2>
@@ -30,7 +30,7 @@
                     <i class="fa fa-search"></i>
                 </a>
             </li>
-            <li class="nav-item dropdown hidden-caret">
+            <!-- <li class="nav-item dropdown hidden-caret">
                 <a class="nav-link" data-toggle="dropdown" aria-expanded="false">
                     <span class="svg-icon svg-icon-2xl">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -90,7 +90,7 @@
                         </div>
                     </div>
                 </div>
-            </li>
+            </li> -->
             <li class="nav-item dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                     <div class="avatar-sm">
