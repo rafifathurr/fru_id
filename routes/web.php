@@ -27,6 +27,12 @@ Route::get('/order-menu', function () {
     ]);
 });
 
+Route::get('/order-menu/add', function () {
+    return view('add_order', [
+        "title" => "Add Order"
+    ]);
+});
+
 // halaman order menu
 Route::get('/product-menu', function () {
     return view('product_menu', [
