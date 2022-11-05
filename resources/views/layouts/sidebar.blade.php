@@ -44,16 +44,16 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item {{ ($title ==="Order Menu") ? 'active' : '' }}">
-                    <a href="/order-menu" aria-expanded="false">
+                <li class="nav-item {{ ($title ==="Order List") ? 'active' : '' }}">
+                    <a href="/order/list" aria-expanded="false">
                         <i class="fas fa-clipboard-list"></i>
-                        <p>Order Menu</p>
+                        <p>Order</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/product-menu" aria-expanded="false">
+                    <a href="/product/list" aria-expanded="false">
                     <i class="fas fa-boxes"></i>
-                        <p>Product Menu</p>
+                        <p>Product</p>
                     </a>
                 </li>
                 <!-- <li class="nav-section">

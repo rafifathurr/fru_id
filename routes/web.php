@@ -21,15 +21,15 @@ Route::get('/', function () {
 });
 
 // halaman order menu
-Route::get('/order-menu', function () {
-    return view('order_menu', [
-        "title" => "Order Menu"
+Route::get('/order/list', function () {
+    return view('order_list', [
+        "title" => "List Order"
     ]);
 });
 
 // halaman order menu
-Route::get('/product-menu', function () {
-    return view('product_menu', [
-        "title" => "Product Menu"
+Route::get('/product/list', function () {
+    return view('product_list', [
+        "title" => "List Product"
     ]);
 });
