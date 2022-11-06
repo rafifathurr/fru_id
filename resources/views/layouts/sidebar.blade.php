@@ -44,7 +44,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item {{ ($title ==="Order List") ? 'active' : '' }}">
+                <li class="nav-item {{ ($title ==="Order List" || $title ==="Add Order") ? 'active' : '' }}">
                     <a href="/order/list" aria-expanded="false">
                         <i class="fas fa-clipboard-list"></i>
                         <p>Order</p>

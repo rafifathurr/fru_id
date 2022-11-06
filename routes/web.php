@@ -23,11 +23,11 @@ Route::get('/', function () {
 // halaman order menu
 Route::get('/order/list', function () {
     return view('order_list', [
-        "title" => "List Order"
+        "title" => "Order List"
     ]);
 });
 
-Route::get('/order-menu/add', function () {
+Route::get('/order/add', function () {
     return view('add_order', [
         "title" => "Add Order"
     ]);

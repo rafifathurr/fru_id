@@ -14,7 +14,7 @@
                     <div class="page-inner py-5">
                         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                             <div>
-                                <h2 class="text-white pb-2 fw-bold">Order List</h2>
+                                <h2 class="text-white pb-2 fw-bold">{{($title)}}</h2>
                             </div>
                         </div>
                     </div>
@@ -22,11 +22,10 @@
                 <div class="page-inner mt--5">
                     <!-- Button -->
                     <div class="d-flex">
-                        <button class="btn btn-primary btn-round ml-auto mb-3" data-toggle="modal"
-                            data-target="#addRowModal">
+                        <a class="btn btn-primary btn-round ml-auto mb-3" href="/order/add">
                             <i class="fa fa-plus"></i>
-                            Add Row
-                        </button>
+                            Add Order
+                        </a>
                     </div>
 
                     <!-- Table -->

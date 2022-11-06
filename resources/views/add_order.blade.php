@@ -96,7 +96,7 @@
                         <div class="modal-footer">
                             <div style="float:right;">
                             <div class="col-md-10" style="margin-right: 20px;">
-                                <a href="/order-menu" type="button" class="btn btn-danger">
+                                <a href="/order/list" type="button" class="btn btn-danger">
                                     <i class="fa fa-arrow-left"></i>&nbsp; 
                                     Back
                                 </a>
