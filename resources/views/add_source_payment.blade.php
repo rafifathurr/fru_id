@@ -19,9 +19,8 @@
                     </div>
                 </div>
                 <section class="container">
-                    <form id="form_add" action="/master/payment/store" method="get" enctype="multipart/form-data" style="margin-right:100px;">
+                    <form id="form_add" action="/master/payment/store" method="post" enctype="multipart/form-data" style="margin-right:100px;">
                     {{ csrf_field() }}
-                        <input type="hidden" name="_token" value="v3VjtdkCifDB5iv7G9aUPYEhKveU18R1tnXop5am">
                         <br>
                         <div class="row">
                             <div class="col-md-10">

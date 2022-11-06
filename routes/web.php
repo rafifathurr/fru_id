@@ -42,5 +42,5 @@ Route::get('/product/list', function () {
 
 Route::get('/master/payment/list', 'App\Http\Controllers\SourceController@index')->name('index');
 Route::get('/master/payment/add', 'App\Http\Controllers\SourceController@create')->name('create');
-Route::get('/master/payment/store', 'App\Http\Controllers\SourceController@store')->name('store');
+Route::post('/master/payment/store', 'App\Http\Controllers\SourceController@store')->name('store');
 
