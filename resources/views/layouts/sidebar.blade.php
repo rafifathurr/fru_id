@@ -56,7 +56,7 @@
                         <p>Product</p>
                     </a>
                 </li>
-                <!-- <li class="nav-section">
+                <li class="nav-section">
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
                     </span>
@@ -74,8 +74,8 @@
                         <p>Master Category</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
+                <li class="nav-item {{ ($title ==="List Source Payment" || $title ==="Add Source Payment") ? 'active' : '' }}">
+                    <a href="/master/payment/list" class="collapsed" aria-expanded="false">
                         <i class="fas fa-wallet"></i>
                         <p>Master Payment</p>
                     </a>
@@ -97,7 +97,7 @@
                         <i class="fas fa-user-cog"></i>
                         <p>User Role</p>
                     </a>
-                </li> -->
+                </li>
             </ul>
         </div>
     </div>

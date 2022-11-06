@@ -39,3 +39,8 @@ Route::get('/product/list', function () {
         "title" => "List Product"
     ]);
 });
+
+Route::get('/master/payment/list', 'App\Http\Controllers\SourceController@index')->name('index');
+Route::get('/master/payment/add', 'App\Http\Controllers\SourceController@create')->name('create');
+Route::get('/master/payment/store', 'App\Http\Controllers\SourceController@store')->name('store');
+
