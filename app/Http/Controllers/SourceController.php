@@ -95,10 +95,7 @@ class SourceController extends Controller
         ]);
         // $this->setLogOwner($req, "Save Data Source Payment: " . $req->sumber);
 
-        return view('payment_list', [
-            "title" => "List Source Payment",
-            "sources" => Source::all()
-        ]);
+        return redirect()->back();
     }
 
 }

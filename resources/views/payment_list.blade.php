@@ -68,12 +68,17 @@
                                                     <div class="form-button-action">
                                                         <button type="button" data-toggle="tooltip" title=""
                                                             class="btn btn-link btn-simple-primary btn-lg"
-                                                            data-original-title="Edit Task" control-id="ControlID-16">
+                                                            data-original-title="Detail" control-id="ControlID-16">
+                                                            <i class="fa fa-eye"></i>
+                                                        </button>
+                                                        <button type="button" data-toggle="tooltip" title=""
+                                                            class="btn btn-link btn-simple-primary btn-lg"
+                                                            data-original-title="Edit" control-id="ControlID-16">
                                                             <i class="fa fa-edit"></i>
                                                         </button>
                                                         <button type="button" data-toggle="tooltip" title=""
                                                             class="btn btn-link btn-simple-danger"
-                                                            data-original-title="Remove" control-id="ControlID-17">
+                                                            data-original-title="Delete" control-id="ControlID-17">
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </div>
