@@ -22,7 +22,7 @@
                 <div class="page-inner mt--5">
                     <!-- Button -->
                     <div class="d-flex">
-                        <a class="btn btn-primary btn-round ml-auto mb-3" href="/master/payment/add">
+                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('source_payment.create') }}">
                             <i class="fa fa-plus"></i>
                             Add Source Payment
                         </a>
@@ -53,35 +53,47 @@
                                                 <th class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
-                                                    style="width: 234px;">Source</th>
+                                                    style="width: 15%; font-weight:900;">
+                                                    <center>Source</center>
+                                                </th>
                                                 <th width="10%" class="sorting" tabindex="0"
                                                     aria-controls="add-row" rowspan="1" colspan="1"
                                                     aria-label="Action: activate to sort column ascending"
-                                                    style="width: 127px;">Action</th>
+                                                    style="width: 10%; font-weight:900;">
+                                                    <center>Action</center>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($sources as $source)
                                             <tr role="row" class="odd">
-                                                <td class="sorting_1">{{$source->source}}</td>
+                                                <td class="sorting_1">
+                                                    <center>{{$source->source}}</center>
+                                                </td>
                                                 <td>
-                                                    <div class="form-button-action">
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-primary btn-lg"
-                                                            data-original-title="Detail" control-id="ControlID-16">
-                                                            <i class="fa fa-eye"></i>
-                                                        </button>
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-primary btn-lg"
-                                                            data-original-title="Edit" control-id="ControlID-16">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-danger"
-                                                            data-original-title="Delete" control-id="ControlID-17">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </div>
+                                                    <center>
+                                                        <div class="form-button-action">
+                                                            <a href="{{route('source_payment.detail', $source->Id) }}" data-toggle="tooltip" title="Detail"
+                                                                class="btn btn-link btn-simple-primary btn-lg"
+                                                                data-original-title="Detail" control-id="ControlID-16">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a href="{{route('source_payment.edit', $source->Id) }}" data-toggle="tooltip" title="Edit"
+                                                                class="btn btn-link btn-simple-primary btn-lg"
+                                                                data-original-title="Edit" control-id="ControlID-16">
+                                                                <i class="fa fa-edit" style="color:grey;"></i>
+                                                            </a>
+                                                            <form action="{{route('source_payment.delete')}}" method="post">
+                                                                {{ csrf_field() }}
+                                                                <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" value="{{ $source->Id }}" required>
+                                                                <button type="submit" data-toggle="tooltip" title="Delete"
+                                                                    class="btn btn-link btn-simple-danger"
+                                                                    data-original-title="Delete" control-id="ControlID-17">
+                                                                    <i class="fa fa-trash" style="color:red;"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </center>
                                                 </td>
                                             </tr>
                                         @endforeach

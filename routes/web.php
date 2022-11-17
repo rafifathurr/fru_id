@@ -40,7 +40,19 @@ Route::get('/product/list', function () {
     ]);
 });
 
-Route::get('/master/payment/list', 'App\Http\Controllers\SourceController@index')->name('index');
-Route::get('/master/payment/add', 'App\Http\Controllers\SourceController@create')->name('create');
-Route::post('/master/payment/store', 'App\Http\Controllers\SourceController@store')->name('store');
+// ALL CONTROLLERS
+Route::namespace('App\Http\Controllers')->group(function (){
+    
+    // ROUTE TO SOURCE PAYMENT CONTROLLERS
+    Route::namespace('source_payment')->prefix('source-payment')->name('source_payment.')->group(function () {
+        Route::get('/', 'SourceControllers@index')->name('index');
+        Route::get('create', 'SourceControllers@create')->name('create');
+        Route::post('store', 'SourceControllers@store')->name('store');
+        Route::get('detail/{id}', 'SourceControllers@detail')->name('detail');
+        Route::get('edit/{id}', 'SourceControllers@edit')->name('edit');
+        Route::post('update', 'SourceControllers@update')->name('update');
+        Route::post('delete', 'SourceControllers@delete')->name('delete');
+    });
+});
+
 

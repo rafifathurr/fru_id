@@ -74,8 +74,8 @@
                         <p>Master Category</p>
                     </a>
                 </li>
-                <li class="nav-item {{ ($title ==="List Source Payment" || $title ==="Add Source Payment") ? 'active' : '' }}">
-                    <a href="/master/payment/list" class="collapsed" aria-expanded="false">
+                <li class="nav-item {{ $title ==="List Source Payment" || $title ==="Add Source Payment" || $title ==="Detail Source Payment" || $title ==="Edit Source Payment" ? 'active' : '' }}">
+                    <a href="{{ route('source_payment.index') }}" class="collapsed" aria-expanded="false">
                         <i class="fas fa-wallet"></i>
                         <p>Master Payment</p>
                     </a>
