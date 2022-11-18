@@ -38,13 +38,13 @@
                 </div>
             </div>
             <ul class="nav nav-primary">
-                <li class="nav-item {{ ($title ==="Dashboard") ? 'active' : '' }}">
+                <li class="nav-item {{ $title === 'Dashboard' ? 'active' : '' }}">
                     <a href="/" aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item {{ ($title ==="Order List" || $title ==="Add Order") ? 'active' : '' }}">
+                <li class="nav-item {{ $title === 'Order List' || $title === 'Add Order' ? 'active' : '' }}">
                     <a href="/order/list" aria-expanded="false">
                         <i class="fas fa-clipboard-list"></i>
                         <p>Order</p>
@@ -52,7 +52,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="/product/list" aria-expanded="false">
-                    <i class="fas fa-boxes"></i>
+                        <i class="fas fa-boxes"></i>
                         <p>Product</p>
                     </a>
                 </li>
@@ -62,7 +62,7 @@
                     </span>
                     <h4 class="text-section">Master Data</h4>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ $title === 'List Supplier' || $title === 'Add Supplier' ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
                         <i class="fas fas fa-warehouse"></i>
                         <p>Master Supplier</p>
@@ -74,7 +74,8 @@
                         <p>Master Category</p>
                     </a>
                 </li>
-                <li class="nav-item {{ ($title ==="List Source Payment" || $title ==="Add Source Payment") ? 'active' : '' }}">
+                <li
+                    class="nav-item {{ $title === 'List Source Payment' || $title === 'Add Source Payment' ? 'active' : '' }}">
                     <a href="/master/payment/list" class="collapsed" aria-expanded="false">
                         <i class="fas fa-wallet"></i>
                         <p>Master Payment</p>
@@ -102,4 +103,4 @@
         </div>
     </div>
 </div>
-<!-- End Sidebar -->s
+<!-- End Sidebar -->

@@ -95,7 +95,6 @@
                         </div>
                     </div>
                 </div>
-                @include('order_modal')
                 @include('layouts.footer')
                 <script src="{{ asset('js/app/order.js') }}"></script>
             </div>
