@@ -62,9 +62,10 @@
                     </span>
                     <h4 class="text-section">Master Data</h4>
                 </li>
-                <li class="nav-item {{ $title === 'List Supplier' || $title === 'Add Supplier' ? 'active' : '' }}">
-                    <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
-                        <i class="fas fas fa-warehouse"></i>
+                <li
+                    class="nav-item {{ $title === 'List Supplier' || $title === 'Add Supplier' ? 'active' : '' }}">
+                    <a href="/supplier" class="collapsed" aria-expanded="false">
+                        <i class="fas fa-warehouse"></i>
                         <p>Master Supplier</p>
                     </a>
                 </li>
@@ -76,7 +77,7 @@
                 </li>
                 <li
                     class="nav-item {{ $title === 'List Source Payment' || $title === 'Add Source Payment' ? 'active' : '' }}">
-                    <a href="/master/payment/list" class="collapsed" aria-expanded="false">
+                    <a href="/source_payment" class="collapsed" aria-expanded="false">
                         <i class="fas fa-wallet"></i>
                         <p>Master Payment</p>
                     </a>

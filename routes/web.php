@@ -42,7 +42,7 @@ Route::get('/product/list', function () {
 
 // ALL CONTROLLERS
 Route::namespace('App\Http\Controllers')->group(function (){
-    
+
     // ROUTE TO SOURCE PAYMENT CONTROLLERS
     Route::namespace('source_payment')->prefix('source-payment')->name('source_payment.')->group(function () {
         Route::get('/', 'SourceControllers@index')->name('index');
@@ -52,6 +52,17 @@ Route::namespace('App\Http\Controllers')->group(function (){
         Route::get('edit/{id}', 'SourceControllers@edit')->name('edit');
         Route::post('update', 'SourceControllers@update')->name('update');
         Route::post('delete', 'SourceControllers@delete')->name('delete');
+    });
+
+    // ROUTE TO SUPPLIER CONTROLLERS
+    Route::namespace('supplier')->prefix('supplier')->name('supplier.')->group(function () {
+        Route::get('/', 'SupplierControllers@index')->name('index');
+        Route::get('create', 'SupplierControllers@create')->name('create');
+        Route::post('store', 'SupplierControllers@store')->name('store');
+        Route::get('detail/{id}', 'SupplierControllers@detail')->name('detail');
+        Route::get('edit/{id}', 'SupplierControllers@edit')->name('edit');
+        Route::post('update', 'SupplierControllers@update')->name('update');
+        Route::post('delete', 'SupplierControllers@delete')->name('delete');
     });
 });
 
