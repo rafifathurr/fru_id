@@ -79,7 +79,7 @@ class SupplierControllers extends Controller
     // Delete Data Function
     public function delete(Request $req)
     {
-        $exec = Supplier::where('Id', $req->id )->delete();
+        $exec = Supplier::where('id', $req->id )->delete();
 
         if ($exec) {
             return redirect()->route('supplier.index');

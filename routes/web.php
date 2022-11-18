@@ -64,6 +64,17 @@ Route::namespace('App\Http\Controllers')->group(function (){
         Route::post('update', 'SupplierControllers@update')->name('update');
         Route::post('delete', 'SupplierControllers@delete')->name('delete');
     });
+
+    // ROUTE TO CATEGORY CONTROLLERS
+    Route::namespace('category')->prefix('category')->name('category.')->group(function () {
+        Route::get('/', 'CategoryControllers@index')->name('index');
+        Route::get('create', 'CategoryControllers@create')->name('create');
+        Route::post('store', 'CategoryControllers@store')->name('store');
+        Route::get('detail/{id}', 'CategoryControllers@detail')->name('detail');
+        Route::get('edit/{id}', 'CategoryControllers@edit')->name('edit');
+        Route::post('update', 'CategoryControllers@update')->name('update');
+        Route::post('delete', 'CategoryControllers@delete')->name('delete');
+    });
 });
 
 

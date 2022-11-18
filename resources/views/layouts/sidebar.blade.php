@@ -63,21 +63,21 @@
                     <h4 class="text-section">Master Data</h4>
                 </li>
                 <li
-                    class="nav-item {{ $title === 'List Supplier' || $title === 'Add Supplier' ? 'active' : '' }}">
-                    <a href="/supplier" class="collapsed" aria-expanded="false">
+                    class="nav-item {{ $title === 'List Supplier' || $title === 'Add Supplier' || $title === 'Edit Supplier' || $title === 'Detail Supplier'? 'active' : '' }}">
+                    <a href="{{route('supplier.index')}}" class="collapsed" aria-expanded="false">
                         <i class="fas fa-warehouse"></i>
                         <p>Master Supplier</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
+                <li class="nav-item {{ $title === 'List Category Product' || $title === 'Add Category Product' || $title === 'Edit Category Product' || $title === 'Detail Category Product'? 'active' : '' }}">
+                    <a href="{{route('category.index')}}" class="collapsed" aria-expanded="false">
                         <i class="fas fa-th"></i>
                         <p>Master Category</p>
                     </a>
                 </li>
                 <li
-                    class="nav-item {{ $title === 'List Source Payment' || $title === 'Add Source Payment' ? 'active' : '' }}">
-                    <a href="/source_payment" class="collapsed" aria-expanded="false">
+                    class="nav-item {{ $title === 'List Source Payment' || $title === 'Add Source Payment' || $title === 'Edit Source Payment' || $title === 'Detail Source Payment'? 'active' : '' }}">
+                    <a href="{{route('source_payment.index')}}" class="collapsed" aria-expanded="false">
                         <i class="fas fa-wallet"></i>
                         <p>Master Payment</p>
                     </a>

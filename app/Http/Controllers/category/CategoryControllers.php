@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\category;
 
 use App\Http\Controllers\Controller;
-use App\Models\Source;
+use App\Models\category\Category;
 
 use Illuminate\Http\Request;
 
@@ -13,19 +13,19 @@ class CategoryControllers extends Controller
     // Index View and Scope Data
     public function index()
     {
-        return view('source_payment.index', [
-            "title" => "List Source Payment",
-            "sources" => Source::all()
+        return view('category.index', [
+            "title" => "List Category Product",
+            "categories" => Category::all()
         ]);
     }
 
     // Create View Data
     public function create()
     {
-        $data['title'] = "Add Source Payment";
+        $data['title'] = "Add Category Product";
         $data['url'] = 'store';
         $data['disabled_'] = '';
-        return view('source_payment.create', $data);
+        return view('category.create', $data);
     }
 
     // Store Function to Database
@@ -33,33 +33,33 @@ class CategoryControllers extends Controller
     {
         date_default_timezone_set("Asia/Bangkok");
         $datenow = date('Y-m-d H:i:s');
-        $source_pay = Source::create([  
-            'source' => $req->sumber,
+        $category_prod = Category::create([  
+            'category' => $req->category,
             'note' => $req->note,
             'created_at' => $datenow
         ]);
 
-        return redirect()->route('source_payment.index');
+        return redirect()->route('category.index');
     }
 
     // Detail Data View by id
     public function detail($id)
     {
-        $data['title'] = "Detail Source Payment";
+        $data['title'] = "Detail Category Product";
         $data['disabled_'] = 'disabled'; 
         $data['url'] = 'create';   
-        $data['sources'] = Source::where('id', $id)->first();
-        return view('source_payment.create', $data);
+        $data['categories'] = Category::where('id', $id)->first();
+        return view('category.create', $data);
     }
 
     // Edit Data View by id
     public function edit($id)
     {
-        $data['title'] = "Edit Source Payment";
+        $data['title'] = "Edit Category Product";
         $data['disabled_'] = ''; 
         $data['url'] = 'update';   
-        $data['sources'] = Source::where('id', $id)->first();
-        return view('source_payment.create', $data);
+        $data['categories'] = Category::where('id', $id)->first();
+        return view('category.create', $data);
     }
 
     // Update Function to Database
@@ -67,22 +67,22 @@ class CategoryControllers extends Controller
     {
         date_default_timezone_set("Asia/Bangkok");
         $datenow = date('Y-m-d H:i:s');
-        $source_pay = Source::where('id', $req->id)->update([  
-            'source' => $req->sumber,
+        $category_prod = Category::where('id', $req->id)->update([  
+            'category' => $req->category,
             'note' => $req->note,
             'updated_at' => $datenow
         ]);
 
-        return redirect()->route('source_payment.index');
+        return redirect()->route('category.index');
     }
 
     // Delete Data Function
     public function delete(Request $req)
     {
-        $exec = Source::where('Id', $req->id )->delete();
+        $exec = Category::where('id', $req->id )->delete();
 
         if ($exec) {
-            return redirect()->route('source_payment.index');
+            return redirect()->route('category.index');
         } 
     }
 

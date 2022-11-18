@@ -19,16 +19,16 @@
                     </div>
                 </div>
                 <section class="container">
-                    <form id="form_add" action="{{ route('supplier.' . $url) }}" method="post" enctype="multipart/form-data" style="margin-right:100px;">
+                    <form id="form_add" action="{{ route('category.' . $url) }}" method="post" enctype="multipart/form-data" style="margin-right:100px;">
                     {{ csrf_field() }}
                         <br>
                         <div class="row">
                             <div class="col-md-10">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2">Supplier <span style="color: red;">*</span></label>
+                                <label class="col-md-2">Category Product <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" @isset($suppliers) value="{{ $suppliers->id }}" readonly @endisset required>
-                                    <input type="text" name="supplier" id="supplier" class="form-control"  step="1" @if (isset($suppliers)) value="{{ $suppliers->supplier }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" @isset($categories) value="{{ $categories->id }}" readonly @endisset required>
+                                    <input type="text" name="category" id="category" class="form-control"  step="1" @if (isset($categories)) value="{{ $categories->category }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -38,17 +38,17 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Note</label>
                                 <div class="col-md-10">
-                                    <textarea class="form-control" name="note" id="note" rows="5" cols="10" autocomplete="off" {{ $disabled_ }} style="width:100%">@if (isset($suppliers)) {{ $suppliers->note }} @endisset</textarea>
+                                    <textarea class="form-control" name="note" id="note" rows="5" cols="10"  autocomplete="off" {{ $disabled_ }} style="width:100%">@if (isset($categories)) {{ $categories->note }} @endisset</textarea>
                                 </div>
                             </div>
                         </div>
                         <br>
                         <div class="modal-footer">
                             <div style="float:right;">
-                                @if ($title == 'Add Supplier')
+                                @if ($title == 'Add Category Product')
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('supplier.index')}}" type="button" class="btn btn-danger">
-                                            <i class="fa fa-arrow-left"></i>&nbsp;
+                                        <a href="{{ route('category.index')}}" type="button" class="btn btn-danger">
+                                            <i class="fa fa-arrow-left"></i>&nbsp; 
                                             Back
                                         </a>
                                         <button type="submit" class="btn btn-primary" style="margin-left:10px;">
@@ -56,10 +56,10 @@
                                             Save
                                         </button>
                                     </div>
-                                @elseif ($title == 'Edit Supplier')
+                                @elseif ($title == 'Edit Category Product')
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('supplier.index')}}" type="button" class="btn btn-danger">
-                                            <i class="fa fa-arrow-left"></i>&nbsp;
+                                        <a href="{{ route('category.index')}}" type="button" class="btn btn-danger">
+                                            <i class="fa fa-arrow-left"></i>&nbsp; 
                                             Back
                                         </a>
                                         <button type="submit" class="btn btn-primary" style="margin-left:10px;">
@@ -69,8 +69,8 @@
                                     </div>
                                 @else
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('supplier.index')}}" type="button" class="btn btn-danger">
-                                            <i class="fa fa-arrow-left"></i>&nbsp;
+                                        <a href="{{ route('category.index')}}" type="button" class="btn btn-danger">
+                                            <i class="fa fa-arrow-left"></i>&nbsp; 
                                             Back
                                         </a>
                                     </div>

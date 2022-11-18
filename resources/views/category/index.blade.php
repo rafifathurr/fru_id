@@ -22,9 +22,9 @@
                 <div class="page-inner mt--5">
                     <!-- Button -->
                     <div class="d-flex">
-                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('supplier.create') }}">
+                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('category.create') }}">
                             <i class="fa fa-plus"></i>
-                            Add Supplier
+                            Add Category Product
                         </a>
                     </div>
 
@@ -46,11 +46,15 @@
                                         style="width: 100%;">
                                         <thead>
                                             <tr role="row">
+                                                <!-- <th class="sorting_asc" tabindex="0" aria-controls="add-row"
+                                                    rowspan="1" colspan="1" aria-sort="ascending"
+                                                    aria-label="Name: activate to sort column descending"
+                                                    style="width: 157px;">No</th> -->
                                                 <th class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
                                                     style="width: 15%; font-weight:900;">
-                                                    <center>Supplier</center>
+                                                    <center>Category Product</center>
                                                 </th>
                                                 <th width="10%" class="sorting" tabindex="0"
                                                     aria-controls="add-row" rowspan="1" colspan="1"
@@ -61,27 +65,27 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($suppliers as $supplier)
+                                        @foreach($categories as $category)
                                             <tr role="row" class="odd">
                                                 <td class="sorting_1">
-                                                    <center>{{$supplier->supplier}}</center>
+                                                    <center>{{$category->category}}</center>
                                                 </td>
                                                 <td>
                                                     <center>
                                                         <div class="form-button-action">
-                                                            <a href="{{route('supplier.detail', $supplier->id) }}" data-toggle="tooltip" title="Detail"
+                                                            <a href="{{route('category.detail', $category->id) }}" data-toggle="tooltip" title="Detail"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Detail" control-id="ControlID-16">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
-                                                            <a href="{{route('supplier.edit', $supplier->id) }}" data-toggle="tooltip" title="Edit"
+                                                            <a href="{{route('category.edit', $category->id) }}" data-toggle="tooltip" title="Edit"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Edit" control-id="ControlID-16">
                                                                 <i class="fa fa-edit" style="color:grey;"></i>
                                                             </a>
-                                                            <form action="{{route('supplier.delete')}}" method="post">
+                                                            <form action="{{route('category.delete')}}" method="post">
                                                                 {{ csrf_field() }}
-                                                                <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" value="{{ $supplier->id }}" required>
+                                                                <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" value="{{ $category->id }}" required>
                                                                 <button type="submit" data-toggle="tooltip" title="Delete"
                                                                     class="btn btn-link btn-simple-danger"
                                                                     data-original-title="Delete" control-id="ControlID-17">

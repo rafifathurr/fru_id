@@ -73,19 +73,19 @@
                                                 <td>
                                                     <center>
                                                         <div class="form-button-action">
-                                                            <a href="{{route('source_payment.detail', $source->Id) }}" data-toggle="tooltip" title="Detail"
+                                                            <a href="{{route('source_payment.detail', $source->id) }}" data-toggle="tooltip" title="Detail"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Detail" control-id="ControlID-16">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
-                                                            <a href="{{route('source_payment.edit', $source->Id) }}" data-toggle="tooltip" title="Edit"
+                                                            <a href="{{route('source_payment.edit', $source->id) }}" data-toggle="tooltip" title="Edit"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Edit" control-id="ControlID-16">
                                                                 <i class="fa fa-edit" style="color:grey;"></i>
                                                             </a>
                                                             <form action="{{route('source_payment.delete')}}" method="post">
                                                                 {{ csrf_field() }}
-                                                                <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" value="{{ $source->Id }}" required>
+                                                                <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" value="{{ $source->id }}" required>
                                                                 <button type="submit" data-toggle="tooltip" title="Delete"
                                                                     class="btn btn-link btn-simple-danger"
                                                                     data-original-title="Delete" control-id="ControlID-17">

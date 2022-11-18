@@ -79,7 +79,7 @@ class SourceControllers extends Controller
     // Delete Data Function
     public function delete(Request $req)
     {
-        $exec = Source::where('Id', $req->id )->delete();
+        $exec = Source::where('id', $req->id )->delete();
 
         if ($exec) {
             return redirect()->route('source_payment.index');

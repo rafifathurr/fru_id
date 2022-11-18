@@ -27,7 +27,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Source Payment <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" @isset($sources) value="{{ $sources->Id }}" readonly @endisset required>
+                                    <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" @isset($sources) value="{{ $sources->id }}" readonly @endisset required>
                                     <input type="text" name="sumber" id="sumber" class="form-control"  step="1" @if (isset($sources)) value="{{ $sources->source }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Note</label>
                                 <div class="col-md-10">
-                                    <textarea class="form-control" name="note" id="note" rows="5" cols="10" @if (isset($sources)) value="{{ $sources->note }}" @endisset autocomplete="off" {{ $disabled_ }} style="width:100%"></textarea>
+                                    <textarea class="form-control" name="note" id="note" rows="5" cols="10"  autocomplete="off" {{ $disabled_ }} style="width:100%">@if (isset($sources)) {{ $sources->note }} @endisset</textarea>
                                 </div>
                             </div>
                         </div>
