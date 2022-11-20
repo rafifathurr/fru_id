@@ -27,8 +27,8 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Username <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" @isset($roles) value="{{ $roles->id }}" readonly @endisset required>
-                                    <input type="text" name="username" id="username" class="form-control"  step="1" @if (isset($roles)) value="{{ $roles->role }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" readonly required>
+                                    <input type="text" name="username" id="username" class="form-control"  step="1" autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Email <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" name="email" id="email" class="form-control"  step="1" @if (isset($roles)) value="{{ $roles->role }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="text" name="email" id="email" class="form-control"  step="1" autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Phone <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="number" name="phone" id="phone" class="form-control"  step="1" @if (isset($roles)) value="{{ $roles->role }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="number" name="phone" id="phone" class="form-control"  step="1" autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Password <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="password" name="password" id="password" class="form-control"  step="1" @if (isset($roles)) value="{{ $roles->role }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="password" name="password" id="password" class="form-control"  step="1" autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Re-Password <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="password" name="repassword" id="repassword" class="form-control"  step="1" @if (isset($roles)) value="{{ $roles->role }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="password" name="repassword" id="repassword" class="form-control"  step="1" autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -78,7 +78,22 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Name <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="password" name="name" id="name" class="form-control"  step="1" @if (isset($roles)) value="{{ $roles->role }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="password" name="name" id="name" class="form-control"  step="1" autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="col-md-2"></div>
+                                <label class="col-md-2">Role <span style="color: red;">*</span></label>
+                                <div class="col-md-10">
+                                    <select class="form-control" name="role" id="role">
+                                        @foreach($roles as $role)
+                                            <option value="" selected disabled hidden>- Select Role -</option>
+                                            <option value="{{$role->id}}">{{$role->role}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +103,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Address <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea class="form-control" name="address" id="address" rows="5" cols="10"  autocomplete="off" required {{ $disabled_ }} style="width:100%">@if (isset($roles)) {{ $roles->note }} @endisset</textarea>
+                                    <textarea class="form-control" name="address" id="address" rows="5" cols="10"  autocomplete="off" required {{ $disabled_ }} style="width:100%"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +112,7 @@
                             <div style="float:right;">
                                 @if ($title == 'Add User')
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('role.index')}}" type="button" class="btn btn-danger">
+                                        <a href="{{ route('users.index')}}" type="button" class="btn btn-danger">
                                             <i class="fa fa-arrow-left"></i>&nbsp;
                                             Back
                                         </a>
@@ -108,7 +123,7 @@
                                     </div>
                                 @elseif ($title == 'Edit User')
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('role.index')}}" type="button" class="btn btn-danger">
+                                        <a href="{{ route('users.index')}}" type="button" class="btn btn-danger">
                                             <i class="fa fa-arrow-left"></i>&nbsp;
                                             Back
                                         </a>
@@ -119,7 +134,7 @@
                                     </div>
                                 @else
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('role.index')}}" type="button" class="btn btn-danger">
+                                        <a href="{{ route('users.index')}}" type="button" class="btn btn-danger">
                                             <i class="fa fa-arrow-left"></i>&nbsp;
                                             Back
                                         </a>

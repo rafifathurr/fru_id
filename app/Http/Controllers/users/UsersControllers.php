@@ -4,6 +4,7 @@ namespace App\Http\Controllers\users;
 
 use App\Http\Controllers\Controller;
 use App\Models\users\User;
+use App\Models\role\Role;
 
 use Illuminate\Http\Request;
 
@@ -25,6 +26,7 @@ class UsersControllers extends Controller
         $data['title'] = "Add User";
         $data['url'] = 'store';
         $data['disabled_'] = '';
+        $data['roles'] = Role::all();
         return view('users.create', $data);
     }
 
