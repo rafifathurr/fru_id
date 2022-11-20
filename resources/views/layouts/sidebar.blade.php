@@ -94,8 +94,8 @@
                         <p>Create User</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
+                <li class="nav-item {{ $title === 'List User Roles' || $title === 'Add User Roles' || $title === 'Edit User Roles' || $title === 'Detail User Roles'? 'active' : '' }}">
+                    <a href="{{route('role.index')}}" class="collapsed" aria-expanded="false">
                         <i class="fas fa-user-cog"></i>
                         <p>User Role</p>
                     </a>
