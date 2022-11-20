@@ -88,8 +88,8 @@
                     </span>
                     <h4 class="text-section">User Management</h4>
                 </li>
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false">
+                <li class="nav-item {{ $title === 'List User' || $title === 'Add User' || $title === 'Edit User' || $title === 'Detail User'? 'active' : '' }}"">
+                    <a href="{{route('users.index')}}" class="collapsed" aria-expanded="false">
                         <i class="fa fa-user-plus"></i>
                         <p>Create User</p>
                     </a>

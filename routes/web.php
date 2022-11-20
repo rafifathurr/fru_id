@@ -77,15 +77,15 @@ Route::namespace('App\Http\Controllers')->group(function (){
     });
 
     // ROUTE TO USERS CONTROLLERS
-    // Route::namespace('users')->prefix('users')->name('users.')->group(function () {
-    //     Route::get('/', 'UsersControllers@index')->name('index');
-    //     Route::get('create', 'UsersControllers@create')->name('create');
-    //     Route::post('store', 'UsersControllers@store')->name('store');
-    //     Route::get('detail/{id}', 'UsersControllers@detail')->name('detail');
-    //     Route::get('edit/{id}', 'UsersControllers@edit')->name('edit');
-    //     Route::post('update', 'UsersControllers@update')->name('update');
-    //     Route::post('delete', 'UsersControllers@delete')->name('delete');
-    // });
+    Route::namespace('users')->prefix('users')->name('users.')->group(function () {
+        Route::get('/', 'UsersControllers@index')->name('index');
+        Route::get('create', 'UsersControllers@create')->name('create');
+        // Route::post('store', 'UsersControllers@store')->name('store');
+        // Route::get('detail/{id}', 'UsersControllers@detail')->name('detail');
+        // Route::get('edit/{id}', 'UsersControllers@edit')->name('edit');
+        // Route::post('update', 'UsersControllers@update')->name('update');
+        // Route::post('delete', 'UsersControllers@delete')->name('delete');
+    });
 
     // ROUTE TO USER ROLES CONTROLLERS
     Route::namespace('role')->prefix('role')->name('role.')->group(function () {

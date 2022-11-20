@@ -25,7 +25,7 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2">User Role<span style="color: red;">*</span></label>
+                                <label class="col-md-2">User Role <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" @isset($roles) value="{{ $roles->id }}" readonly @endisset required>
                                     <input type="text" name="role" id="role" class="form-control"  step="1" @if (isset($roles)) value="{{ $roles->role }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
