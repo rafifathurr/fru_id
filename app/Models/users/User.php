@@ -9,7 +9,7 @@ class User extends Model
 {
     protected $primaryKey = 'id';
 
-      protected $table = "users_role";
+      protected $table = "users";
 
       protected $guarded = [];
 

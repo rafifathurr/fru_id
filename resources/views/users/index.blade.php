@@ -46,43 +46,92 @@
                                         style="width: 100%;">
                                         <thead>
                                             <tr role="row">
-                                                <!-- <th class="sorting_asc" tabindex="0" aria-controls="add-row"
+                                                <th class="sorting_asc" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1" aria-sort="ascending"
-                                                    aria-label="Name: activate to sort column descending"
-                                                    style="width: 157px;">No</th> -->
-                                                <th class="sorting" tabindex="0" aria-controls="add-row"
+                                                    aria-label="Name: activate to sort column descending">
+                                                    <center>No</center>
+                                                </th>
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
-                                                    style="width: 15%; font-weight:900;">
+                                                    style="font-weight:900;">
                                                     <center>Name</center>
                                                 </th>
-                                                <th class="sorting" tabindex="0" aria-controls="add-row"
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
                                                     style="width: 15%; font-weight:900;">
                                                     <center>Username</center>
                                                 </th>
-                                                <th class="sorting" tabindex="0" aria-controls="add-row"
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
                                                     style="width: 15%; font-weight:900;">
                                                     <center>Email</center>
                                                 </th>
-                                                <th class="sorting" tabindex="0" aria-controls="add-row"
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
-                                                    style="width: 15%; font-weight:900;">
+                                                    style="font-weight:900;">
                                                     <center>Role</center>
                                                 </th>
-                                                <th width="10%" class="sorting" tabindex="0"
+                                                <th width="15%" class="sorting" tabindex="0"
                                                     aria-controls="add-row" rowspan="1" colspan="1"
                                                     aria-label="Action: activate to sort column ascending"
-                                                    style="width: 10%; font-weight:900;">
+                                                    style="font-weight:900;">
                                                     <center>Action</center>
                                                 </th>
                                             </tr>
                                         </thead>
-
+                                        <tbody>
+                                        {{$num = 0}}
+                                        @foreach($users as $user)
+                                            <tr role="row" class="odd">
+                                                <td>
+                                                    <center>{{$num=$num+1}}</center>
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <center>{{$user->name}}</center>
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <center>{{$user->username}}</center>
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <center>{{$user->email}}</center>
+                                                </td>
+                                                <td class="sorting_1">
+                                                    @foreach($roles as $role)
+                                                        <center> @if(isset($users)) @if($user->role == $role->id){{$role->role}} @endif @endisset </center>
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                        <div class="form-button-action">
+                                                            <a href="{{route('users.detail', $user->id) }}" data-toggle="tooltip" title="Detail"
+                                                                class="btn btn-link btn-simple-primary btn-lg"
+                                                                data-original-title="Detail" control-id="ControlID-16">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a href="{{route('users.edit', $user->id) }}" data-toggle="tooltip" title="Edit"
+                                                                class="btn btn-link btn-simple-primary btn-lg"
+                                                                data-original-title="Edit" control-id="ControlID-16">
+                                                                <i class="fa fa-edit" style="color:grey;"></i>
+                                                            </a>
+                                                            <form action="{{route('users.delete')}}" method="post">
+                                                                {{ csrf_field() }}
+                                                                <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" value="{{ $user->id }}" required>
+                                                                <button type="submit" data-toggle="tooltip" title="Delete"
+                                                                    class="btn btn-link btn-simple-danger"
+                                                                    data-original-title="Delete" control-id="ControlID-17">
+                                                                    <i class="fa fa-trash" style="color:red;"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </center>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>

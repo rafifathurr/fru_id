@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <section class="container">
-                    <form id="form_add" action="{{ route('role.' . $url) }}" method="post" enctype="multipart/form-data" style="margin-right:100px;">
+                    <form id="form_add" action="{{ route('users.' . $url) }}" method="post" enctype="multipart/form-data" style="margin-right:100px;">
                     {{ csrf_field() }}
                         <br>
                         <div class="row">
@@ -27,8 +27,8 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Username <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" readonly required>
-                                    <input type="text" name="username" id="username" class="form-control"  step="1" autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" @isset($users) value="{{ $users->id }}" readonly @endisset required>
+                                    <input type="text" name="username" id="username" class="form-control"  step="1" @if (isset($users)) value="{{ $users->username }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Email <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" name="email" id="email" class="form-control"  step="1" autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="text" name="email" id="email" class="form-control"  step="1" @if (isset($users)) value="{{ $users->email }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Phone <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="number" name="phone" id="phone" class="form-control"  step="1" autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="number" name="phone" id="phone" class="form-control"  step="1" @if (isset($users)) value="0{{ $users->phone }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Name <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="password" name="name" id="name" class="form-control"  step="1" autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="text" name="name" id="name" class="form-control"  step="1" @if (isset($users)) value="{{ $users->name }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -88,10 +88,10 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Role <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <select class="form-control" name="role" id="role">
+                                    <select class="form-control" name="role" id="role"  @if (isset($users)) @endisset autocomplete="off" required {{ $disabled_ }}>
+                                        <option value="" selected disabled hidden>- Select Role -</option>
                                         @foreach($roles as $role)
-                                            <option value="" selected disabled hidden>- Select Role -</option>
-                                            <option value="{{$role->id}}">{{$role->role}}</option>
+                                            <option  @if(isset($users)) <?php if($users->role == $role->id){echo 'selected';}?> @endisset value="{{$role->id}}">{{$role->role}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -103,7 +103,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Address <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea class="form-control" name="address" id="address" rows="5" cols="10"  autocomplete="off" required {{ $disabled_ }} style="width:100%"></textarea>
+                                    <textarea class="form-control" name="address" id="address" rows="5" cols="10"  autocomplete="off" required {{ $disabled_ }} style="width:100%">@if (isset($users)) {{ $users->address }} @endisset</textarea>
                                 </div>
                             </div>
                         </div>

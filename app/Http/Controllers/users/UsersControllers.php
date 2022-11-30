@@ -15,8 +15,9 @@ class UsersControllers extends Controller
     public function index()
     {
         return view('users.index', [
-            "title" => "List User"
-            // "suppliers" => Supplier::all()
+            "title" => "List User",
+            "users" => User::all(),
+            "roles" => Role::all()
         ]);
     }
 
@@ -30,63 +31,77 @@ class UsersControllers extends Controller
         return view('users.create', $data);
     }
 
-    // // Store Function to Database
-    // public function store(Request $req)
-    // {
-    //     date_default_timezone_set("Asia/Bangkok");
-    //     $datenow = date('Y-m-d H:i:s');
-    //     $supplier_pay = Supplier::create([
-    //         'supplier' => $req->supplier,
-    //         'note' => $req->note,
-    //         'created_at' => $datenow
-    //     ]);
+    // Store Function to Database
+    public function store(Request $request)
+    {
+        if($request->password == $request->repassword){
+            date_default_timezone_set("Asia/Bangkok");
+            $datenow = date('Y-m-d H:i:s');
+            User::create([
+                'username' => $request->username,
+                'email' => $request->email,
+                'phone' => (int)$request->phone,
+                'password' => bcrypt($request->password),
+                'name' => $request->name,
+                'role' => $request->role,
+                'address' => $request->address,
+                'created_at' => $datenow
+            ]);
+        }
+        return redirect()->route('users.index');
+    }
 
-    //     return redirect()->route('supplier.index');
-    // }
+    // Detail Data View by id
+    public function detail($id)
+    {
+        $data['title'] = "Detail Supplier";
+        $data['disabled_'] = 'disabled';
+        $data['url'] = 'create';
+        $data['users'] = User::where('id', $id)->first();
+        $data['roles'] = Role::all();
+        return view('users.create', $data);
+    }
 
-    // // Detail Data View by id
-    // public function detail($id)
-    // {
-    //     $data['title'] = "Detail Supplier";
-    //     $data['disabled_'] = 'disabled';
-    //     $data['url'] = 'create';
-    //     $data['suppliers'] = Supplier::where('id', $id)->first();
-    //     return view('supplier.create', $data);
-    // }
+    // Edit Data View by id
+    public function edit($id)
+    {
+        $data['title'] = "Edit User";
+        $data['disabled_'] = '';
+        $data['url'] = 'update';
+        $data['users'] = User::where('id', $id)->first();
+        $data['roles'] = Role::all();
+        return view('users.create', $data);
+    }
 
-    // // Edit Data View by id
-    // public function edit($id)
-    // {
-    //     $data['title'] = "Edit Supplier";
-    //     $data['disabled_'] = '';
-    //     $data['url'] = 'update';
-    //     $data['suppliers'] = Supplier::where('id', $id)->first();
-    //     return view('supplier.create', $data);
-    // }
+    // Update Function to Database
+    public function update(Request $req)
+    {
+        if($req->password == $req->repassword){
+            date_default_timezone_set("Asia/Bangkok");
+            $datenow = date('Y-m-d H:i:s');
+            $user_pay = User::where('id', $req->id)->update([
+                'username' => $req->username,
+                'email' => $req->email,
+                'phone' => (int)$req->phone,
+                'password' => bcrypt($req->password),
+                'name' => $req->name,
+                'role' => $req->role,
+                'address' => $req->address,
+                'updated_at' => $datenow
+            ]);
+        }
+        return redirect()->route('supplier.index');
+    }
 
-    // // Update Function to Database
-    // public function update(Request $req)
-    // {
-    //     date_default_timezone_set("Asia/Bangkok");
-    //     $datenow = date('Y-m-d H:i:s');
-    //     $supplier_pay = Supplier::where('id', $req->id)->update([
-    //         'supplier' => $req->supplier,
-    //         'note' => $req->note,
-    //         'updated_at' => $datenow
-    //     ]);
+    // Delete Data Function
+    public function delete(Request $req)
+    {
+        $exec = User::where('id', $req->id )->delete();
 
-    //     return redirect()->route('supplier.index');
-    // }
-
-    // // Delete Data Function
-    // public function delete(Request $req)
-    // {
-    //     $exec = Supplier::where('id', $req->id )->delete();
-
-    //     if ($exec) {
-    //         return redirect()->route('supplier.index');
-    //     }
-    // }
+        if ($exec) {
+            return redirect()->route('users.index');
+        }
+    }
 
 
 }
