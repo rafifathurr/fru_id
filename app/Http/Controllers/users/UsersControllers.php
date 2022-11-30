@@ -43,7 +43,7 @@ class UsersControllers extends Controller
                 'phone' => (int)$request->phone,
                 'password' => bcrypt($request->password),
                 'name' => $request->name,
-                'role' => $request->role,
+                'role_id' => $request->role,
                 'address' => $request->address,
                 'created_at' => $datenow
             ]);
@@ -85,7 +85,7 @@ class UsersControllers extends Controller
                 'phone' => (int)$req->phone,
                 'password' => bcrypt($req->password),
                 'name' => $req->name,
-                'role' => $req->role,
+                'role_id' => $req->role,
                 'address' => $req->address,
                 'updated_at' => $datenow
             ]);

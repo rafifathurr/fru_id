@@ -100,9 +100,7 @@
                                                     <center>{{$user->email}}</center>
                                                 </td>
                                                 <td class="sorting_1">
-                                                    @foreach($roles as $role)
-                                                        <center> @if(isset($users)) @if($user->role == $role->id){{$role->role}} @endif @endisset </center>
-                                                    @endforeach
+                                                   <center>{{$user->role->role}}</center>
                                                 </td>
                                                 <td>
                                                     <center>

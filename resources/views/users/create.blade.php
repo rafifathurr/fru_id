@@ -91,7 +91,7 @@
                                     <select class="form-control" name="role" id="role"  @if (isset($users)) @endisset autocomplete="off" required {{ $disabled_ }}>
                                         <option value="" selected disabled hidden>- Select Role -</option>
                                         @foreach($roles as $role)
-                                            <option  @if(isset($users)) <?php if($users->role == $role->id){echo 'selected';}?> @endisset value="{{$role->id}}">{{$role->role}}</option>
+                                            <option  @if(isset($users)) <?php if($users->role_id == $role->id){echo 'selected';}?> @endisset value="{{$role->id}}">{{$role->role}}</option>
                                         @endforeach
                                     </select>
                                 </div>
