@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('layouts.head')
-
+<style>
+</style>
 <body>
     <div class="wrapper">
         <div class="main-header">
@@ -49,22 +50,22 @@
                                                 <th class="sorting_asc" tabindex="0" aria-controls="add-row" width:0%>
                                                     <center>No</center>
                                                 </th>
-                                                <th class="sorting" tabindex="0" aria-controls="add-row"
+                                                <th width="50%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
-                                                    style="width: 50%; font-weight:900;">
+                                                    style="font-weight:900;">
                                                     <center>Role</center>
                                                 </th>
-                                                <th width="20%" class="sorting" tabindex="0"
+                                                <th width="30%" class="sorting" tabindex="0"
                                                     aria-controls="add-row" rowspan="1" colspan="1"
                                                     aria-label="Action: activate to sort column ascending"
-                                                    font-weight:900;">
+                                                    style="font-weight:900;">
                                                     <center>Action</center>
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {{$num = 0}}
+                                        <?php $num = 0; ?>
                                         @foreach($roles as $role)
                                             <tr role="row" class="odd">
                                                 <td>
@@ -86,15 +87,11 @@
                                                                 data-original-title="Edit" control-id="ControlID-16">
                                                                 <i class="fa fa-edit" style="color:grey;"></i>
                                                             </a>
-                                                            <form action="{{route('role.delete')}}" method="post">
-                                                                {{ csrf_field() }}
-                                                                <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" value="{{ $role->id }}" required>
-                                                                <button type="submit" data-toggle="tooltip" title="Delete"
-                                                                    class="btn btn-link btn-simple-danger"
-                                                                    data-original-title="Delete" control-id="ControlID-17">
-                                                                    <i class="fa fa-trash" style="color:red;"></i>
-                                                                </button>
-                                                            </form>
+                                                            <button type="submit" onclick="destroy({{$role->id}})" data-toggle="tooltip" title="Delete"
+                                                                class="btn btn-link btn-simple-danger"
+                                                                data-original-title="Delete" control-id="ControlID-17">
+                                                                <i class="fa fa-trash" style="color:red;"></i>
+                                                            </button>
                                                         </div>
                                                     </center>
                                                 </td>
@@ -121,5 +118,29 @@
         </div>
     </div>
 </body>
+
+<script>
+    function destroy(id) {
+    var token = $('meta[name="csrf-token"]').attr('content');
+
+    swal({
+          title: "",
+          text: "Are you sure want to delete this record?",
+          icon: "warning",
+          buttons: ['Cancel', 'OK'],
+          // dangerMode: true,
+      }).then((willDelete) => {
+          if (willDelete) {
+            $.post("{{route('role.delete')}}",{ id:id,_token:token},function(data){
+                location.reload();
+            })
+          } else {
+            return false;
+          }
+      });
+  }
+</script>
+
+@include('layouts.swal')
 
 </html>

@@ -4,6 +4,9 @@ namespace App\Http\Controllers\product;
 
 use App\Http\Controllers\Controller;
 use App\Models\product\Product;
+use App\Models\category\Category;
+use App\Models\supplier\Supplier;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 
@@ -13,44 +16,63 @@ class ProductControllers extends Controller
     // Index View and Scope Data
     public function index()
     {
-        return view('role.index', [
+        return view('product.index', [
             "title" => "List Products",
             "products" => Product::all()
         ]);
     }
 
-    // // Create View Data
-    // public function create()
-    // {
-    //     $data['title'] = "Add User Roles";
-    //     $data['url'] = 'store';
-    //     $data['disabled_'] = '';
-    //     return view('role.create', $data);
-    // }
+    // Create View Data
+    public function create()
+    {
+        $data['title'] = "Add Products";
+        $data['url'] = 'store';
+        $data['disabled_'] = '';
+        $data['categories'] = Category::all();
+        $data['suppliers'] = Supplier::all();
+        return view('product.create', $data);
+    }
 
-    // // Store Function to Database
-    // public function store(Request $req)
-    // {
-    //     date_default_timezone_set("Asia/Bangkok");
-    //     $datenow = date('Y-m-d H:i:s');
-    //     $role_pay = Role::create([
-    //         'role' => $req->role,
-    //         'note' => $req->note,
-    //         'created_at' => $datenow
-    //     ]);
+    // Store Function to Database
+    public function store(Request $req)
+    {
+        date_default_timezone_set("Asia/Bangkok");
+        $datenow = date('Y-m-d H:i:s');
 
-    //     return redirect()->route('role.index');
-    // }
+        // $destination = 'uploads/Persuratan/sprin\\';
+        // if ($req->hasFile('lampiran')) {
+        // $file = $req->file('lampiran');
+        // $nama_file = time() . '_SPRIN' . '_' . str_replace(' ', '_', $req->file('lampiran')->getClientOriginalName());
+        // Storage::disk('uploads')->putFileAs($destination, $file, $nama_file);
+        // } else {
+        // $nama_file = null;
+        // }
 
-    // // Detail Data View by id
-    // public function detail($id)
-    // {
-    //     $data['title'] = "Detail User Roles";
-    //     $data['disabled_'] = 'disabled';
-    //     $data['url'] = 'create';
-    //     $data['roles'] = Role::where('id', $id)->first();
-    //     return view('role.create', $data);
-    // }
+        $role_pay = Product::create([
+            'name_product' => $req->name,
+            'status' => $req->status,
+            'stock' => $req->stock,
+            'base_price' => $req->base_price,
+            'selling_price' => $req->selling_price,
+            'desc' => $req->desc,
+            'category_id' => $req->category,
+            'supplier_id' => $req->supplier_id,
+            'created_at' => $datenow
+        ]);
+
+        return redirect()->route('product.index')->with(['success' => 'Data successfully stored!']);
+    }
+
+    // Detail Data View by id
+    public function detail($id)
+    {
+        $data['title'] = "Detail Products";
+        $data['disabled_'] = 'disabled';
+        $data['url'] = 'create';
+        $data['categories'] = Category::all();
+        $data['suppliers'] = Supplier::all();
+        return view('product.create', $data);
+    }
 
     // // Edit Data View by id
     // public function edit($id)
@@ -76,15 +98,15 @@ class ProductControllers extends Controller
     //     return redirect()->route('role.index');
     // }
 
-    // // Delete Data Function
-    // public function delete(Request $req)
-    // {
-    //     $exec = Role::where('id', $req->id )->delete();
+    // Delete Data Function
+    public function delete(Request $req)
+    {
+        $exec = Product::where('id', $req->id )->delete();
 
-    //     if ($exec) {
-    //         return redirect()->route('role.index');
-    //     }
-    // }
-
-
+        if ($exec) {
+            Session::flash('success', 'Data successfully deleted!');
+          } else {
+            Session::flash('gagal', 'Error Data');
+          }
+    }
 }

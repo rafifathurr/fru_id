@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('layouts.head')
+<style>
+    .swal-button--cancel{
+        color:white;
+        background-color:red;
+    }
+
+    .swal-button--confirm{
+        color:white;
+        background-color:#509dc1;
+    }
+</style>
 <body>
     <div class="wrapper">
         <div class="main-header">
@@ -81,7 +92,9 @@
                 </section>
             </div>
             @include('layouts.footer')
+
         </div>
     </div>
 </body>
+@include('layouts.swal')
 </html>

@@ -50,8 +50,8 @@
                         <p>Order</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="/product/list" aria-expanded="false">
+                <li class="nav-item {{ $title === 'List Products' || $title === 'Add Products' || $title === 'Edit Products' || $title === 'Detail Products'? 'active' : '' }}">
+                    <a href="{{route('product.index')}}" class="collapsed" aria-expanded="false">
                         <i class="fas fa-boxes"></i>
                         <p>Product</p>
                     </a>

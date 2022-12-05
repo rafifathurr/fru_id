@@ -43,6 +43,17 @@ Route::get('/product/list', function () {
 // ALL CONTROLLERS
 Route::namespace('App\Http\Controllers')->group(function (){
 
+    // ROUTE TO PRODUCT CONTROLLERS
+    Route::namespace('product')->prefix('product')->name('product.')->group(function () {
+        Route::get('/', 'ProductControllers@index')->name('index');
+        Route::get('create', 'ProductControllers@create')->name('create');
+        Route::post('store', 'ProductControllers@store')->name('store');
+        // Route::get('detail/{id}', 'ProductControllers@detail')->name('detail');
+        // Route::get('edit/{id}', 'ProductControllers@edit')->name('edit');
+        // Route::post('update', 'ProductControllers@update')->name('update');
+        Route::post('delete', 'ProductControllers@delete')->name('delete');
+    });
+
     // ROUTE TO SOURCE PAYMENT CONTROLLERS
     Route::namespace('source_payment')->prefix('source-payment')->name('source_payment.')->group(function () {
         Route::get('/', 'SourceControllers@index')->name('index');

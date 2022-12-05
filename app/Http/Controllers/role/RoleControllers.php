@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\role\Role;
 
 use Illuminate\Http\Request;
+use Auth;
+use Session;
+use DB;
+use PDF;
 
 class RoleControllers extends Controller
 {
@@ -39,7 +43,7 @@ class RoleControllers extends Controller
             'created_at' => $datenow
         ]);
 
-        return redirect()->route('role.index');
+        return redirect()->route('role.index')->with(['success' => 'Data successfully stored!']);
     }
 
     // Detail Data View by id
@@ -73,7 +77,7 @@ class RoleControllers extends Controller
             'updated_at' => $datenow
         ]);
 
-        return redirect()->route('role.index');
+        return redirect()->route('role.index')->with(['success' => 'Data successfully updated!']);
     }
 
     // Delete Data Function
@@ -82,9 +86,9 @@ class RoleControllers extends Controller
         $exec = Role::where('id', $req->id )->delete();
 
         if ($exec) {
-            return redirect()->route('role.index');
-        }
+            Session::flash('success', 'Data successfully deleted!');
+          } else {
+            Session::flash('gagal', 'Error Data');
+          }
     }
-
-
 }

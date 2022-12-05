@@ -22,9 +22,9 @@
                 <div class="page-inner mt--5">
                     <!-- Button -->
                     <div class="d-flex">
-                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('users.create') }}">
+                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('product.create') }}">
                             <i class="fa fa-plus"></i>
-                            Add User
+                            Add Product
                         </a>
                     </div>
 
@@ -51,29 +51,35 @@
                                                     aria-label="Name: activate to sort column descending">
                                                     <center>No</center>
                                                 </th>
-                                                <th width="25%" class="sorting" tabindex="0" aria-controls="add-row"
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
                                                     style="font-weight:900;">
-                                                    <center>Name</center>
+                                                    <center>Product</center>
                                                 </th>
-                                                <th width="25%" class="sorting" tabindex="0" aria-controls="add-row"
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
                                                     style="width: 15%; font-weight:900;">
-                                                    <center>Username</center>
+                                                    <center>Base Price</center>
                                                 </th>
-                                                <th width="25%" class="sorting" tabindex="0" aria-controls="add-row"
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
                                                     style="width: 15%; font-weight:900;">
-                                                    <center>Email</center>
+                                                    <center>Selling Price</center>
                                                 </th>
-                                                <th width="25%" class="sorting" tabindex="0" aria-controls="add-row"
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
                                                     style="font-weight:900;">
-                                                    <center>Role</center>
+                                                    <center>Stock</center>
+                                                </th>
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Position: activate to sort column ascending"
+                                                    style="font-weight:900;">
+                                                    <center>Status</center>
                                                 </th>
                                                 <th width="15%" class="sorting" tabindex="0"
                                                     aria-controls="add-row" rowspan="1" colspan="1"
@@ -85,39 +91,42 @@
                                         </thead>
                                         <tbody>
                                         <?php $num = 0; ?>
-                                        @foreach($users as $user)
+                                        @foreach($products as $prod)
                                             <tr role="row" class="odd">
                                                 <td>
                                                     <center>{{$num=$num+1}}</center>
                                                 </td>
                                                 <td class="sorting_1">
-                                                    <center>{{$user->name}}</center>
+                                                    <center>{{$prod->name_product}}</center>
                                                 </td>
                                                 <td class="sorting_1">
-                                                    <center>{{$user->username}}</center>
+                                                    <center>{{$prod->base_price}}</center>
                                                 </td>
                                                 <td class="sorting_1">
-                                                    <center>{{$user->email}}</center>
+                                                    <center>{{$prod->selling_price}}</center>
                                                 </td>
                                                 <td class="sorting_1">
-                                                   <center>{{$user->role->role}}</center>
+                                                   <center>{{$prod->stock}}</center>
                                                 </td>
+                                                <td class="sorting_1">
+                                                    <center>{{$prod->status}}</center>
+                                                 </td>
                                                 <td>
                                                     <center>
                                                         <div class="form-button-action">
-                                                            <a href="{{route('users.detail', $user->id) }}" data-toggle="tooltip" title="Detail"
+                                                            <a href="{{route('users.detail', $prod->id) }}" data-toggle="tooltip" title="Detail"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Detail" control-id="ControlID-16">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
-                                                            <a href="{{route('users.edit', $user->id) }}" data-toggle="tooltip" title="Edit"
+                                                            <a href="{{route('users.edit', $prod->id) }}" data-toggle="tooltip" title="Edit"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Edit" control-id="ControlID-16">
                                                                 <i class="fa fa-edit" style="color:grey;"></i>
                                                             </a>
-                                                            <form action="{{route('users.delete')}}" method="post">
+                                                            <form action="{{route('product.delete')}}" method="post">
                                                                 {{ csrf_field() }}
-                                                                <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" value="{{ $user->id }}" required>
+                                                                <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" value="{{ $prod->id }}" required>
                                                                 <button type="submit" data-toggle="tooltip" title="Delete"
                                                                     class="btn btn-link btn-simple-danger"
                                                                     data-original-title="Delete" control-id="ControlID-17">
@@ -150,5 +159,5 @@
         </div>
     </div>
 </body>
-
+@include('layouts.swal')
 </html>

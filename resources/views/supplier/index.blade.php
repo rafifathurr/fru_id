@@ -46,23 +46,30 @@
                                         style="width: 100%;">
                                         <thead>
                                             <tr role="row">
-                                                <th class="sorting" tabindex="0" aria-controls="add-row"
+                                                <th class="sorting_asc" tabindex="0" aria-controls="add-row" width:0%>
+                                                    <center>No</center>
+                                                </th>
+                                                <th width="50%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
-                                                    style="width: 15%; font-weight:900;">
+                                                    style="font-weight:900;">
                                                     <center>Supplier</center>
                                                 </th>
-                                                <th width="10%" class="sorting" tabindex="0"
+                                                <th width="30%" class="sorting" tabindex="0"
                                                     aria-controls="add-row" rowspan="1" colspan="1"
                                                     aria-label="Action: activate to sort column ascending"
-                                                    style="width: 10%; font-weight:900;">
+                                                    style="font-weight:900;">
                                                     <center>Action</center>
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <?php $num = 0; ?>
                                         @foreach($suppliers as $supplier)
                                             <tr role="row" class="odd">
+                                                <td>
+                                                    <center>{{$num=$num+1}}</center>
+                                                </td>
                                                 <td class="sorting_1">
                                                     <center>{{$supplier->supplier}}</center>
                                                 </td>
