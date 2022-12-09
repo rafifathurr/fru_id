@@ -44,8 +44,8 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item {{ $title === 'Order List' || $title === 'Add Order' ? 'active' : '' }}">
-                    <a href="/order/list" aria-expanded="false">
+                <li class="nav-item {{ $title === 'List Order' || $title === 'Add Order' || $title === 'Edit Order' || $title === 'Detail Order'? 'active' : '' }}">
+                    <a href="{{route('order.index')}}" aria-expanded="false">
                         <i class="fas fa-clipboard-list"></i>
                         <p>Order</p>
                     </a>

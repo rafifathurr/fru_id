@@ -9,6 +9,10 @@ use App\Models\supplier\Supplier;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
+use Auth;
+use Session;
+use DB;
+use PDF;
 
 class ProductControllers extends Controller
 {
@@ -28,7 +32,7 @@ class ProductControllers extends Controller
         $data['title'] = "Add Products";
         $data['url'] = 'store';
         $data['disabled_'] = '';
-        $data['categories'] = Category::all();
+        $data['categories'] = Category::orderBy('category', 'asc')->get();
         $data['suppliers'] = Supplier::all();
         return view('product.create', $data);
     }
@@ -39,26 +43,26 @@ class ProductControllers extends Controller
         date_default_timezone_set("Asia/Bangkok");
         $datenow = date('Y-m-d H:i:s');
 
-        // $destination = 'uploads/Persuratan/sprin\\';
-        // if ($req->hasFile('lampiran')) {
-        // $file = $req->file('lampiran');
-        // $nama_file = time() . '_SPRIN' . '_' . str_replace(' ', '_', $req->file('lampiran')->getClientOriginalName());
-        // Storage::disk('uploads')->putFileAs($destination, $file, $nama_file);
-        // } else {
-        // $nama_file = null;
-        // }
-
-        $role_pay = Product::create([
-            'name_product' => $req->name,
+        $product_pay = Product::create([
+            'product_name' => $req->name,
+            'code' => $req->code,
             'status' => $req->status,
             'stock' => $req->stock,
             'base_price' => $req->base_price,
             'selling_price' => $req->selling_price,
             'desc' => $req->desc,
             'category_id' => $req->category,
-            'supplier_id' => $req->supplier_id,
+            'supplier_id' => $req->supplier,
             'created_at' => $datenow
         ]);
+
+        $destination='Uploads/Product/'.$product_pay->id.'/uploads\\';
+        if ($req->hasFile('uploads')) {
+            $file = $req->file('uploads');
+            $name_file = time().'_'.$req->file('uploads')->getClientOriginalName();
+            Storage::disk('Uploads')->putFileAs($destination,$file,$name_file);
+            Product::where('id', $product_pay->id)->update(['upload' => $name_file]);
+          }
 
         return redirect()->route('product.index')->with(['success' => 'Data successfully stored!']);
     }
@@ -69,34 +73,52 @@ class ProductControllers extends Controller
         $data['title'] = "Detail Products";
         $data['disabled_'] = 'disabled';
         $data['url'] = 'create';
+        $data['products'] = Product::where('id', $id)->first();
         $data['categories'] = Category::all();
         $data['suppliers'] = Supplier::all();
         return view('product.create', $data);
     }
 
-    // // Edit Data View by id
-    // public function edit($id)
-    // {
-    //     $data['title'] = "Edit User Roles";
-    //     $data['disabled_'] = '';
-    //     $data['url'] = 'update';
-    //     $data['roles'] = Role::where('id', $id)->first();
-    //     return view('role.create', $data);
-    // }
+    // Edit Data View by id
+    public function edit($id)
+    {
+        $data['title'] = "Edit Products";
+        $data['disabled_'] = '';
+        $data['url'] = 'update';
+        $data['products'] = Product::where('id', $id)->first();
+        $data['categories'] = Category::all();
+        $data['suppliers'] = Supplier::all();
+        return view('product.create', $data);
+    }
 
-    // // Update Function to Database
-    // public function update(Request $req)
-    // {
-    //     date_default_timezone_set("Asia/Bangkok");
-    //     $datenow = date('Y-m-d H:i:s');
-    //     $role_pay = Role::where('id', $req->id)->update([
-    //         'role' => $req->role,
-    //         'note' => $req->note,
-    //         'updated_at' => $datenow
-    //     ]);
+    // Update Function to Database
+    public function update(Request $req)
+    {
+        date_default_timezone_set("Asia/Bangkok");
+        $datenow = date('Y-m-d H:i:s');
+        $product_pay = Product::where('id', $req->id)->update([
+            'product_name' => $req->name,
+            'code' => $req->code,
+            'status' => $req->status,
+            'stock' => $req->stock,
+            'base_price' => $req->base_price,
+            'selling_price' => $req->selling_price,
+            'desc' => $req->desc,
+            'category_id' => $req->category,
+            'supplier_id' => $req->supplier,
+            'updated_at' => $datenow
+        ]);
 
-    //     return redirect()->route('role.index');
-    // }
+        $destination='Uploads/Product/'.$req->id.'/uploads\\';
+        if ($req->hasFile('uploads')) {
+            $file = $req->file('uploads');
+            $name_file = time().'_'.$req->file('uploads')->getClientOriginalName();
+            Storage::disk('Uploads')->putFileAs($destination,$file,$name_file);
+            Product::where('id', $req->id)->update(['upload' => $name_file]);
+          }
+
+        return redirect()->route('product.index')->with(['success' => 'Data successfully stored!']);
+    }
 
     // Delete Data Function
     public function delete(Request $req)

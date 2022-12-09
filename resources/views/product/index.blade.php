@@ -60,6 +60,12 @@
                                                 <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
+                                                    style="font-weight:900;">
+                                                    <center>Code</center>
+                                                </th>
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Position: activate to sort column ascending"
                                                     style="width: 15%; font-weight:900;">
                                                     <center>Base Price</center>
                                                 </th>
@@ -97,13 +103,16 @@
                                                     <center>{{$num=$num+1}}</center>
                                                 </td>
                                                 <td class="sorting_1">
-                                                    <center>{{$prod->name_product}}</center>
+                                                    <center>{{$prod->product_name}}</center>
                                                 </td>
                                                 <td class="sorting_1">
-                                                    <center>{{$prod->base_price}}</center>
+                                                    <center>{{$prod->code}}</center>
                                                 </td>
                                                 <td class="sorting_1">
-                                                    <center>{{$prod->selling_price}}</center>
+                                                    <center>Rp. {{number_format($prod->base_price,0,',','.')}}</center>
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <center>Rp. {{number_format($prod->selling_price,0,',','.')}}</center>
                                                 </td>
                                                 <td class="sorting_1">
                                                    <center>{{$prod->stock}}</center>
@@ -114,25 +123,21 @@
                                                 <td>
                                                     <center>
                                                         <div class="form-button-action">
-                                                            <a href="{{route('users.detail', $prod->id) }}" data-toggle="tooltip" title="Detail"
+                                                            <a href="{{route('product.detail', $prod->id) }}" data-toggle="tooltip" title="Detail"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Detail" control-id="ControlID-16">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
-                                                            <a href="{{route('users.edit', $prod->id) }}" data-toggle="tooltip" title="Edit"
+                                                            <a href="{{route('product.edit', $prod->id) }}" data-toggle="tooltip" title="Edit"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Edit" control-id="ControlID-16">
                                                                 <i class="fa fa-edit" style="color:grey;"></i>
                                                             </a>
-                                                            <form action="{{route('product.delete')}}" method="post">
-                                                                {{ csrf_field() }}
-                                                                <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" value="{{ $prod->id }}" required>
-                                                                <button type="submit" data-toggle="tooltip" title="Delete"
-                                                                    class="btn btn-link btn-simple-danger"
-                                                                    data-original-title="Delete" control-id="ControlID-17">
-                                                                    <i class="fa fa-trash" style="color:red;"></i>
-                                                                </button>
-                                                            </form>
+                                                            <button type="submit" onclick="destroy({{$prod->id}})" data-toggle="tooltip" title="Delete"
+                                                                class="btn btn-link btn-simple-danger"
+                                                                data-original-title="Delete" control-id="ControlID-17">
+                                                                <i class="fa fa-trash" style="color:red;"></i>
+                                                            </button>
                                                         </div>
                                                     </center>
                                                 </td>
@@ -159,5 +164,27 @@
         </div>
     </div>
 </body>
+<script>
+    function destroy(id) {
+    var token = $('meta[name="csrf-token"]').attr('content');
+
+    swal({
+          title: "",
+          text: "Are you sure want to delete this record?",
+          icon: "warning",
+          buttons: ['Cancel', 'OK'],
+          // dangerMode: true,
+      }).then((willDelete) => {
+          if (willDelete) {
+            $.post("{{route('product.delete')}}",{ id:id,_token:token},function(data){
+                location.reload();
+            })
+          } else {
+            return false;
+          }
+      });
+  }
+</script>
+
 @include('layouts.swal')
 </html>

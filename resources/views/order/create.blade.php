@@ -28,11 +28,14 @@
                                 <label class="col-md-2">Product <span style="color: red;">*</span></label>
                                 <div class="col-md-6">
                                     <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" required="">
-                                    <select name="prods" id="prods" class="form-control">
+                                    <select name="prods" id="prods" class="form-control" {{-- @if(isset($orders)) @endisset --}}>
                                         <option value="" style="display: none;" selected="">- Choose Products -</option>
+                                        @foreach($products as $prod)
+                                            <option  {{-- @if(isset($orders)) <?php if($orders->product_id == $prod->id){echo 'selected';}?> @endisset --}} value="{{$prod->id}}">{{$prod->product_name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
-                                <label class="col-md-2">Qty <span style="color: red;">*</span></label>
+                                <label class="col-md-2 mt-1">Qty <span style="color: red;">*</span></label>
                                 <div class="col-md-5">
                                     <input type="number" name="qty" id="qty" class="form-control"  step="1" required="" style="width:35%">
                                 </div>
@@ -46,7 +49,7 @@
                                 <div class="col-md-4">
                                     <input type="number" name="entry_price" id="entry_price" class="form-control" autocomplete="off" required="" style="width:100%">
                                 </div>
-                                <label class="col-md-2">Base Price <span style="color: red;">*</span></label>
+                                <label class="col-md-2 mt-1">Base Price <span style="color: red;">*</span></label>
                                 <div class="col-md-4">
                                     <input type="number" name="base_price" id="base_price" class="form-control" autocomplete="off" required="" style="width:100%">
                                 </div>
@@ -60,9 +63,12 @@
                                 <div class="col-md-4">
                                     <select name="source_pay" id="source_pay" class="form-control">
                                         <option value="" style="display: none;" selected="">- Choose Sources -</option>
+                                        @foreach($sources as $source)
+                                            <option  {{-- @if(isset($orders)) <?php if($orders->source_id == $source->id){echo 'selected';}?> @endisset --}} value="{{$source->id}}">{{$source->source}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
-                                <label class="col-md-2">Date Order <span style="color: red;">*</span></label>
+                                <label class="col-md-2 mt-1">Date Order <span style="color: red;">*</span></label>
                                 <div class="col-md-4">
                                     <input type="text" name="date" id="date" class="form-control tgl_date" data-date="" data-date-format="DD/MM/YYYY" autocomplete="off" required="">
                                 </div>

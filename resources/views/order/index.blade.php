@@ -22,7 +22,7 @@
                 <div class="page-inner mt--5">
                     <!-- Button -->
                     <div class="d-flex">
-                        <a class="btn btn-primary btn-round ml-auto mb-3" href="/order/add">
+                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{route('order.create')}}">
                             <i class="fa fa-plus"></i>
                             Add Order
                         </a>

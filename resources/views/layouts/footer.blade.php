@@ -53,6 +53,7 @@
 <!-- Atlantis DEMO methods, don't include it in your project! -->
 <script src="{{ asset('js/setting-demo.js') }}"></script>
 <script src="{{ asset('js/demo.js') }}"></script>
+<script src="{{url('js/plugin/inputmask/jquery.inputmask.bundle.js')}}"></script>
 
 <script>
     Circles.create({
