@@ -16,10 +16,16 @@ use Illuminate\Support\Facades\Route;
 // ALL CONTROLLERS
 Route::namespace('App\Http\Controllers')->group(function (){
 
-    // ROUTE TO DASHBOARD CONTROLLERS
-    Route::namespace('dashboard')->prefix('/')->name('dashboard.')->group(function () {
-        Route::get('/', 'DashboardControllers@index')->name('index');
+    Route::namespace('login')->prefix('auth')->name('login.')->group(function () {
+        Route::get('/login', 'LoginController@index')->name('index')->middleware('guest');
+        Route::post('/login', 'LoginController@authenticate')->name('authenticate')->middleware('guest');
+        Route::post('/logout', 'LoginController@logout')->name('logout')->middleware('auth');
     });
+
+    // ROUTE TO DASHBOARD CONTROLLERS
+    Route::namespace('dashboard')->prefix('/dashboard')->name('dashboard.')->group(function () {
+        Route::get('/', 'DashboardControllers@index')->name('index');
+    })->middleware('auth');
 
     // ROUTE TO ORDER CONTROLLERS
     Route::namespace('order')->prefix('order')->name('order.')->group(function () {
@@ -31,7 +37,7 @@ Route::namespace('App\Http\Controllers')->group(function (){
         // Route::get('edit/{id}', 'OrderControllers@edit')->name('edit');
         // Route::post('update', 'OrderControllers@update')->name('update');
         Route::post('delete', 'OrderControllers@delete')->name('delete');
-    });
+    })->middleware('auth');
 
     // ROUTE TO PRODUCT CONTROLLERS
     Route::namespace('product')->prefix('product')->name('product.')->group(function () {
@@ -42,7 +48,7 @@ Route::namespace('App\Http\Controllers')->group(function (){
         Route::get('edit/{id}', 'ProductControllers@edit')->name('edit');
         Route::post('update', 'ProductControllers@update')->name('update');
         Route::post('delete', 'ProductControllers@delete')->name('delete');
-    });
+    })->middleware('auth');
 
     // ROUTE TO SOURCE PAYMENT CONTROLLERS
     Route::namespace('source_payment')->prefix('source-payment')->name('source_payment.')->group(function () {
@@ -53,7 +59,7 @@ Route::namespace('App\Http\Controllers')->group(function (){
         Route::get('edit/{id}', 'SourceControllers@edit')->name('edit');
         Route::post('update', 'SourceControllers@update')->name('update');
         Route::post('delete', 'SourceControllers@delete')->name('delete');
-    });
+    })->middleware('auth');
 
     // ROUTE TO SUPPLIER CONTROLLERS
     Route::namespace('supplier')->prefix('supplier')->name('supplier.')->group(function () {
@@ -64,7 +70,7 @@ Route::namespace('App\Http\Controllers')->group(function (){
         Route::get('edit/{id}', 'SupplierControllers@edit')->name('edit');
         Route::post('update', 'SupplierControllers@update')->name('update');
         Route::post('delete', 'SupplierControllers@delete')->name('delete');
-    });
+    })->middleware('auth');
 
     // ROUTE TO CATEGORY CONTROLLERS
     Route::namespace('category')->prefix('category')->name('category.')->group(function () {
@@ -75,7 +81,7 @@ Route::namespace('App\Http\Controllers')->group(function (){
         Route::get('edit/{id}', 'CategoryControllers@edit')->name('edit');
         Route::post('update', 'CategoryControllers@update')->name('update');
         Route::post('delete', 'CategoryControllers@delete')->name('delete');
-    });
+    })->middleware('auth');
 
     // ROUTE TO USERS CONTROLLERS
     Route::namespace('users')->prefix('users')->name('users.')->group(function () {
@@ -86,7 +92,7 @@ Route::namespace('App\Http\Controllers')->group(function (){
         Route::get('edit/{id}', 'UsersControllers@edit')->name('edit');
         Route::post('update', 'UsersControllers@update')->name('update');
         Route::post('delete', 'UsersControllers@delete')->name('delete');
-    });
+    })->middleware('auth');
 
     // ROUTE TO USER ROLES CONTROLLERS
     Route::namespace('role')->prefix('role')->name('role.')->group(function () {
@@ -97,7 +103,7 @@ Route::namespace('App\Http\Controllers')->group(function (){
         Route::get('edit/{id}', 'RoleControllers@edit')->name('edit');
         Route::post('update', 'RoleControllers@update')->name('update');
         Route::post('delete', 'RoleControllers@delete')->name('delete');
-    });
+    })->middleware('auth');
 });
 
 

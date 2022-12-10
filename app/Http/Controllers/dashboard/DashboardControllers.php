@@ -26,6 +26,16 @@ class DashboardControllers extends Controller
                             ->orderBy('date', 'ASC')
                             ->select(DB::raw('DATE_FORMAT(date, "%a") as name_day'))
                             ->get();
+        $data['calofday'] = Order::whereRaw('date >= DATE(NOW() - INTERVAL 7 DAY)')
+                            ->select(DB::raw('count(*) as total'))
+                            ->orderBy('date', 'ASC')
+                            ->groupBy('date')
+                            ->get();
+        $data['profitmonth'] = Order::whereRaw('date <= NOW() and date >= Date_add(Now(),interval - 12 month)')
+                            ->select(DB::raw('sum(profit) as profit'))
+                            ->orderBy(DB::raw('DATE_FORMAT(date, "%b")'), 'ASC')
+                            ->groupBy(DB::raw('DATE_FORMAT(date, "%b")'))
+                            ->get();
         $data['countorderall'] = count(Order::all());
         $data['countorderyear'] = count(Order::whereYear('date', Carbon::now()->year)->get());
         $data['countorderlastyear'] = count(Order::whereYear('date', (Carbon::now()->year)-1)->get());

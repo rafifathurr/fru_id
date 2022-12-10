@@ -3,6 +3,7 @@
 @include('layouts.head')
 
 <body>
+    @csrf
     <div class="wrapper">
         <div class="main-header">
             @include('layouts.navbar')
@@ -50,7 +51,7 @@
                         <div class="col-md-6">
                             <div class="card full-height">
                                 <div class="card-body">
-                                    <div class="card-title">Total Income & Tax Statistics</div>
+                                    <div class="card-title">Total Income & Tax Statistics <br><strong>{{date('M Y')}}</strong></div>
                                     <div class="row py-3">
                                         <div class="col-md-4 d-flex flex-column justify-content-around">
                                             <div>
@@ -73,11 +74,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-head-row">
-                                        <div class="card-title">Month Profit</div>
+                                        <div class="card-title"><strong>{{date('M Y')}} Profit</strong> </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -85,32 +86,6 @@
                                         <canvas id="statisticsChart"></canvas>
                                     </div>
                                     <div id="myChartLegend"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-primary">
-                                <div class="card-header">
-                                    <div class="card-title">Daily Sales</div>
-                                    <div class="card-category">March 25 - April 02</div>
-                                </div>
-                                <div class="card-body pb-0">
-                                    <div class="mb-4 mt-2">
-                                        <h1>$4,578.58</h1>
-                                    </div>
-                                    <div class="pull-in">
-                                        <canvas id="dailySalesChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body pb-0">
-                                    <div class="h1 fw-bold float-right text-warning">+7%</div>
-                                    <h2 class="mb-2">213</h2>
-                                    <p class="text-muted">Transactions</p>
-                                    <div class="pull-in sparkline-fix">
-                                        <div id="lineChart"></div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -252,10 +227,6 @@
                                 </div>
                                 <div class="card-body pb-0">
                                     <div class="d-flex">
-                                        <div class="avatar">
-                                            <img src="{{ asset('img/logoproduct.svg') }}" alt="..."
-                                                class="avatar-img rounded-circle">
-                                        </div>
                                         <div class="flex-1 pt-1 ml-2">
                                             <h6 class="fw-bold mb-1">CSS</h6>
                                             <small class="text-muted">Cascading Style Sheets</small>
@@ -266,10 +237,6 @@
                                     </div>
                                     <div class="separator-dashed"></div>
                                     <div class="d-flex">
-                                        <div class="avatar">
-                                            <img src="{{ asset('img/logoproduct.svg') }}" alt="..."
-                                                class="avatar-img rounded-circle">
-                                        </div>
                                         <div class="flex-1 pt-1 ml-2">
                                             <h6 class="fw-bold mb-1">J.CO Donuts</h6>
                                             <small class="text-muted">The Best Donuts</small>
@@ -280,10 +247,6 @@
                                     </div>
                                     <div class="separator-dashed"></div>
                                     <div class="d-flex">
-                                        <div class="avatar">
-                                            <img src="{{ asset('img/logoproduct3.svg') }}" alt="..."
-                                                class="avatar-img rounded-circle">
-                                        </div>
                                         <div class="flex-1 pt-1 ml-2">
                                             <h6 class="fw-bold mb-1">Ready Pro</h6>
                                             <small class="text-muted">Bootstrap 4 Admin Dashboard</small>
@@ -293,9 +256,6 @@
                                         </div>
                                     </div>
                                     <div class="separator-dashed"></div>
-                                    <!-- <div class="pull-in">
-                                        <canvas id="topProductsChart"></canvas>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -306,10 +266,6 @@
                                 </div>
                                 <div class="card-body pb-0">
                                     <div class="d-flex">
-                                        <div class="avatar">
-                                            <img src="{{ asset('img/logoproduct.svg') }}" alt="..."
-                                                class="avatar-img rounded-circle">
-                                        </div>
                                         <div class="flex-1 pt-1 ml-2">
                                             <h6 class="fw-bold mb-1">CSS</h6>
                                             <small class="text-muted">Cascading Style Sheets</small>
@@ -320,10 +276,6 @@
                                     </div>
                                     <div class="separator-dashed"></div>
                                     <div class="d-flex">
-                                        <div class="avatar">
-                                            <img src="{{ asset('img/logoproduct.svg') }}" alt="..."
-                                                class="avatar-img rounded-circle">
-                                        </div>
                                         <div class="flex-1 pt-1 ml-2">
                                             <h6 class="fw-bold mb-1">J.CO Donuts</h6>
                                             <small class="text-muted">The Best Donuts</small>
@@ -334,10 +286,6 @@
                                     </div>
                                     <div class="separator-dashed"></div>
                                     <div class="d-flex">
-                                        <div class="avatar">
-                                            <img src="{{ asset('img/logoproduct3.svg') }}" alt="..."
-                                                class="avatar-img rounded-circle">
-                                        </div>
                                         <div class="flex-1 pt-1 ml-2">
                                             <h6 class="fw-bold mb-1">Ready Pro</h6>
                                             <small class="text-muted">Bootstrap 4 Admin Dashboard</small>
@@ -347,9 +295,6 @@
                                         </div>
                                     </div>
                                     <div class="separator-dashed"></div>
-                                    <!-- <div class="pull-in">
-                                        <canvas id="topProductsChart"></canvas>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -529,11 +474,18 @@
                 </div>
                 @include('layouts.footer')
                 <script>
-                    cost days = []
                     @foreach($dayofweeks as $day)
-                        days.push({{$day->name_day}});
+                        <?php 
+                        $days[] = $day->name_day;
+                        ?>
                     @endforeach
-                    alert(days);
+                    @foreach($calofday as $cal)
+                        <?php 
+                        $cals[] = $cal->total;
+                        ?>
+                    @endforeach
+                    var days = @json($days);
+                    var cal = @json($cals);
                 </script>
                 <script>
                     Circles.create({
@@ -542,7 +494,7 @@
                         value: {{$countorderday}},
                         maxValue: {{$countorderlastday}},
                         width: 7,
-                        text: {{$countorderday}},
+                        text: "{{$countorderday}}",
                         colors: ['#f1f1f1', '#FF9E27'],
                         duration: 400,
                         wrpClass: 'circles-wrp',
@@ -557,7 +509,7 @@
                         value: {{$countordermonth}},
                         maxValue: {{$countorderlastmonth}},
                         width: 7,
-                        text: {{$countordermonth}},
+                        text: "{{$countordermonth}}",
                         colors: ['#f1f1f1', '#2BB930'],
                         duration: 400,
                         wrpClass: 'circles-wrp',
@@ -572,7 +524,7 @@
                         value: {{$countorderyear}},
                         maxValue: {{$countorderlastyear}},
                         width: 7,
-                        text: {{$countorderyear}},
+                        text: "{{$countorderyear}}",
                         colors: ['#f1f1f1', '#F25961'],
                         duration: 400,
                         wrpClass: 'circles-wrp',
@@ -587,7 +539,7 @@
                         value: {{$countorderall}},
                         maxValue: {{$countorderall}},
                         width: 7,
-                        text: {{$countorderall}},
+                        text: "{{$countorderall}}",
                         colors: ['#f1f1f1', '#1269db'],
                         duration: 400,
                         wrpClass: 'circles-wrp',
@@ -607,7 +559,7 @@
                                 label: "Total Income",
                                 backgroundColor: '#ff9e27',
                                 borderColor: 'rgb(23, 125, 255)',
-                                data: [6, 4, 9, 5, 4, 6, 4, 3],
+                                data: cal,
                             }],
                         },
                         options: {
@@ -633,6 +585,79 @@
                                     }
                                 }]
                             },
+                        }
+                    });
+
+                    var statisticsChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            datasets: [ {
+                                label: "Orders",
+                                borderColor: '#1269db',
+                                pointBackgroundColor: 'rgba(243, 84, 93, 0.6)',
+                                pointRadius: 0,
+                                backgroundColor: 'rgba(243, 84, 93, 0.4)',
+                                legendColor: '#1269db',
+                                fill: true,
+                                borderWidth: 2,
+                                data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
+                            }]
+                        },
+                        options : {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            legend: {
+                                display: false
+                            },
+                            tooltips: {
+                                bodySpacing: 4,
+                                mode:"nearest",
+                                intersect: 0,
+                                position:"nearest",
+                                xPadding:10,
+                                yPadding:10,
+                                caretPadding:10
+                            },
+                            layout:{
+                                padding:{left:5,right:5,top:15,bottom:15}
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        fontStyle: "500",
+                                        beginAtZero: false,
+                                        maxTicksLimit: 5,
+                                        padding: 10
+                                    },
+                                    gridLines: {
+                                        drawTicks: false,
+                                        display: false
+                                    }
+                                }],
+                                xAxes: [{
+                                    gridLines: {
+                                        zeroLineColor: "transparent"
+                                    },
+                                    ticks: {
+                                        padding: 10,
+                                        fontStyle: "500"
+                                    }
+                                }]
+                            },
+                            legendCallback: function(chart) {
+                                var text = [];
+                                text.push('<ul class="' + chart.id + '-legend html-legend">');
+                                for (var i = 0; i < chart.data.datasets.length; i++) {
+                                    text.push('<li><span style="background-color:' + chart.data.datasets[i].legendColor + '"></span>');
+                                    if (chart.data.datasets[i].label) {
+                                        text.push(chart.data.datasets[i].label);
+                                    }
+                                    text.push('</li>');
+                                }
+                                text.push('</ul>');
+                                return text.join('');
+                            }
                         }
                     });
 
