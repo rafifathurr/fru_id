@@ -54,7 +54,7 @@ class UsersControllers extends Controller
     // Detail Data View by id
     public function detail($id)
     {
-        $data['title'] = "Detail Supplier";
+        $data['title'] = "Detail User";
         $data['disabled_'] = 'disabled';
         $data['url'] = 'create';
         $data['users'] = User::where('id', $id)->first();
