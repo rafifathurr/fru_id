@@ -21,8 +21,8 @@ class OrderControllers extends Controller
     public function index()
     {
         return view('order.index', [
-            "title" => "List Order"
-            // "orders" => Order::all()
+            "title" => "List Order",
+            "orders" => Order::orderBy('date', 'DESC')->get()
         ]);
     }
 
@@ -37,35 +37,33 @@ class OrderControllers extends Controller
         return view('order.create', $data);
     }
 
-    // // Store Function to Database
-    // public function store(Request $req)
-    // {
-    //     date_default_timezone_set("Asia/Bangkok");
-    //     $datenow = date('Y-m-d H:i:s');
+    // get Detail Product View Data
+    public function getDetailProds(Request $req)
+    {
+        $data["prods"] = Product::where("id", $req->id_prod)->first();
+        return $data["prods"];
+    }
 
-    //     $product_pay = Product::create([
-    //         'product_name' => $req->name,
-    //         'code' => $req->code,
-    //         'status' => $req->status,
-    //         'stock' => $req->stock,
-    //         'base_price' => $req->base_price,
-    //         'selling_price' => $req->selling_price,
-    //         'desc' => $req->desc,
-    //         'category_id' => $req->category,
-    //         'supplier_id' => $req->supplier,
-    //         'created_at' => $datenow
-    //     ]);
+    // Store Function to Database
+    public function store(Request $req)
+    {
+        date_default_timezone_set("Asia/Bangkok");
+        $datenow = date('Y-m-d H:i:s');
 
-    //     $destination='Uploads/Product/'.$product_pay->id.'/uploads\\';
-    //     if ($req->hasFile('uploads')) {
-    //         $file = $req->file('uploads');
-    //         $name_file = time().'_'.$req->file('uploads')->getClientOriginalName();
-    //         Storage::disk('Uploads')->putFileAs($destination,$file,$name_file);
-    //         Product::where('id', $product_pay->id)->update(['upload' => $name_file]);
-    //       }
+        $order_pay = Order::create([
+            'product_id' => $req->prods,
+            'qty' => $req->qty,
+            'entry_price' => $req->entry_price,
+            'source_id' => $req->source_pay,
+            'date' => $req->tgl,
+            'note' => $req->note,
+            'tax' => $req->cal_tax,
+            'profit' => $req->cal_profit,
+            'created_at' => $datenow
+        ]);
 
-    //     return redirect()->route('product.index')->with(['success' => 'Data successfully stored!']);
-    // }
+        return redirect()->route('order.index')->with(['success' => 'Data successfully stored!']);
+    }
 
     // // Detail Data View by id
     // public function detail($id)
@@ -123,7 +121,7 @@ class OrderControllers extends Controller
     // Delete Data Function
     public function delete(Request $req)
     {
-        $exec = Product::where('id', $req->id )->delete();
+        $exec = Order::where('id', $req->id )->delete();
 
         if ($exec) {
             Session::flash('success', 'Data successfully deleted!');

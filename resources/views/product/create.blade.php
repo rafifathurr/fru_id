@@ -210,29 +210,6 @@
                 </section>
             </div>
             @include('layouts.footer')
-            <script type="text/javascript"> 
-
-                        $('.numeric').inputmask({
-                            alias:"numeric",
-                            prefix: "Rp.",
-                            digits:0,
-                            repeat:20,
-                            digitsOptional:false,
-                            decimalProtect:true,
-                            groupSeparator:".",
-                            placeholder: '0',
-                            radixPoint:",",
-                            radixFocus:true,
-                            autoGroup:true,
-                            autoUnmask:false,
-                            clearMaskOnLostFocus: false,
-                            onBeforeMask: function (value, opts) {
-                                return value;
-                            },
-                            removeMaskOnSubmit:true
-                        });
-                        
-                </script>
         </div>
     </div>
 </body>

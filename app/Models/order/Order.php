@@ -9,19 +9,19 @@ class Order extends Model
 {
     protected $primaryKey = 'id';
 
-      protected $table = "order";
+      protected $table = "orders";
 
       protected $guarded = [];
 
       public $timestamps = false;
 
-      // public function category()
-      // {
-      //   return $this->belongsTo('App\Models\category\Category', 'category_id', 'id');
-      // }
+      public function product()
+      {
+        return $this->belongsTo('App\Models\product\Product', 'product_id', 'id');
+      }
 
-      // public function supplier()
-      // {
-      //   return $this->belongsTo('App\Models\supplier\Supplier', 'supplier_id', 'id');
-      // }
+      public function source()
+      {
+        return $this->belongsTo('App\Models\source_payment\Source', 'source_id', 'id');
+      }
   }

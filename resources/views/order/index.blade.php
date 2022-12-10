@@ -48,118 +48,101 @@
                                             <tr role="row">
                                                 <th class="sorting_asc" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1" aria-sort="ascending"
-                                                    aria-label="Name: activate to sort column descending"
-                                                    style="width: 157px;">Name</th>
-                                                <th class="sorting" tabindex="0" aria-controls="add-row"
+                                                    aria-label="Name: activate to sort column descending">
+                                                    <center>No</center>
+                                                </th>
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
-                                                    style="width: 234px;">Position</th>
-                                                <th class="sorting" tabindex="0" aria-controls="add-row"
+                                                    style="font-weight:900;">
+                                                    <center>Date</center>
+                                                </th>
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="Office: activate to sort column ascending"
-                                                    style="width: 121px;">Office</th>
-                                                <th width="10%" class="sorting" tabindex="0"
+                                                    aria-label="Position: activate to sort column ascending"
+                                                    style="font-weight:900;">
+                                                    <center>Product</center>
+                                                </th>
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Position: activate to sort column ascending"
+                                                    style="width: 15%; font-weight:900;">
+                                                    <center>Code</center>
+                                                </th>
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Position: activate to sort column ascending"
+                                                    style="width: 15%; font-weight:900;">
+                                                    <center>Source Payment</center>
+                                                </th>
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Position: activate to sort column ascending"
+                                                    style="font-weight:900;">
+                                                    <center>Qty</center>
+                                                </th>
+                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Position: activate to sort column ascending"
+                                                    style="font-weight:900;">
+                                                    <center>Profit</center>
+                                                </th>
+                                                <th width="15%" class="sorting" tabindex="0"
                                                     aria-controls="add-row" rowspan="1" colspan="1"
                                                     aria-label="Action: activate to sort column ascending"
-                                                    style="width: 127px;">Action</th>
+                                                    style="font-weight:900;">
+                                                    <center>Action</center>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <?php $num = 0; ?>
+                                        @foreach($orders as $order)
                                             <tr role="row" class="odd">
-                                                <td class="sorting_1">Airi Satou</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
                                                 <td>
-                                                    <div class="form-button-action">
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-primary btn-lg"
-                                                            data-original-title="Edit Task" control-id="ControlID-16">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-danger"
-                                                            data-original-title="Remove" control-id="ControlID-17">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </div>
+                                                    <center>{{$num=$num+1}}</center>
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <center>{{$order->date}}</center>
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <center>{{$order->product->product_name}}</center>
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <center>{{$order->product->code}}</center>
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <center>{{$order->source->source}}</center>
+                                                </td>
+                                                <td class="sorting_1">
+                                                   <center>{{$order->qty}}</center>
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <center>Rp. {{number_format($order->profit,0,',','.')}}</center>
+                                                 </td>
+                                                <td>
+                                                    <center>
+                                                        <div class="form-button-action">
+                                                            <a href="{{-- {{route('order.detail', $order->id) }} --}}" data-toggle="tooltip" title="Detail"
+                                                                class="btn btn-link btn-simple-primary btn-lg"
+                                                                data-original-title="Detail" control-id="ControlID-16">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a href="{{-- {{route('order.edit', $order->id) }} --}}" data-toggle="tooltip" title="Edit"
+                                                                class="btn btn-link btn-simple-primary btn-lg"
+                                                                data-original-title="Edit" control-id="ControlID-16">
+                                                                <i class="fa fa-edit" style="color:grey;"></i>
+                                                            </a>
+                                                            <button type="submit" onclick="destroy({{$order->id}})" data-toggle="tooltip" title="Delete"
+                                                                class="btn btn-link btn-simple-danger"
+                                                                data-original-title="Delete" control-id="ControlID-17">
+                                                                <i class="fa fa-trash" style="color:red;"></i>
+                                                            </button>
+                                                        </div>
+                                                    </center>
                                                 </td>
                                             </tr>
-                                            <tr role="row" class="even">
-                                                <td class="sorting_1">Ashton Cox</td>
-                                                <td>Junior Technical Author</td>
-                                                <td>San Francisco</td>
-                                                <td>
-                                                    <div class="form-button-action">
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-primary btn-lg"
-                                                            data-original-title="Edit Task" control-id="ControlID-18">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-danger"
-                                                            data-original-title="Remove" control-id="ControlID-19">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr role="row" class="odd">
-                                                <td class="sorting_1">Brielle Williamson</td>
-                                                <td>Integration Specialist</td>
-                                                <td>New York</td>
-                                                <td>
-                                                    <div class="form-button-action">
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-primary btn-lg"
-                                                            data-original-title="Edit Task" control-id="ControlID-20">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-danger"
-                                                            data-original-title="Remove" control-id="ControlID-21">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr role="row" class="even">
-                                                <td class="sorting_1">Cedric Kelly</td>
-                                                <td>Senior Javascript Developer</td>
-                                                <td>Edinburgh</td>
-                                                <td>
-                                                    <div class="form-button-action">
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-primary btn-lg"
-                                                            data-original-title="Edit Task" control-id="ControlID-22">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-danger"
-                                                            data-original-title="Remove" control-id="ControlID-23">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr role="row" class="odd">
-                                                <td class="sorting_1">Colleen Hurst</td>
-                                                <td>Javascript Developer</td>
-                                                <td>San Francisco</td>
-                                                <td>
-                                                    <div class="form-button-action">
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-primary btn-lg"
-                                                            data-original-title="Edit Task" control-id="ControlID-24">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-simple-danger"
-                                                            data-original-title="Remove" control-id="ControlID-25">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -176,10 +159,32 @@
                     </div>
                 </div>
                 @include('layouts.footer')
-                <script src="{{ asset('js/app/order.js') }}"></script>
+                <script src="{{ asset('js/app/table.js') }}"></script>
             </div>
         </div>
     </div>
 </body>
+<script>
+    function destroy(id) {
+    var token = $('meta[name="csrf-token"]').attr('content');
 
+    swal({
+          title: "",
+          text: "Are you sure want to delete this record?",
+          icon: "warning",
+          buttons: ['Cancel', 'OK'],
+          // dangerMode: true,
+      }).then((willDelete) => {
+          if (willDelete) {
+            $.post("{{route('order.delete')}}",{ id:id,_token:token},function(data){
+                location.reload();
+            })
+          } else {
+            return false;
+          }
+      });
+  }
+</script>
+
+@include('layouts.swal')
 </html>

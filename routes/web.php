@@ -13,41 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// halaman dashboard
-Route::get('/', function () {
-    return view('dashboard', [
-        "title" => "Dashboard"
-    ]);
-});
-
-// halaman order menu
-Route::get('/order/list', function () {
-    return view('order_list', [
-        "title" => "Order List"
-    ]);
-});
-
-Route::get('/order/add', function () {
-    return view('add_order', [
-        "title" => "Add Order"
-    ]);
-});
-
-// halaman order menu
-Route::get('/product/list', function () {
-    return view('product_list', [
-        "title" => "List Product"
-    ]);
-});
-
 // ALL CONTROLLERS
 Route::namespace('App\Http\Controllers')->group(function (){
+
+    // ROUTE TO DASHBOARD CONTROLLERS
+    Route::namespace('dashboard')->prefix('/')->name('dashboard.')->group(function () {
+        Route::get('/', 'DashboardControllers@index')->name('index');
+    });
 
     // ROUTE TO ORDER CONTROLLERS
     Route::namespace('order')->prefix('order')->name('order.')->group(function () {
         Route::get('/', 'OrderControllers@index')->name('index');
         Route::get('create', 'OrderControllers@create')->name('create');
         Route::post('store', 'OrderControllers@store')->name('store');
+        Route::get('getDetailProds', 'OrderControllers@getDetailProds')->name('getDetailProds');
         // Route::get('detail/{id}', 'OrderControllers@detail')->name('detail');
         // Route::get('edit/{id}', 'OrderControllers@edit')->name('edit');
         // Route::post('update', 'OrderControllers@update')->name('update');

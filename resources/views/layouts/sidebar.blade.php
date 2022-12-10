@@ -39,7 +39,7 @@
             </div>
             <ul class="nav nav-primary">
                 <li class="nav-item {{ $title === 'Dashboard' ? 'active' : '' }}">
-                    <a href="/" aria-expanded="false">
+                    <a href="{{route('dashboard.index')}}" aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
