@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\supplier\Supplier;
 
 use Illuminate\Http\Request;
+use Auth;
+use Session;
+use DB;
+use PDF;
 
 class SupplierControllers extends Controller
 {
@@ -39,7 +43,7 @@ class SupplierControllers extends Controller
             'created_at' => $datenow
         ]);
 
-        return redirect()->route('supplier.index');
+        return redirect()->route('supplier.index')->with(['success' => 'Data successfully stored!']);
     }
 
     // Detail Data View by id
@@ -73,7 +77,7 @@ class SupplierControllers extends Controller
             'updated_at' => $datenow
         ]);
 
-        return redirect()->route('supplier.index');
+        return redirect()->route('supplier.index')->with(['success' => 'Data successfully updated!']);
     }
 
     // Delete Data Function
@@ -82,8 +86,10 @@ class SupplierControllers extends Controller
         $exec = Supplier::where('id', $req->id )->delete();
 
         if ($exec) {
-            return redirect()->route('supplier.index');
-        }
+            Session::flash('success', 'Data successfully deleted!');
+          } else {
+            Session::flash('gagal', 'Error Data');
+          }
     }
 
 

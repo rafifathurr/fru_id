@@ -99,7 +99,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">
                     <div class="dropdown-user-scroll scrollbar-outer">
-                        <li>
+                      <!--  <li>
                             <div class="user-box">
                                 <div class="avatar-lg"><img src="{{ asset('img/profile.jpg') }}" alt="image profile"
                                         class="avatar-img rounded"></div>
@@ -109,15 +109,15 @@
                                         class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                                 </div>
                             </div>
-                        </li>
+                        </li> -->
                         <li>
-                            <div class="dropdown-divider"></div>
+                            <!-- <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">My Profile</a>
                             <a class="dropdown-item" href="#">My Balance</a>
                             <a class="dropdown-item" href="#">Inbox</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Account Setting</a>
-                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-divider"></div> -->
                             <form action="{{route('login.logout')}}" method="post">
                                 @csrf
                                 <button class="dropdown-item">Logout</button>

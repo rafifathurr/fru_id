@@ -32,7 +32,7 @@
                                     <input type="hidden" class="form-control" id="id" name="id"
                                         autocomplete="off" required="">
                                     <select name="prods" id="prods" onchange="getProds()" class="form-control"
-                                        @if (isset($orders)) @endisset>
+                                        @if (isset($orders)) @endisset {{$disabled_}}>
                                         <option value="" style="display: none;" selected="">- Choose Products -
                                         </option>
                                         @foreach ($products as $prod)
@@ -47,7 +47,7 @@
                             <label class="col-md-2 mt-1">Qty <span style="color: red;">*</span></label>
                             <div class="col-md-5">
                                 <input type="number" name="qty" id="qty" class="form-control"
-                                    step="1" required="" style="width:35%">
+                                    @if (isset($orders)) value="{{ $orders->qty }}" @endisset step="1" required="" style="width:35%" {{$disabled_}}>
                             </div>
                         </div>
                     </div>
@@ -57,14 +57,19 @@
                             <div class="col-md-2"></div>
                             <label class="col-md-2">Entry Price <span style="color: red;">*</span></label>
                             <div class="col-md-4">
+                                <input type="hidden" name="entry_price_old" id="entry_price_old"
+                                    @if (isset($orders)) value="{{ $orders->entry_price }}" @endisset class="form-control numeric" autocomplete="off" required="" {{$disabled_}}
+                                    style="width:100%">
                                 <input type="text" name="entry_price" id="entry_price"
-                                    class="form-control numeric" autocomplete="off" required=""
+                                    @if (isset($orders)) value="{{ $orders->entry_price }}" @endisset class="form-control numeric" autocomplete="off" required="" {{$disabled_}}
                                     style="width:100%">
                             </div>
                             <label class="col-md-2 mt-1">Base Price <span style="color: red;">*</span></label>
                             <div class="col-md-4">
+                                <input type="hidden" name="base_price_old" id="base_price_old" class="form-control numeric"
+                                    @if (isset($orders)) value="{{ $orders->product->base_price }}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}}>
                                 <input type="text" name="base_price" id="base_price" class="form-control numeric"
-                                    autocomplete="off" required="" style="width:100%">
+                                    @if (isset($orders)) value="{{($orders->product->base_price * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}}>
                             </div>
                         </div>
                     </div>
@@ -74,7 +79,7 @@
                             <div class="col-md-2"></div>
                             <label class="col-md-2">Source Payment <span style="color: red;">*</span></label>
                             <div class="col-md-4">
-                                <select name="source_pay" id="source_pay" class="form-control">
+                                <select name="source_pay" id="source_pay" class="form-control" {{$disabled_}}>
                                     <option value="" style="display: none;" selected="">- Choose Sources -
                                     </option>
                                     @foreach ($sources as $source)
@@ -91,7 +96,7 @@
                             <input type="date" name="tgl" id="tgl" class="form-control tgl_date"
                                 autocomplete="off" data-date="" data-date-format="DD/MM/YYYY"
                                 @isset($orders) value="{{ $orders->date }}" @endisset
-                                required>
+                                required {{$disabled_}}>
                         </div>
                     </div>
                 </div>
@@ -101,7 +106,7 @@
                         <div class="col-md-2"></div>
                         <label class="col-md-2">Note </label>
                         <div class="col-md-10">
-                            <textarea class="form-control" name="note" id="note" rows="5" cols="10" style="width:100%"></textarea>
+                            <textarea class="form-control" name="note" id="note" rows="5" cols="10" style="width:100%" {{$disabled_}}>@if (isset($orders)) {{ $orders->desc }} @endisset</textarea>
                         </div>
                     </div>
                 </div>
@@ -109,31 +114,51 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="col-md-2"></div>
-                        <label class="col-md-2">Calculation Tax </label>
+                        <label class="col-md-2">Calculation Tax <span style="color: red;">*</span></label>
                         <div class="col-md-4">
                             <input type="text" name="cal_tax" id="cal_tax" class="form-control numeric"
-                                autocomplete="off" required="">
+                                 @if (isset($orders)) value="{{ $orders->tax }}" @endisset autocomplete="off" required {{$disabled_}}>
                         </div>
-                        <label class="col-md-2">Calculation Profit </span></label>
+                        <label class="col-md-2">Calculation Profit <span style="color: red;">*</span></label>
                         <div class="col-md-4">
                             <input type="text" name="cal_profit" id="cal_profit"
-                                class="form-control numeric" autocomplete="off" required="">
+                                @if (isset($orders)) value="{{ $orders->profit }}" @endisset class="form-control numeric" autocomplete="off" required {{$disabled_}}>
                         </div>
                     </div>
                 </div>
                 <br>
                 <div class="modal-footer">
                     <div style="float:right;">
-                        <div class="col-md-10" style="margin-right: 20px;">
-                            <a href="/order/list" type="button" class="btn btn-danger">
-                                <i class="fa fa-arrow-left"></i>&nbsp;
-                                Back
-                            </a>
-                            <button type="submit" class="btn btn-primary" style="margin-left:10px;">
-                                <i class="fa fa-check"></i>&nbsp;
-                                Save
-                            </button>
-                        </div>
+                    @if ($title == 'Add Order')
+                                    <div class="col-md-10" style="margin-right: 20px;">
+                                        <a href="{{route('order.index')}}" type="button" class="btn btn-danger">
+                                            <i class="fa fa-arrow-left"></i>&nbsp;
+                                            Back
+                                        </a>
+                                        <button type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                            <i class="fa fa-check"></i>&nbsp;
+                                            Save
+                                        </button>
+                                    </div>
+                                @elseif ($title == 'Edit Order')
+                                    <div class="col-md-10" style="margin-right: 20px;">
+                                        <a href="{{route('order.index')}}" type="button" class="btn btn-danger">
+                                            <i class="fa fa-arrow-left"></i>&nbsp;
+                                            Back
+                                        </a>
+                                        <button type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                            <i class="fa fa-check"></i>&nbsp;
+                                            Save
+                                        </button>
+                                    </div>
+                                @else
+                                    <div class="col-md-10" style="margin-right: 20px;">
+                                        <a href="{{ route('order.index') }}" type="button" class="btn btn-danger">
+                                            <i class="fa fa-arrow-left"></i>&nbsp;
+                                            Back
+                                        </a>
+                                    </div>
+                                @endif
                     </div>
                 </div>
             </form>
@@ -167,11 +192,17 @@
 
             $('#qty').on('keyup textInput input', function() {
                 var qty = $("#qty").val();
+                var base_price_old = $("#base_price_old").val();
 
                 //Calculation
-                var result_base = base_price * qty;
-
-                $("#base_price").val(result_base);
+                if(base_price_old != 0){
+                    var result_base = base_price * qty;
+                    $("#base_price").val(result_base);
+                }else{
+                    var result_base = base_price_old * qty;
+                    $("#base_price").val(result_base);
+                }
+                else
             });
 
             $('#entry_price').on('keyup textInput input', function() {

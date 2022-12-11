@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\source_payment\Source;
 
 use Illuminate\Http\Request;
+use Auth;
+use Session;
+use DB;
+use PDF;
 
 class SourceControllers extends Controller
 {
@@ -39,7 +43,7 @@ class SourceControllers extends Controller
             'created_at' => $datenow
         ]);
 
-        return redirect()->route('source_payment.index');
+        return redirect()->route('source_payment.index')->with(['success' => 'Data successfully stored!']);
     }
 
     // Detail Data View by id
@@ -73,7 +77,7 @@ class SourceControllers extends Controller
             'updated_at' => $datenow
         ]);
 
-        return redirect()->route('source_payment.index');
+        return redirect()->route('source_payment.index')->with(['success' => 'Data successfully updated!']);
     }
 
     // Delete Data Function
@@ -82,8 +86,10 @@ class SourceControllers extends Controller
         $exec = Source::where('id', $req->id )->delete();
 
         if ($exec) {
-            return redirect()->route('source_payment.index');
-        } 
+            Session::flash('success', 'Data successfully deleted!');
+          } else {
+            Session::flash('gagal', 'Error Data');
+          }
     }
 
 

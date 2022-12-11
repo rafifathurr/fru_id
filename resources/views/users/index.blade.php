@@ -115,15 +115,11 @@
                                                                 data-original-title="Edit" control-id="ControlID-16">
                                                                 <i class="fa fa-edit" style="color:grey;"></i>
                                                             </a>
-                                                            <form action="{{route('users.delete')}}" method="post">
-                                                                {{ csrf_field() }}
-                                                                <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" value="{{ $user->id }}" required>
-                                                                <button type="submit" data-toggle="tooltip" title="Delete"
-                                                                    class="btn btn-link btn-simple-danger"
-                                                                    data-original-title="Delete" control-id="ControlID-17">
-                                                                    <i class="fa fa-trash" style="color:red;"></i>
-                                                                </button>
-                                                            </form>
+                                                            <button type="submit" onclick="destroy({{$user->id}})" data-toggle="tooltip" title="Delete"
+                                                                class="btn btn-link btn-simple-danger"
+                                                                data-original-title="Delete" control-id="ControlID-17">
+                                                                <i class="fa fa-trash" style="color:red;"></i>
+                                                            </button>
                                                         </div>
                                                     </center>
                                                 </td>
@@ -150,5 +146,29 @@
         </div>
     </div>
 </body>
+
+<script>
+    function destroy(id) {
+    var token = $('meta[name="csrf-token"]').attr('content');
+
+    swal({
+          title: "",
+          text: "Are you sure want to delete this record?",
+          icon: "warning",
+          buttons: ['Cancel', 'OK'],
+          // dangerMode: true,
+      }).then((willDelete) => {
+          if (willDelete) {
+            $.post("{{route('users.delete')}}",{ id:id,_token:token},function(data){
+                location.reload();
+            })
+          } else {
+            return false;
+          }
+      });
+  }
+</script>
+
+@include('layouts.swal')
 
 </html>

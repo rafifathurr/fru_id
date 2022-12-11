@@ -65,58 +65,49 @@ class OrderControllers extends Controller
         return redirect()->route('order.index')->with(['success' => 'Data successfully stored!']);
     }
 
-    // // Detail Data View by id
-    // public function detail($id)
-    // {
-    //     $data['title'] = "Detail Products";
-    //     $data['disabled_'] = 'disabled';
-    //     $data['url'] = 'create';
-    //     $data['products'] = Product::where('id', $id)->first();
-    //     $data['categories'] = Category::all();
-    //     $data['suppliers'] = Supplier::all();
-    //     return view('product.create', $data);
-    // }
+    // Detail Data View by id
+    public function detail($id)
+    {
+        $data['title'] = "Detail Order";
+        $data['disabled_'] = 'disabled';
+        $data['url'] = 'create';
+        $data['orders'] = Order::where('id', $id)->first();
+        $data['products'] = Product::orderBy('product_name', 'asc')->get();
+        $data['sources'] = Source::orderBy('id', 'asc')->get();
+        return view('order.create', $data);
+    }
 
-    // // Edit Data View by id
-    // public function edit($id)
-    // {
-    //     $data['title'] = "Edit Products";
-    //     $data['disabled_'] = '';
-    //     $data['url'] = 'update';
-    //     $data['products'] = Product::where('id', $id)->first();
-    //     $data['categories'] = Category::all();
-    //     $data['suppliers'] = Supplier::all();
-    //     return view('product.create', $data);
-    // }
+    // Edit Data View by id
+    public function edit($id)
+    {
+        $data['title'] = "Edit Order";
+        $data['disabled_'] = '';
+        $data['url'] = 'update';
+        $data['orders'] = Order::where('id', $id)->first();
+        $data['products'] = Product::orderBy('product_name', 'asc')->get();
+        $data['sources'] = Source::orderBy('id', 'asc')->get();
+        return view('order.create', $data);
+    }
 
-    // // Update Function to Database
-    // public function update(Request $req)
-    // {
-    //     date_default_timezone_set("Asia/Bangkok");
-    //     $datenow = date('Y-m-d H:i:s');
-    //     $product_pay = Product::where('id', $req->id)->update([
-    //         'product_name' => $req->name,
-    //         'code' => $req->code,
-    //         'status' => $req->status,
-    //         'stock' => $req->stock,
-    //         'base_price' => $req->base_price,
-    //         'selling_price' => $req->selling_price,
-    //         'desc' => $req->desc,
-    //         'category_id' => $req->category,
-    //         'supplier_id' => $req->supplier,
-    //         'updated_at' => $datenow
-    //     ]);
+    // Update Function to Database
+    public function update(Request $req)
+    {
+        date_default_timezone_set("Asia/Bangkok");
+        $datenow = date('Y-m-d H:i:s');
+        $order_pay = Order::where('id', $req->id)->update([
+            'product_id' => $req->prods,
+            'qty' => $req->qty,
+            'entry_price' => $req->entry_price,
+            'source_id' => $req->source_pay,
+            'date' => $req->tgl,
+            'note' => $req->note,
+            'tax' => $req->cal_tax,
+            'profit' => $req->cal_profit,
+            'updated_at' => $datenow
+        ]);
 
-    //     $destination='Uploads/Product/'.$req->id.'/uploads\\';
-    //     if ($req->hasFile('uploads')) {
-    //         $file = $req->file('uploads');
-    //         $name_file = time().'_'.$req->file('uploads')->getClientOriginalName();
-    //         Storage::disk('Uploads')->putFileAs($destination,$file,$name_file);
-    //         Product::where('id', $req->id)->update(['upload' => $name_file]);
-    //       }
-
-    //     return redirect()->route('product.index')->with(['success' => 'Data successfully stored!']);
-    // }
+        return redirect()->route('order.index')->with(['success' => 'Data successfully stored!']);
+    }
 
     // Delete Data Function
     public function delete(Request $req)

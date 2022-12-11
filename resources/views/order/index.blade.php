@@ -123,12 +123,12 @@
                                                 <td>
                                                     <center>
                                                         <div class="form-button-action">
-                                                            <a href="{{-- {{route('order.detail', $order->id) }} --}}" data-toggle="tooltip" title="Detail"
+                                                            <a href="{{route('order.detail', $order->id) }}" data-toggle="tooltip" title="Detail"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Detail" control-id="ControlID-16">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
-                                                            <a href="{{-- {{route('order.edit', $order->id) }} --}}" data-toggle="tooltip" title="Edit"
+                                                            <a href="{{route('order.edit', $order->id) }}" data-toggle="tooltip" title="Edit"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Edit" control-id="ControlID-16">
                                                                 <i class="fa fa-edit" style="color:grey;"></i>

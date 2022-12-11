@@ -56,11 +56,36 @@
                                         <div class="col-md-4 d-flex flex-column justify-content-around">
                                             <div>
                                                 <h6 class="fw-bold text-uppercase text-success op-8">Total Income</h6>
-                                                <h3 class="fw-bold">Rp. {{number_format($totalincome,0,',','.')}},-</h3>
+                                                <div style="display:flex">
+                                                    <h4 class="fw-bold">Rp. {{number_format($totalincome,0,',','.')}},-</h4>
+                                                    @if($totalincomelast < $totalincome)
+                                                        <i class="fa fa-arrow-up" style="color:#31ce36;font-size:18px;margin-top: 0.22rem !important;margin-left:10px;"></i>
+                                                    @elseif($totalincomelast > $totalincome)
+                                                        <i class="fa fa-arrow-down" style="color:#f25961;font-size:18px;margin-top: 0.22rem !important;margin-left:10px;"></i>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold text-uppercase text-success op-8" style="color:#1269db !important;">Total Profit</h6>
+                                                <div style="display:flex">
+                                                    <h4 class="fw-bold">Rp. {{number_format($totalprofit,0,',','.')}},-</h4>
+                                                    @if($totalprofitlast < $totalprofit)
+                                                        <i class="fa fa-arrow-up" style="color:#31ce36;font-size:18px;margin-top: 0.22rem !important;margin-left:10px;"></i>
+                                                    @elseif($totalprofitlast > $totalprofit)
+                                                        <i class="fa fa-arrow-down" style="color:#f25961;font-size:18px;margin-top: 0.22rem !important;margin-left:10px;"></i>
+                                                    @endif
+                                                </div>
                                             </div>
                                             <div>
                                                 <h6 class="fw-bold text-uppercase text-danger op-8">Total Tax</h6>
-                                                <h3 class="fw-bold">Rp. {{number_format($totaltax,0,',','.')}},-</h3>
+                                                <div style="display:flex">
+                                                    <h4 class="fw-bold">Rp. {{number_format($totaltax,0,',','.')}},-</h4>
+                                                    @if($totaltaxlast < $totaltax)
+                                                        <i class="fa fa-arrow-up" style="color:#f25961;font-size:18px;margin-top: 0.22rem !important;margin-left:10px;"></i>
+                                                    @elseif($totaltaxlast > $totaltax)
+                                                        <i class="fa fa-arrow-down" style="color:#31ce36;font-size:18px;margin-top: 0.22rem !important;margin-left:10px;"></i>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
@@ -226,36 +251,17 @@
                                     <div class="card-title">Top Sales Products</div>
                                 </div>
                                 <div class="card-body pb-0">
+                                @foreach($topproduct as $tp)
                                     <div class="d-flex">
                                         <div class="flex-1 pt-1 ml-2">
-                                            <h6 class="fw-bold mb-1">CSS</h6>
-                                            <small class="text-muted">Cascading Style Sheets</small>
+                                            <h6 class="fw-bold mb-1">{{$tp->product->product_name}}</h6>
                                         </div>
                                         <div class="d-flex ml-auto align-items-center">
-                                            <h3 class="text-info fw-bold">+$17</h3>
+                                            <h3 class="text-info fw-bold">+{{$tp->total}}</h3>
                                         </div>
                                     </div>
                                     <div class="separator-dashed"></div>
-                                    <div class="d-flex">
-                                        <div class="flex-1 pt-1 ml-2">
-                                            <h6 class="fw-bold mb-1">J.CO Donuts</h6>
-                                            <small class="text-muted">The Best Donuts</small>
-                                        </div>
-                                        <div class="d-flex ml-auto align-items-center">
-                                            <h3 class="text-info fw-bold">+$300</h3>
-                                        </div>
-                                    </div>
-                                    <div class="separator-dashed"></div>
-                                    <div class="d-flex">
-                                        <div class="flex-1 pt-1 ml-2">
-                                            <h6 class="fw-bold mb-1">Ready Pro</h6>
-                                            <small class="text-muted">Bootstrap 4 Admin Dashboard</small>
-                                        </div>
-                                        <div class="d-flex ml-auto align-items-center">
-                                            <h3 class="text-info fw-bold">+$350</h3>
-                                        </div>
-                                    </div>
-                                    <div class="separator-dashed"></div>
+                                @endforeach
                                 </div>
                             </div>
                         </div>
@@ -265,36 +271,17 @@
                                     <div class="card-title">Top Sales Payment Type</div>
                                 </div>
                                 <div class="card-body pb-0">
+                                    @foreach($topsource as $ts)
                                     <div class="d-flex">
                                         <div class="flex-1 pt-1 ml-2">
-                                            <h6 class="fw-bold mb-1">CSS</h6>
-                                            <small class="text-muted">Cascading Style Sheets</small>
+                                            <h6 class="fw-bold mb-1">{{$ts->source->source}}</h6>
                                         </div>
                                         <div class="d-flex ml-auto align-items-center">
-                                            <h3 class="text-info fw-bold">+$17</h3>
+                                            <h3 class="text-info fw-bold">+{{$ts->total}}</h3>
                                         </div>
                                     </div>
                                     <div class="separator-dashed"></div>
-                                    <div class="d-flex">
-                                        <div class="flex-1 pt-1 ml-2">
-                                            <h6 class="fw-bold mb-1">J.CO Donuts</h6>
-                                            <small class="text-muted">The Best Donuts</small>
-                                        </div>
-                                        <div class="d-flex ml-auto align-items-center">
-                                            <h3 class="text-info fw-bold">+$300</h3>
-                                        </div>
-                                    </div>
-                                    <div class="separator-dashed"></div>
-                                    <div class="d-flex">
-                                        <div class="flex-1 pt-1 ml-2">
-                                            <h6 class="fw-bold mb-1">Ready Pro</h6>
-                                            <small class="text-muted">Bootstrap 4 Admin Dashboard</small>
-                                        </div>
-                                        <div class="d-flex ml-auto align-items-center">
-                                            <h3 class="text-info fw-bold">+$350</h3>
-                                        </div>
-                                    </div>
-                                    <div class="separator-dashed"></div>
+                                @endforeach
                                 </div>
                             </div>
                         </div>
@@ -484,8 +471,26 @@
                         $cals[] = $cal->total;
                         ?>
                     @endforeach
+                    @foreach($month as $mo)
+                        <?php 
+                        $mos[] = $mo->month;
+                        ?>
+                    @endforeach
+                    @foreach($incomepermonth as $in)
+                        <?php 
+                        $inc[] = $in->income;
+                        ?>
+                    @endforeach
+                    @foreach($profitpermonth as $pm)
+                        <?php 
+                        $profs[] = $pm->profit;
+                        ?>
+                    @endforeach
                     var days = @json($days);
                     var cal = @json($cals);
+                    var month = @json($mos);
+                    var income = @json($inc);
+                    var profit = @json($profs);
                 </script>
                 <script>
                     Circles.create({
@@ -591,17 +596,16 @@
                     var statisticsChart = new Chart(ctx, {
                         type: 'line',
                         data: {
-                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            labels: month,
                             datasets: [ {
-                                label: "Orders",
+                                label: "Profit",
                                 borderColor: '#1269db',
-                                pointBackgroundColor: 'rgba(243, 84, 93, 0.6)',
                                 pointRadius: 0,
-                                backgroundColor: 'rgba(243, 84, 93, 0.4)',
+                                backgroundColor: '#006EFF8E',
                                 legendColor: '#1269db',
                                 fill: true,
                                 borderWidth: 2,
-                                data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
+                                data: profit
                             }]
                         },
                         options : {

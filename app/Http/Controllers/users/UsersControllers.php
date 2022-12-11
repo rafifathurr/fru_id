@@ -7,6 +7,10 @@ use App\Models\users\User;
 use App\Models\role\Role;
 
 use Illuminate\Http\Request;
+use Auth;
+use Session;
+use DB;
+use PDF;
 
 class UsersControllers extends Controller
 {
@@ -48,7 +52,7 @@ class UsersControllers extends Controller
                 'created_at' => $datenow
             ]);
         }
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with(['success' => 'Data successfully stored!']);
     }
 
     // Detail Data View by id
@@ -90,7 +94,7 @@ class UsersControllers extends Controller
                 'updated_at' => $datenow
             ]);
         }
-        return redirect()->route('supplier.index');
+        return redirect()->route('supplier.index')->with(['success' => 'Data successfully updated!']);
     }
 
     // Delete Data Function
@@ -99,8 +103,10 @@ class UsersControllers extends Controller
         $exec = User::where('id', $req->id )->delete();
 
         if ($exec) {
-            return redirect()->route('users.index');
-        }
+            Session::flash('success', 'Data successfully deleted!');
+          } else {
+            Session::flash('gagal', 'Error Data');
+          }
     }
 
 

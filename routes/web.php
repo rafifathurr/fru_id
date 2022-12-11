@@ -13,7 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 // ALL CONTROLLERS
+
+Route::get('/', function () {
+    return view('login.login');
+});
+
 Route::namespace('App\Http\Controllers')->group(function (){
 
     Route::namespace('login')->prefix('auth')->name('login.')->group(function () {
@@ -21,6 +27,15 @@ Route::namespace('App\Http\Controllers')->group(function (){
         Route::post('/login', 'LoginController@authenticate')->name('authenticate')->middleware('guest');
         Route::post('/logout', 'LoginController@logout')->name('logout')->middleware('auth');
     });
+});
+
+Route::namespace('App\Http\Controllers')->group(function (){
+
+        Route::namespace('login')->prefix('auth')->name('login.')->group(function () {
+            Route::get('/login', 'LoginController@index')->name('index')->middleware('guest');
+            Route::post('/login', 'LoginController@authenticate')->name('authenticate')->middleware('guest');
+            Route::post('/logout', 'LoginController@logout')->name('logout')->middleware('auth');
+        });
 
     // ROUTE TO DASHBOARD CONTROLLERS
     Route::namespace('dashboard')->prefix('/dashboard')->name('dashboard.')->group(function () {
@@ -33,9 +48,9 @@ Route::namespace('App\Http\Controllers')->group(function (){
         Route::get('create', 'OrderControllers@create')->name('create');
         Route::post('store', 'OrderControllers@store')->name('store');
         Route::get('getDetailProds', 'OrderControllers@getDetailProds')->name('getDetailProds');
-        // Route::get('detail/{id}', 'OrderControllers@detail')->name('detail');
-        // Route::get('edit/{id}', 'OrderControllers@edit')->name('edit');
-        // Route::post('update', 'OrderControllers@update')->name('update');
+        Route::get('detail/{id}', 'OrderControllers@detail')->name('detail');
+        Route::get('edit/{id}', 'OrderControllers@edit')->name('edit');
+        Route::post('update', 'OrderControllers@update')->name('update');
         Route::post('delete', 'OrderControllers@delete')->name('delete');
     })->middleware('auth');
 
