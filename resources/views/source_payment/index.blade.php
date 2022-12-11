@@ -22,7 +22,7 @@
                 <div class="page-inner mt--5">
                     <!-- Button -->
                     <div class="d-flex">
-                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('source_payment.create') }}">
+                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('admin.source_payment.create') }}">
                             <i class="fa fa-plus"></i>
                             Add Source Payment
                         </a>
@@ -76,12 +76,12 @@
                                                 <td>
                                                     <center>
                                                         <div class="form-button-action">
-                                                            <a href="{{route('source_payment.detail', $source->id) }}" data-toggle="tooltip" title="Detail"
+                                                            <a href="{{route('admin.source_payment.detail', $source->id) }}" data-toggle="tooltip" title="Detail"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Detail" control-id="ControlID-16">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
-                                                            <a href="{{route('source_payment.edit', $source->id) }}" data-toggle="tooltip" title="Edit"
+                                                            <a href="{{route('admin.source_payment.edit', $source->id) }}" data-toggle="tooltip" title="Edit"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Edit" control-id="ControlID-16">
                                                                 <i class="fa fa-edit" style="color:grey;"></i>
@@ -129,7 +129,7 @@
           // dangerMode: true,
       }).then((willDelete) => {
           if (willDelete) {
-            $.post("{{route('source_payment.delete')}}",{ id:id,_token:token},function(data){
+            $.post("{{route('admin.source_payment.delete')}}",{ id:id,_token:token},function(data){
                 location.reload();
             })
           } else {

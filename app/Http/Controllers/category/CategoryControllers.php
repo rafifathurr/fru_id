@@ -4,6 +4,7 @@ namespace App\Http\Controllers\category;
 
 use App\Http\Controllers\Controller;
 use App\Models\category\Category;
+use Session;
 
 use Illuminate\Http\Request;
 
@@ -39,7 +40,7 @@ class CategoryControllers extends Controller
             'created_at' => $datenow
         ]);
 
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with(['success' => 'Data successfully stored!']);
     }
 
     // Detail Data View by id
@@ -73,7 +74,7 @@ class CategoryControllers extends Controller
             'updated_at' => $datenow
         ]);
 
-        return redirect()->route('category.index');
+        return redirect()->route('admin.category.index')->with(['success' => 'Data successfully updated!']);
     }
 
     // Delete Data Function
@@ -82,8 +83,10 @@ class CategoryControllers extends Controller
         $exec = Category::where('id', $req->id )->delete();
 
         if ($exec) {
-            return redirect()->route('category.index');
-        } 
+            Session::flash('success', 'Data successfully deleted!');
+          } else {
+            Session::flash('gagal', 'Error Data');
+          }
     }
 
 

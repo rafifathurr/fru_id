@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <section class="container">
-                    <form id="form_add" action="{{ route('users.' . $url) }}" method="post" enctype="multipart/form-data" style="margin-right:100px;">
+                    <form id="form_add" action="{{ route('admin.users.' . $url) }}" method="post" enctype="multipart/form-data" style="margin-right:100px;">
                     {{ csrf_field() }}
                         <br>
                         <div class="row">
@@ -112,7 +112,7 @@
                             <div style="float:right;">
                                 @if ($title == 'Add User')
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('users.index')}}" type="button" class="btn btn-danger">
+                                        <a href="{{ route('admin.users.index')}}" type="button" class="btn btn-danger">
                                             <i class="fa fa-arrow-left"></i>&nbsp;
                                             Back
                                         </a>
@@ -123,7 +123,7 @@
                                     </div>
                                 @elseif ($title == 'Edit User')
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('users.index')}}" type="button" class="btn btn-danger">
+                                        <a href="{{ route('admin.users.index')}}" type="button" class="btn btn-danger">
                                             <i class="fa fa-arrow-left"></i>&nbsp;
                                             Back
                                         </a>
@@ -134,7 +134,7 @@
                                     </div>
                                 @else
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('users.index')}}" type="button" class="btn btn-danger">
+                                        <a href="{{ route('admin.users.index')}}" type="button" class="btn btn-danger">
                                             <i class="fa fa-arrow-left"></i>&nbsp;
                                             Back
                                         </a>

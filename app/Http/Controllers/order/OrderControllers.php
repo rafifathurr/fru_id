@@ -17,6 +17,11 @@ use PDF;
 class OrderControllers extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // Index View and Scope Data
     public function index()
     {
@@ -62,7 +67,11 @@ class OrderControllers extends Controller
             'created_at' => $datenow
         ]);
 
-        return redirect()->route('order.index')->with(['success' => 'Data successfully stored!']);
+        if(Auth::guard('admin')->check()){
+            return redirect()->route('admin.order.index')->with(['success' => 'Data successfully stored!']);
+        }else{
+            return redirect()->route('user.order.index')->with(['success' => 'Data successfully stored!']);
+        }
     }
 
     // Detail Data View by id
@@ -106,7 +115,11 @@ class OrderControllers extends Controller
             'updated_at' => $datenow
         ]);
 
-        return redirect()->route('order.index')->with(['success' => 'Data successfully stored!']);
+        if(Auth::guard('admin')->check()){
+            return redirect()->route('admin.order.index')->with(['success' => 'Data successfully updated!']);
+        }else{
+            return redirect()->route('user.order.index')->with(['success' => 'Data successfully updated!']);
+        }
     }
 
     // Delete Data Function

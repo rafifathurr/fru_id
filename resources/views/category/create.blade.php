@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <section class="container">
-                    <form id="form_add" action="{{ route('category.' . $url) }}" method="post" enctype="multipart/form-data" style="margin-right:100px;">
+                    <form id="form_add" action="{{ route('admin.category.' . $url) }}" method="post" enctype="multipart/form-data" style="margin-right:100px;">
                     {{ csrf_field() }}
                         <br>
                         <div class="row">
@@ -47,7 +47,7 @@
                             <div style="float:right;">
                                 @if ($title == 'Add Category Product')
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('category.index')}}" type="button" class="btn btn-danger">
+                                        <a href="{{ route('admin.category.index')}}" type="button" class="btn btn-danger">
                                             <i class="fa fa-arrow-left"></i>&nbsp; 
                                             Back
                                         </a>
@@ -58,7 +58,7 @@
                                     </div>
                                 @elseif ($title == 'Edit Category Product')
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('category.index')}}" type="button" class="btn btn-danger">
+                                        <a href="{{ route('admin.category.index')}}" type="button" class="btn btn-danger">
                                             <i class="fa fa-arrow-left"></i>&nbsp; 
                                             Back
                                         </a>
@@ -69,7 +69,7 @@
                                     </div>
                                 @else
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('category.index')}}" type="button" class="btn btn-danger">
+                                        <a href="{{ route('admin.category.index')}}" type="button" class="btn btn-danger">
                                             <i class="fa fa-arrow-left"></i>&nbsp; 
                                             Back
                                         </a>

@@ -17,6 +17,11 @@ use PDF;
 class ProductControllers extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // Index View and Scope Data
     public function index()
     {
@@ -64,7 +69,13 @@ class ProductControllers extends Controller
             Product::where('id', $product_pay->id)->update(['upload' => $name_file]);
           }
 
-        return redirect()->route('product.index')->with(['success' => 'Data successfully stored!']);
+        if(Auth::guard('admin')->check()){
+            return redirect()->route('admin.product.index')->with(['success' => 'Data successfully stored!']);
+        }else{
+            return redirect()->route('user.product.index')->with(['success' => 'Data successfully stored!']);
+        }
+            
+        
     }
 
     // Detail Data View by id
@@ -117,7 +128,11 @@ class ProductControllers extends Controller
             Product::where('id', $req->id)->update(['upload' => $name_file]);
           }
 
-        return redirect()->route('product.index')->with(['success' => 'Data successfully stored!']);
+        if(Auth::guard('admin')->check()){
+            return redirect()->route('admin.product.index')->with(['success' => 'Data successfully updated!']);
+        }else{
+            return redirect()->route('user.product.index')->with(['success' => 'Data successfully updated!']);
+        }
     }
 
     // Delete Data Function

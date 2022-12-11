@@ -23,7 +23,7 @@
                 <div class="page-inner mt--5">
                     <!-- Button -->
                     <div class="d-flex">
-                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('role.create') }}">
+                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('admin.role.create') }}">
                             <i class="fa fa-plus"></i>
                             Add User Role
                         </a>
@@ -77,12 +77,12 @@
                                                 <td>
                                                     <center>
                                                         <div class="form-button-action">
-                                                            <a href="{{route('role.detail', $role->id) }}" data-toggle="tooltip" title="Detail"
+                                                            <a href="{{route('admin.role.detail', $role->id) }}" data-toggle="tooltip" title="Detail"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Detail" control-id="ControlID-16">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
-                                                            <a href="{{route('role.edit', $role->id) }}" data-toggle="tooltip" title="Edit"
+                                                            <a href="{{route('admin.role.edit', $role->id) }}" data-toggle="tooltip" title="Edit"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Edit" control-id="ControlID-16">
                                                                 <i class="fa fa-edit" style="color:grey;"></i>
@@ -131,7 +131,7 @@
           // dangerMode: true,
       }).then((willDelete) => {
           if (willDelete) {
-            $.post("{{route('role.delete')}}",{ id:id,_token:token},function(data){
+            $.post("{{route('admin.role.delete')}}",{ id:id,_token:token},function(data){
                 location.reload();
             })
           } else {
