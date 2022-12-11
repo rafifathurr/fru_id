@@ -118,7 +118,7 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Account Setting</a>
                             <div class="dropdown-divider"></div> -->
-                            <form action="{{route('login.logout')}}" method="post">
+                            <form action="{{url('/auth/logout')}}" method="post">
                                 @csrf
                                 <button class="dropdown-item">Logout</button>
                             </form>

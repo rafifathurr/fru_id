@@ -4,7 +4,7 @@
  <meta charset="UTF-8">
  <meta http-equiv="X-UA-Compatible" content="IE=edge">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>FRU.ID - Login</title>
+ <title>FRU.ID - Forgot</title>
  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
   <link rel="stylesheet" href="{{ asset('login/login.css') }}">
   <link rel="icon" href="{{ asset('img/fru.png') }}" type="image/x-icon" />
@@ -20,7 +20,7 @@
   <div class="hal-login">
    <div class="container">
    <div class="detail-cont">
-    <h2>Log in FRU.ID</h2>
+    <h2>Forgot Password</h2>
 
   @error('email')
       <div class="invalid-feedback " style="color:red;">
@@ -34,31 +34,33 @@
       </div>
       <br>
    @else
-    <p>Please log in using that account has
-     registered on the website.</p>
+    <p>Please Check Your Email Account and Setting Up Your New Password</p>
   @endif
 
    </div>
    <div class="form">
-     <form action="{{route('login.authenticate')}}" method="post">
+     <form action="{{route('forgot.updatepass')}}" method="post">
       {{ csrf_field() }}
     <label for="email">Email Address</label>
     <div class="input-icon">
      <input type="email" name="email" id="email" placeholder="Email" class="@error('email') is-invalid" @enderror placeholder="Your Email Address" autofocus required value="{{ old('email') }}">
      <i class="uil uil-envelope-alt"></i>
-     
    </div>
     <label for="password">Password</label>
     <div class="input-icon">
         <input type="password" name="password" id="password" placeholder="Password" required>
         <i class="uil uil-keyhole-circle"></i>
     </div>
-    <a href="{{route('forgot.index')}}" style="text-align:right;"><i>Forgot Password</i> </a>
+    <label for="repassword">Re Password</label>
+    <div class="input-icon">
+        <input type="password" name="repassword" id="repassword" placeholder="Re-Password" required>
+        <i class="uil uil-keyhole-circle"></i>
+    </div>
    </div>
    
    <br>
    <div class="button">
-    <button type="submit">Log In</button>
+    <button type="submit">Change Password</button>
    </div>
   </form>
   </div>
@@ -84,9 +86,9 @@
     <script type="text/javascript">
     swal({
         icon: 'error',
-        title: '{{Session::get("gagal")}}',
+        title: 'Change Password Failed!',
         button: false,
-        text: 'Invalid Credentials!',
+        text: '{{Session::get("gagal")}}',
         timer: 1500
     });
     </script>

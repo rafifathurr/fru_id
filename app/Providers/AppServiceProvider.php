@@ -27,10 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Paginator::useBootstrap();
-        Gate::define('is_admin', function(User $user){
-            return $user->role_id === 1;
-        });
-        Schema::defaultStringLength(191);
+        // Paginator::useBootstrap();
+        // Gate::define('is_admin', function(User $user){
+        //     return $user->role_id === 1;
+        // });
+        // Schema::defaultStringLength(191);
     }
 }

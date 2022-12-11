@@ -20,8 +20,13 @@
                     </div>
                 </div>
                 <section class="container">
-                    <form id="form_add" action="{{ route('order.' . $url) }}" method="POST" enctype="multipart/form-data"
+                    @if(Auth::guard('admin')->check())
+                    <form id="form_add" action="{{ route('admin.order.' . $url) }}" method="POST" enctype="multipart/form-data"
                         style="margin-right:100px;">
+                    @else
+                    <form id="form_add" action="{{ route('user.order.' . $url) }}" method="POST" enctype="multipart/form-data"
+                        style="margin-right:100px;">
+                    @endif
                         {{ csrf_field() }}
                         <br>
                         <div class="row">
@@ -131,7 +136,8 @@
                     <div style="float:right;">
                     @if ($title == 'Add Order')
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{route('order.index')}}" type="button" class="btn btn-danger">
+                                    @if(Auth::guard('admin')->check())
+                                        <a href="{{route('admin.order.index')}}" type="button" class="btn btn-danger">
                                             <i class="fa fa-arrow-left"></i>&nbsp;
                                             Back
                                         </a>
@@ -139,10 +145,21 @@
                                             <i class="fa fa-check"></i>&nbsp;
                                             Save
                                         </button>
+                                    @else
+                                        <a href="{{route('user.order.index')}}" type="button" class="btn btn-danger">
+                                            <i class="fa fa-arrow-left"></i>&nbsp;
+                                            Back
+                                        </a>
+                                        <button type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                            <i class="fa fa-check"></i>&nbsp;
+                                            Save
+                                        </button>
+                                    @endif
                                     </div>
                                 @elseif ($title == 'Edit Order')
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{route('order.index')}}" type="button" class="btn btn-danger">
+                                        @if(Auth::guard('admin')->check())
+                                        <a href="{{route('admin.order.index')}}" type="button" class="btn btn-danger">
                                             <i class="fa fa-arrow-left"></i>&nbsp;
                                             Back
                                         </a>
@@ -150,13 +167,30 @@
                                             <i class="fa fa-check"></i>&nbsp;
                                             Save
                                         </button>
-                                    </div>
-                                @else
-                                    <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('order.index') }}" type="button" class="btn btn-danger">
+                                    @else
+                                        <a href="{{route('user.order.index')}}" type="button" class="btn btn-danger">
                                             <i class="fa fa-arrow-left"></i>&nbsp;
                                             Back
                                         </a>
+                                        <button type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                            <i class="fa fa-check"></i>&nbsp;
+                                            Save
+                                        </button>
+                                    @endif
+                                    </div>
+                                @else
+                                    <div class="col-md-10" style="margin-right: 20px;">
+                                        @if(Auth::guard('admin')->check())
+                                        <a href="{{route('admin.order.index')}}" type="button" class="btn btn-danger">
+                                            <i class="fa fa-arrow-left"></i>&nbsp;
+                                            Back
+                                        </a>
+                                        @else
+                                            <a href="{{route('user.order.index')}}" type="button" class="btn btn-danger">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;
+                                                Back
+                                            </a>
+                                        @endif
                                     </div>
                                 @endif
                     </div>
@@ -174,7 +208,11 @@
             var id_prods = document.getElementById("prods").value;
             $.ajax({
                 type: 'GET',
-                url: "{{ route('order.getDetailProds') }}",
+                @if(Auth::guard('admin')->check())
+                    url: "{{ route('admin.order.getDetailProds') }}",
+                @else
+                    url: "{{ route('user.order.getDetailProds') }}",
+                @endif
                 data: {
                     'id_prod': id_prods
                 },
@@ -192,17 +230,13 @@
 
             $('#qty').on('keyup textInput input', function() {
                 var qty = $("#qty").val();
+                var base = $("#base_price").val();
                 var base_price_old = $("#base_price_old").val();
 
                 //Calculation
-                if(base_price_old != 0){
                     var result_base = base_price * qty;
+
                     $("#base_price").val(result_base);
-                }else{
-                    var result_base = base_price_old * qty;
-                    $("#base_price").val(result_base);
-                }
-                else
             });
 
             $('#entry_price').on('keyup textInput input', function() {

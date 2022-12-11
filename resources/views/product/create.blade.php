@@ -20,8 +20,13 @@
                     </div>
                 </div>
                 <section class="container">
-                    <form id="form_add" action="{{ route('product.' . $url) }}" method="post"
+                @if(Auth::guard('admin')->check())
+                    <form id="form_add" action="{{ route('admin.product.' . $url) }}" method="post"
                         enctype="multipart/form-data" style="margin-right:100px;">
+                @else
+                    <form id="form_add" action="{{ route('user.product.' . $url) }}" method="post"
+                        enctype="multipart/form-data" style="margin-right:100px;">
+                @endif
                         {{ csrf_field() }}
                         <br>
                         <div class="row">
@@ -149,7 +154,6 @@
                                                 <a href="{{url('/').'/Uploads/Product/'.$products->id.'/uploads/'.$products->upload}}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> &nbsp;<?php echo $changename; ?> </a><br>
                                             @else
                                                 <span style="font-size: 13px;color: red">*) .doc .docx .pdf .png .jpg .jpeg</span>
-                                                <a href="#"><strong>No Attachment</strong></a>
                                             @endif
                                         @endif
                                     @else
@@ -164,7 +168,6 @@
                                                 <a href="{{url('/').'/Uploads/Product/'.$products->id.'/uploads/'.$products->upload}}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> &nbsp;<?php echo $changename; ?> </a><br>
                                             @else
                                                 <span style="font-size: 13px;color: red">*) .doc .docx .pdf .png .jpg .jpeg</span>
-                                                <a href="#"><strong>No Attachment</strong></a>
                                             @endif
                                         @endif
                                     @endif
@@ -176,32 +179,61 @@
                             <div style="float:right;">
                                 @if ($title == 'Add Products')
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('product.index') }}" type="button" class="btn btn-danger">
-                                            <i class="fa fa-arrow-left"></i>&nbsp;
-                                            Back
-                                        </a>
-                                        <button type="submit" class="btn btn-primary" style="margin-left:10px;">
-                                            <i class="fa fa-check"></i>&nbsp;
-                                            Save
-                                        </button>
+                                       @if(Auth::guard('admin')->check())
+                                            <a href="{{route('admin.product.index')}}" type="button" class="btn btn-danger">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;
+                                                Back
+                                            </a>
+                                            <button type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                                <i class="fa fa-check"></i>&nbsp;
+                                                Save
+                                            </button>
+                                        @else
+                                            <a href="{{route('user.product.index')}}" type="button" class="btn btn-danger">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;
+                                                Back
+                                            </a>
+                                            <button type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                                <i class="fa fa-check"></i>&nbsp;
+                                                Save
+                                            </button>
+                                        @endif
                                     </div>
                                 @elseif ($title == 'Edit Products')
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('product.index') }}" type="button" class="btn btn-danger">
-                                            <i class="fa fa-arrow-left"></i>&nbsp;
-                                            Back
-                                        </a>
-                                        <button type="submit" class="btn btn-primary" style="margin-left:10px;">
-                                            <i class="fa fa-check"></i>&nbsp;
-                                            Save
-                                        </button>
+                                        @if(Auth::guard('admin')->check())
+                                            <a href="{{route('admin.product.index')}}" type="button" class="btn btn-danger">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;
+                                                Back
+                                            </a>
+                                            <button type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                                <i class="fa fa-check"></i>&nbsp;
+                                                Save
+                                            </button>
+                                        @else
+                                            <a href="{{route('user.product.index')}}" type="button" class="btn btn-danger">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;
+                                                Back
+                                            </a>
+                                            <button type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                                <i class="fa fa-check"></i>&nbsp;
+                                                Save
+                                            </button>
+                                        @endif
                                     </div>
                                 @else
                                     <div class="col-md-10" style="margin-right: 20px;">
-                                        <a href="{{ route('product.index') }}" type="button" class="btn btn-danger">
-                                            <i class="fa fa-arrow-left"></i>&nbsp;
-                                            Back
-                                        </a>
+                                        @if(Auth::guard('admin')->check())
+                                            <a href="{{route('admin.product.index')}}" type="button" class="btn btn-danger">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;
+                                                Back
+                                            </a>
+                                        @else
+                                            <a href="{{route('user.product.index')}}" type="button" class="btn btn-danger">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;
+                                                Back
+                                            </a>
+                                        @endif
                                     </div>
                                 @endif
                             </div>

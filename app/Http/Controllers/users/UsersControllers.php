@@ -15,6 +15,11 @@ use PDF;
 class UsersControllers extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     // Index View and Scope Data
     public function index()
     {
@@ -52,7 +57,7 @@ class UsersControllers extends Controller
                 'created_at' => $datenow
             ]);
         }
-        return redirect()->route('users.index')->with(['success' => 'Data successfully stored!']);
+        return redirect()->route('admin.users.index')->with(['success' => 'Data successfully stored!']);
     }
 
     // Detail Data View by id
@@ -94,7 +99,7 @@ class UsersControllers extends Controller
                 'updated_at' => $datenow
             ]);
         }
-        return redirect()->route('supplier.index')->with(['success' => 'Data successfully updated!']);
+        return redirect()->route('admin.supplier.index')->with(['success' => 'Data successfully updated!']);
     }
 
     // Delete Data Function

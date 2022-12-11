@@ -22,10 +22,17 @@
                 <div class="page-inner mt--5">
                     <!-- Button -->
                     <div class="d-flex">
-                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('product.create') }}">
+                    @if(Auth::guard('admin')->check())
+                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('admin.product.create') }}">
                             <i class="fa fa-plus"></i>
                             Add Product
                         </a>
+                    @else
+                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('user.product.create') }}">
+                            <i class="fa fa-plus"></i>
+                            Add Product
+                        </a>
+                    @endif
                     </div>
 
                     <!-- Table -->
@@ -123,12 +130,13 @@
                                                 <td>
                                                     <center>
                                                         <div class="form-button-action">
-                                                            <a href="{{route('product.detail', $prod->id) }}" data-toggle="tooltip" title="Detail"
+                                                        @if(Auth::guard('admin')->check())
+                                                            <a href="{{route('admin.product.detail', $prod->id) }}" data-toggle="tooltip" title="Detail"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Detail" control-id="ControlID-16">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
-                                                            <a href="{{route('product.edit', $prod->id) }}" data-toggle="tooltip" title="Edit"
+                                                            <a href="{{route('admin.product.edit', $prod->id) }}" data-toggle="tooltip" title="Edit"
                                                                 class="btn btn-link btn-simple-primary btn-lg"
                                                                 data-original-title="Edit" control-id="ControlID-16">
                                                                 <i class="fa fa-edit" style="color:grey;"></i>
@@ -138,6 +146,23 @@
                                                                 data-original-title="Delete" control-id="ControlID-17">
                                                                 <i class="fa fa-trash" style="color:red;"></i>
                                                             </button>
+                                                        @else
+                                                            <a href="{{route('user.product.detail', $prod->id) }}" data-toggle="tooltip" title="Detail"
+                                                                class="btn btn-link btn-simple-primary btn-lg"
+                                                                data-original-title="Detail" control-id="ControlID-16">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a href="{{route('user.product.edit', $prod->id) }}" data-toggle="tooltip" title="Edit"
+                                                                class="btn btn-link btn-simple-primary btn-lg"
+                                                                data-original-title="Edit" control-id="ControlID-16">
+                                                                <i class="fa fa-edit" style="color:grey;"></i>
+                                                            </a>
+                                                            <button type="submit" onclick="destroy({{$prod->id}})" data-toggle="tooltip" title="Delete"
+                                                                class="btn btn-link btn-simple-danger"
+                                                                data-original-title="Delete" control-id="ControlID-17">
+                                                                <i class="fa fa-trash" style="color:red;"></i>
+                                                            </button>
+                                                        @endif
                                                         </div>
                                                     </center>
                                                 </td>
@@ -176,9 +201,15 @@
           // dangerMode: true,
       }).then((willDelete) => {
           if (willDelete) {
-            $.post("{{route('product.delete')}}",{ id:id,_token:token},function(data){
+          @if(Auth::guard('admin')->check())
+            $.post("{{route('admin.product.delete')}}",{ id:id,_token:token},function(data){
                 location.reload();
             })
+          @else
+           $.post("{{route('user.product.delete')}}",{ id:id,_token:token},function(data){
+                location.reload();
+            })
+          @endif
           } else {
             return false;
           }
