@@ -62,8 +62,8 @@
                             <div class="col-md-2"></div>
                             <label class="col-md-2">Entry Price <span style="color: red;">*</span></label>
                             <div class="col-md-4">
-                                <input type="hidden" name="entry_price_old" id="entry_price_old"
-                                    @if (isset($orders)) value="{{ $orders->entry_price }}" @endisset class="form-control numeric" autocomplete="off" required="" {{$disabled_}}
+                                <input type="hidden" name="sell_price_old" id="sell_price_old"
+                                    @if (isset($orders)) value="{{ $orders->product->selling_price }}" @endisset class="form-control" {{$disabled_}}
                                     style="width:100%">
                                 <input type="text" name="entry_price" id="entry_price"
                                     @if (isset($orders)) value="{{ $orders->entry_price }}" @endisset class="form-control numeric" autocomplete="off" required="" {{$disabled_}}
@@ -71,8 +71,8 @@
                             </div>
                             <label class="col-md-2 mt-1">Base Price <span style="color: red;">*</span></label>
                             <div class="col-md-4">
-                                <input type="hidden" name="base_price_old" id="base_price_old" class="form-control numeric"
-                                    @if (isset($orders)) value="{{ $orders->product->base_price }}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}}>
+                                <input type="hidden" name="base_price_old" id="base_price_old" class="form-control"
+                                    @if (isset($orders)) value="{{ $orders->product->base_price }}" @endisset {{$disabled_}}>
                                 <input type="text" name="base_price" id="base_price" class="form-control numeric"
                                     @if (isset($orders)) value="{{($orders->product->base_price * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}}>
                             </div>
@@ -217,7 +217,10 @@
                     'id_prod': id_prods
                 },
                 success: function(data) {
-
+                    $("#qty").val(1);
+                    $("#entry_price").val(0);
+                    $("#cal_tax").val(0);
+                    $("#cal_profit").val(0);
                     $("#base_price").val(data["base_price"])
                     base_price = data["base_price"];
                     sell_price = data["selling_price"];
@@ -234,23 +237,36 @@
                 var base_price_old = $("#base_price_old").val();
 
                 //Calculation
+                if(base_price_old == 0 || sell_price != 0){
                     var result_base = base_price * qty;
-
+                    $("#base_price").val(result_base);  
+                }else{
+                    $("#entry_price").val(0);
+                    $("#cal_tax").val(0);
+                    $("#cal_profit").val(0);
+                    var result_base = base_price_old * qty;
                     $("#base_price").val(result_base);
+                }
             });
 
             $('#entry_price').on('keyup textInput input', function() {
                 var entry_price = $("#entry_price").val();
+                var sell_price_old = $("#sell_price_old").val();
                 var base_price = $("#base_price").val();
                 var entry = entry_price.split('.').join('').replace(/^Rp/, '');
                 var base = base_price.split('.').join('').replace(/^Rp/, '');
                 var qty = $("#qty").val();
 
                 //Calculation
-                var profit = entry - base;
-                var sell_total = sell_price * qty;
-                var tax = sell_total - entry;
-
+                if(sell_price != 0){
+                    var profit = entry - base;
+                    var sell_total = sell_price * qty;
+                    var tax = sell_total - entry;
+                }else{
+                    var profit = entry - base;
+                    var sell_total = sell_price_old * qty;
+                    var tax = sell_total - entry;
+                }
                 $("#cal_tax").val(tax);
                 $("#cal_profit").val(profit);
             });

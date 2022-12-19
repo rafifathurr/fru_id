@@ -47,7 +47,7 @@ class DashboardControllers extends Controller
         $data['countorderlastyear'] = count(Order::whereYear('date', (Carbon::now()->year)-1)->get());
         $data['countordermonth'] = count(Order::whereMonth('date', Carbon::now()->month)->get());
         $data['countorderlastmonth'] = count(Order::whereMonth('date', Carbon::now()->month-1)->get());
-        $data['countorderday'] = count(Order::whereRaw('DAY(date) = DAY(now())')->get());
+        $data['countorderday'] = count(Order::where('date', now())->get());
         $data['countorderlastday'] = count(Order::whereRaw('DAY(date) = (DAY(now())-1)')->get());
         $data['totalincome'] = Order::whereMonth('date', Carbon::now()->month)->sum('entry_price');
         $data['totalincomelast'] = Order::whereMonth('date', Carbon::now()->month-1)->sum('entry_price');
