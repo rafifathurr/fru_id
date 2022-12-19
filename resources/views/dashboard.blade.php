@@ -461,16 +461,6 @@
                 </div>
                 @include('layouts.footer')
                 <script>
-                    @foreach($dayofweeks as $day)
-                        <?php 
-                        $days[] = $day->name_day;
-                        ?>
-                    @endforeach
-                    @foreach($calofday as $cal)
-                        <?php 
-                        $cals[] = $cal->total;
-                        ?>
-                    @endforeach
                     @foreach($month as $mo)
                         <?php 
                         $mos[] = $mo->month;
@@ -486,8 +476,23 @@
                         $profs[] = $pm->profit;
                         ?>
                     @endforeach
-                    var days = @json($days);
-                    var cal = @json($cals);
+                    @if(json_encode($dayofweeks)!='[]')
+                        @foreach($dayofweeks as $day)
+                            <?php 
+                            $days[] = $day->name_day;
+                            ?>
+                        @endforeach
+                        @foreach($calofday as $cal)
+                            <?php 
+                            $cals[] = $cal->total;
+                            ?>
+                        @endforeach
+                        var days = @json($days);
+                        var cal = @json($cals);
+                    @else
+                        var days =[];
+                        var cal =[];
+                    @endif
                     var month = @json($mos);
                     var income = @json($inc);
                     var profit = @json($profs);

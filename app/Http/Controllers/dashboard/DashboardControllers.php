@@ -58,7 +58,7 @@ class DashboardControllers extends Controller
         $data['month'] = Order::whereYear('date', Carbon::now()->year)
                         ->selectRaw('MONTHNAME(date) as month')
                         ->groupBy(DB::raw('MONTHNAME(date)'))
-                        ->orderBy(DB::raw('MONTHNAME(date)'), 'ASC')
+                        ->orderBy(DB::raw('MONTHNAME(date)'), 'DESC')
                         ->get();
         $data['incomepermonth'] = Order::whereYear('date', Carbon::now()->year)
                                 ->selectRaw('sum(entry_price) as income')
@@ -68,7 +68,7 @@ class DashboardControllers extends Controller
         $data['profitpermonth'] = Order::whereYear('date', Carbon::now()->year)
                                 ->selectRaw('sum(profit) as profit')
                                 ->groupBy(DB::raw('MONTH(date)'))
-                                ->orderBy(DB::raw('MONTH(date)'), 'ASC')
+                                ->orderBy(DB::raw('MONTH(date)'), 'DESC')
                                 ->get();
         $data['topproduct'] = Order::whereRaw('MONTH(date) = MONTH(now())')
                                 ->select(DB::raw('product_id, sum(qty) as total'))
