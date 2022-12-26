@@ -105,7 +105,6 @@ class ProductControllers extends Controller
     // Update Function to Database
     public function update(Request $req)
     {
-        dd($req->status);
         date_default_timezone_set("Asia/Bangkok");
         $datenow = date('Y-m-d H:i:s');
         $product_pay = Product::where('id', $req->id)->update([
