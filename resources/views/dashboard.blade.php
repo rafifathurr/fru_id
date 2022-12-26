@@ -57,7 +57,7 @@
                                             <div>
                                                 <h6 class="fw-bold text-uppercase text-success op-8">Total Income</h6>
                                                 <div style="display:flex">
-                                                    <h4 class="fw-bold">Rp. {{number_format($totalincome,0,',','.')}},-</h4>
+                                                    <h4 class="fw-bold">Rp. {{number_format($totalincome, 0 , ',' , '.')}},-</h4>
                                                     @if($totalincomelast < $totalincome)
                                                         <i class="fa fa-arrow-up" style="color:#31ce36;font-size:18px;margin-top: 0.22rem !important;margin-left:10px;"></i>
                                                     @elseif($totalincomelast > $totalincome)

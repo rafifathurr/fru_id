@@ -56,10 +56,10 @@
                                     <select class="form-control selectpicker" id="status"
                                         name="status" data-size="8" data-show-subtext="true"
                                         data-live-search="true" @if(isset($products)) @endisset autocomplete="off" required {{ $disabled_ }}>
-                                        <option value="" selected disabled hidden>- Select Status -</option>
+                                        <option value="" disabled hidden>- Select Status -</option>
                                         @if(isset($products))
-                                            <option  selected value="{{$products->status}}>{{$products->status}}</option>
-                                            <option value="Active">Active</option>
+                                            <option selected value="{{$products->status}}">{{$products->status}}</option>
+                                            <option value="Active" selected>Active</option>
                                             <option value="Inactive">Inactive</option>
                                         @else
                                             <option value="Active">Active</option>
