@@ -57,8 +57,8 @@ class OrderControllers extends Controller
 
         $get_prods = Product::where('id', $req->prods)->first();
 
-        dd($get_prods->stock);
-        
+        // dd($get_prods->stock);
+
         $order_pay = Order::create([
             'product_id' => $req->prods,
             'qty' => $req->qty,
