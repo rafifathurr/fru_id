@@ -25,10 +25,9 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2">Username <span style="color: red;">*</span></label>
+                                <label class="col-md-2">Name <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" @isset($users) value="{{ $users->id }}" readonly @endisset required>
-                                    <input type="text" name="username" id="username" class="form-control"  step="1" @if (isset($users)) value="{{ $users->username }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="text" name="name" id="name" class="form-control"  step="1" @if (isset($users)) value="{{ $users->name }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -38,17 +37,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Email <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" name="email" id="email" class="form-control"  step="1" @if (isset($users)) value="{{ $users->email }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="col-md-2"></div>
-                                <label class="col-md-2">Phone <span style="color: red;">*</span></label>
-                                <div class="col-md-10">
-                                    <input type="number" name="phone" id="phone" class="form-control"  step="1" @if (isset($users)) value="0{{ $users->phone }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="email" name="email" id="email" class="form-control"  step="1" @if (isset($users)) value="{{ $users->email }}" @else value="{{ old('email') }}"  @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -76,9 +65,20 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2">Name <span style="color: red;">*</span></label>
+                                <label class="col-md-2">Username <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" name="name" id="name" class="form-control"  step="1" @if (isset($users)) value="{{ $users->name }}" @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                    <input type="hidden" class="form-control" id="id" name="id" autocomplete="off" @isset($users) value="{{ $users->id }}" readonly @endisset required>
+                                    <input type="text" name="username" id="username" class="form-control"  step="1" @if (isset($users)) value="{{ $users->username }}" @else value="{{ old('username') }}"  @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="col-md-2"></div>
+                                <label class="col-md-2">Phone <span style="color: red;">*</span></label>
+                                <div class="col-md-10">
+                                    <input type="text" name="phone" id="phone" class="form-control"  step="1" @if (isset($users)) value="{{ $users->phone }}" @else value="{{ old('phone') }}"  @endisset autocomplete="off" required {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
                         </div>
@@ -149,4 +149,5 @@
         </div>
     </div>
 </body>
+@include('layouts.swal')
 </html>

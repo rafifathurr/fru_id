@@ -43,21 +43,31 @@ class UsersControllers extends Controller
     // Store Function to Database
     public function store(Request $request)
     {
-        if($request->password == $request->repassword){
-            date_default_timezone_set("Asia/Bangkok");
-            $datenow = date('Y-m-d H:i:s');
-            User::create([
-                'username' => $request->username,
-                'email' => $request->email,
-                'phone' => (int)$request->phone,
-                'password' => bcrypt($request->password),
-                'name' => $request->name,
-                'role_id' => $request->role,
-                'address' => $request->address,
-                'created_at' => $datenow
-            ]);
+        $exec = User::where('email', $request->email)->first();
+        $exec_2 = User::where('username', $request->username)->first();
+
+        if($exec || $exec_2){
+            return back()->with(['gagal' => 'Your Email or Username Already Exist!']);
+        }else{
+            if($request->password == $request->repassword){
+                date_default_timezone_set("Asia/Bangkok");
+                $datenow = date('Y-m-d H:i:s');
+                $sample = User::create([
+                    'username' => $request->username,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'password' => bcrypt($request->password),
+                    'name' => $request->name,
+                    'role_id' => $request->role,
+                    'address' => $request->address,
+                    'created_at' => $datenow
+                ]);
+                return redirect()->route('admin.users.index')->with(['success' => 'Data successfully stored!']);
+            }else{
+                return back()->with(['gagal' => 'Password Not Match!']);
+            }
+           
         }
-        return redirect()->route('admin.users.index')->with(['success' => 'Data successfully stored!']);
     }
 
     // Detail Data View by id
@@ -91,15 +101,17 @@ class UsersControllers extends Controller
             $user_pay = User::where('id', $req->id)->update([
                 'username' => $req->username,
                 'email' => $req->email,
-                'phone' => (int)$req->phone,
+                'phone' => $req->phone,
                 'password' => bcrypt($req->password),
                 'name' => $req->name,
                 'role_id' => $req->role,
                 'address' => $req->address,
                 'updated_at' => $datenow
             ]);
+            return redirect()->route('admin.users.index')->with(['success' => 'Data successfully updated!']);
+        }else{
+            return back()->with(['gagal' => 'Password Not Match!']);
         }
-        return redirect()->route('admin.supplier.index')->with(['success' => 'Data successfully updated!']);
     }
 
     // Delete Data Function

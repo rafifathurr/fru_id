@@ -51,7 +51,9 @@
                             </div>
                             <label class="col-md-2 mt-1">Qty <span style="color: red;">*</span></label>
                             <div class="col-md-5">
-                                <input type="number" name="qty" id="qty" class="form-control"
+                                <input type="hidden" min="0" name="stock" id="stock" class="form-control"
+                                    @if (isset($orders)) value="{{ $orders->product->stock }}" @endisset step="1" required="" style="width:35%" {{$disabled_}}>
+                                <input type="number" min="0" name="qty" id="qty" class="form-control"
                                     @if (isset($orders)) value="{{ $orders->qty }}" @endisset step="1" required="" style="width:35%" {{$disabled_}}>
                             </div>
                         </div>
@@ -63,7 +65,7 @@
                             <label class="col-md-2">Entry Price <span style="color: red;">*</span></label>
                             <div class="col-md-4">
                                 <input type="hidden" name="sell_price_old" id="sell_price_old"
-                                    @if (isset($orders)) value="{{ $orders->product->selling_price }}" @endisset class="form-control" {{$disabled_}}
+                                    @if (isset($orders)) value="{{ $orders->product->selling_price }}" @endisset class="form-control" required {{$disabled_}}
                                     style="width:100%">
                                 <input type="text" name="entry_price" id="entry_price"
                                     @if (isset($orders)) value="{{ $orders->entry_price }}" @endisset class="form-control numeric" autocomplete="off" required="" {{$disabled_}}
@@ -84,7 +86,7 @@
                             <div class="col-md-2"></div>
                             <label class="col-md-2">Source Payment <span style="color: red;">*</span></label>
                             <div class="col-md-4">
-                                <select name="source_pay" id="source_pay" class="form-control" {{$disabled_}}>
+                                <select name="source_pay" id="source_pay" class="form-control" required {{$disabled_}}>
                                     <option value="" style="display: none;" selected="">- Choose Sources -
                                     </option>
                                     @foreach ($sources as $source)
@@ -141,7 +143,7 @@
                                             <i class="fa fa-arrow-left"></i>&nbsp;
                                             Back
                                         </a>
-                                        <button type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                        <button id="save_data" type="submit" class="btn btn-primary" style="margin-left:10px;">
                                             <i class="fa fa-check"></i>&nbsp;
                                             Save
                                         </button>
@@ -172,7 +174,7 @@
                                             <i class="fa fa-arrow-left"></i>&nbsp;
                                             Back
                                         </a>
-                                        <button type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                        <button id="save_data" type="submit" class="btn btn-primary" style="margin-left:10px;">
                                             <i class="fa fa-check"></i>&nbsp;
                                             Save
                                         </button>
@@ -217,13 +219,14 @@
                     'id_prod': id_prods
                 },
                 success: function(data) {
-                    $("#qty").val(1);
                     $("#entry_price").val(0);
                     $("#cal_tax").val(0);
                     $("#cal_profit").val(0);
-                    $("#base_price").val(data["base_price"])
                     base_price = data["base_price"];
                     sell_price = data["selling_price"];
+                    max_qty = data["stock"];
+                    var input = document.getElementById("qty");
+                    input.setAttribute("max",max_qty);
                 }
             });
         }
@@ -233,19 +236,36 @@
 
             $('#qty').on('keyup textInput input', function() {
                 var qty = $("#qty").val();
+                var max_stock = $("#stock").val();
                 var base = $("#base_price").val();
                 var base_price_old = $("#base_price_old").val();
 
                 //Calculation
                 if(base_price_old == 0 || sell_price != 0){
-                    var result_base = base_price * qty;
-                    $("#base_price").val(result_base);  
+                    if(qty > max_qty){
+                        $('#save_data').attr('disabled', 'disabled');
+                        alert("Item Quantity Exceed Stock Limit!");
+                        $("#qty").val(0);
+                    }else{
+                        $('#save_data').removeAttr('disabled');
+                        var result_base = base_price * qty;
+                        $("#base_price").val(result_base);  
+                    }
                 }else{
-                    $("#entry_price").val(0);
-                    $("#cal_tax").val(0);
-                    $("#cal_profit").val(0);
-                    var result_base = base_price_old * qty;
-                    $("#base_price").val(result_base);
+                    var input = document.getElementById("qty");
+                    input.setAttribute("max",max_stock);
+
+                    if(qty > max_stock){
+                        $('#save_data').attr('disabled', 'disabled');
+                        alert("Item Quantity Exceed Stock Limit!");
+                    }else{
+                        $('#save_data').removeAttr('disabled');
+                        $("#entry_price").val(0);
+                        $("#cal_tax").val(0);
+                        $("#cal_profit").val(0);
+                        var result_base = base_price_old * qty;
+                        $("#base_price").val(result_base);
+                    }
                 }
             });
 
@@ -259,13 +279,23 @@
 
                 //Calculation
                 if(sell_price != 0){
-                    var profit = entry - base;
-                    var sell_total = sell_price * qty;
-                    var tax = sell_total - entry;
+                    if(entry == 0){
+                        var tax = 0;
+                        var profit = 0;
+                    }else{
+                        var profit = entry - base;
+                        var sell_total = sell_price * qty;
+                        var tax = sell_total - entry;
+                    }
                 }else{
-                    var profit = entry - base;
-                    var sell_total = sell_price_old * qty;
-                    var tax = sell_total - entry;
+                    if(entry == 0){
+                        var tax = 0;
+                        var profit = 0;
+                    }else{
+                        var profit = entry - base;
+                        var sell_total = sell_price_old * qty;
+                        var tax = sell_total - entry;
+                    }
                 }
                 $("#cal_tax").val(tax);
                 $("#cal_profit").val(profit);

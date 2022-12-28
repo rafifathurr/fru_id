@@ -58,11 +58,11 @@
                                         data-live-search="true" @if(isset($products)) @endisset autocomplete="off" required {{ $disabled_ }}>
                                         <option value="" disabled hidden>- Select Status -</option>
                                         @if(isset($products))
-                                            <option selected value="{{$products->status}}">{{$products->status}}</option>
-                                            <option value="Active" selected>Active</option>
+                                            <option selected value="{{$products->status}}" hidden>{{$products->status}}</option>
+                                            <option value="Active">Active</option>
                                             <option value="Inactive">Inactive</option>
                                         @else
-                                            <option value="Active">Active</option>
+                                            <option value="Active" selected>Active</option>
                                             <option value="Inactive">Inactive</option>
                                         @endisset
                                     </select>

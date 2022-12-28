@@ -37,7 +37,7 @@ class OrderControllers extends Controller
         $data['title'] = "Add Order";
         $data['url'] = 'store';
         $data['disabled_'] = '';
-        $data['products'] = Product::orderBy('product_name', 'asc')->get();
+        $data['products'] = Product::orderBy('product_name', 'asc')->where('status', 'Active')->get();
         $data['sources'] = Source::orderBy('id', 'asc')->get();
         return view('order.create', $data);
     }
@@ -55,6 +55,10 @@ class OrderControllers extends Controller
         date_default_timezone_set("Asia/Bangkok");
         $datenow = date('Y-m-d H:i:s');
 
+        $get_prods = Product::where('id', $req->prods)->first();
+
+        dd($get_prods->stock);
+        
         $order_pay = Order::create([
             'product_id' => $req->prods,
             'qty' => $req->qty,
@@ -64,7 +68,8 @@ class OrderControllers extends Controller
             'note' => $req->note,
             'tax' => $req->cal_tax,
             'profit' => $req->cal_profit,
-            'created_at' => $datenow
+            'created_at' => $datenow,
+            'created_by' => Auth::user()->username
         ]);
 
         if(Auth::guard('admin')->check()){
@@ -112,7 +117,8 @@ class OrderControllers extends Controller
             'note' => $req->note,
             'tax' => $req->cal_tax,
             'profit' => $req->cal_profit,
-            'updated_at' => $datenow
+            'updated_at' => $datenow,
+            'updated_by' => Auth::user()->username
         ]);
 
         if(Auth::guard('admin')->check()){
