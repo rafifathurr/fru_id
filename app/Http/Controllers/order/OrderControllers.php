@@ -57,7 +57,22 @@ class OrderControllers extends Controller
 
         $get_prods = Product::where('id', $req->prods)->first();
 
-        // dd($get_prods->stock);
+        $new_update_stock = $get_prods->stock - $req->qty;
+
+        if($new_update_stock == 0){
+            Product::where('id', $req->prods)->update([
+                'stock' => $new_update_stock,
+                'status' => 'Inactive',
+                'updated_at' => $datenow,
+                'updated_by' => Auth::user()->username
+            ]);
+        }else{
+            Product::where('id', $req->prods)->update([
+                'stock' => $new_update_stock,
+                'updated_at' => $datenow,
+                'updated_by' => Auth::user()->username
+            ]);
+        }
 
         $order_pay = Order::create([
             'product_id' => $req->prods,

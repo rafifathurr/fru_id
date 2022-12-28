@@ -125,7 +125,11 @@
                                                    <center>{{$prod->stock}}</center>
                                                 </td>
                                                 <td class="sorting_1">
-                                                    <center>{{$prod->status}}</center>
+                                                    @if($prod->status == "Active")
+                                                        <center style="color:#05c305;">{{$prod->status}}</center>
+                                                    @else
+                                                        <center style="color:red;">{{$prod->status}}</center>
+                                                    @endif
                                                  </td>
                                                 <td>
                                                     <center>

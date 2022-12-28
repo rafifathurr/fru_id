@@ -47,16 +47,36 @@ class DashboardControllers extends Controller
         $data['countorderall'] = count(Order::all());
         $data['countorderyear'] = count(Order::whereYear('date', Carbon::now()->year)->get());
         $data['countorderlastyear'] = count(Order::whereYear('date', (Carbon::now()->year)-1)->get());
-        $data['countordermonth'] = count(Order::whereMonth('date', Carbon::now()->month)->get());
-        $data['countorderlastmonth'] = count(Order::whereMonth('date', Carbon::now()->month-1)->get());
-        $data['countorderday'] = count(Order::where('date', now())->get());
-        $data['countorderlastday'] = count(Order::whereRaw('DAY(date) = (DAY(now())-1)')->get());
-        $data['totalincome'] = Order::whereMonth('date', Carbon::now()->month)->sum('entry_price');
-        $data['totalincomelast'] = Order::whereMonth('date', Carbon::now()->month-1)->sum('entry_price');
-        $data['totalprofit'] = Order::whereMonth('date', Carbon::now()->month)->sum('profit');
-        $data['totalprofitlast'] = Order::whereMonth('date', Carbon::now()->month-1)->sum('profit');
-        $data['totaltax'] = Order::whereMonth('date', Carbon::now()->month)->sum('tax');
-        $data['totaltaxlast'] = Order::whereMonth('date', Carbon::now()->month-1)->sum('tax');
+        $data['countordermonth'] = count(Order::whereMonth('date', Carbon::now()->month)
+                                            ->whereRaw('YEAR(date) = YEAR(now())')
+                                            ->get());
+        $data['countorderlastmonth'] = count(Order::whereMonth('date', Carbon::now()->month-1)
+                                                ->whereRaw('YEAR(date) = YEAR(now())')
+                                                ->get());
+        $data['countorderday'] = count(Order::whereRaw('DAY(date) = DAY(now())')
+                                        ->whereRaw('YEAR(date) = YEAR(now())')
+                                        ->get());
+        $data['countorderlastday'] = count(Order::whereRaw('DAY(date) = (DAY(now())-1)')
+                                            ->whereRaw('YEAR(date) = YEAR(now())')
+                                            ->get());
+        $data['totalincome'] = Order::whereMonth('date', Carbon::now()->month)
+                                ->whereRaw('YEAR(date) = YEAR(now())')
+                                ->sum('entry_price');
+        $data['totalincomelast'] = Order::whereMonth('date', Carbon::now()->month-1)
+                                    ->whereRaw('YEAR(date) = YEAR(now())')
+                                    ->sum('entry_price');
+        $data['totalprofit'] = Order::whereMonth('date', Carbon::now()->month)
+                                ->whereRaw('YEAR(date) = YEAR(now())')
+                                ->sum('profit');
+        $data['totalprofitlast'] = Order::whereMonth('date', Carbon::now()->month-1)
+                                    ->whereRaw('YEAR(date) = YEAR(now())')
+                                    ->sum('profit');
+        $data['totaltax'] = Order::whereMonth('date', Carbon::now()->month)
+                            ->whereRaw('YEAR(date) = YEAR(now())')
+                            ->sum('tax');
+        $data['totaltaxlast'] = Order::whereMonth('date', Carbon::now()->month-1)
+                                ->whereRaw('YEAR(date) = YEAR(now())')
+                                ->sum('tax');
         $data['month'] = Order::whereYear('date', Carbon::now()->year)
                         ->selectRaw('MONTHNAME(date) as month')
                         ->groupBy(DB::raw('MONTHNAME(date)'))

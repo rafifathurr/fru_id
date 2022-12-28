@@ -58,7 +58,8 @@ class ProductControllers extends Controller
             'desc' => $req->desc,
             'category_id' => $req->category,
             'supplier_id' => $req->supplier,
-            'created_at' => $datenow
+            'created_at' => $datenow,
+            'created_by' => Auth::user()->username
         ]);
 
         $destination='Uploads/Product/'.$product_pay->id.'/uploads\\';
@@ -117,7 +118,8 @@ class ProductControllers extends Controller
             'desc' => $req->desc,
             'category_id' => $req->category,
             'supplier_id' => $req->supplier,
-            'updated_at' => $datenow
+            'updated_at' => $datenow,
+            'updated_by' => Auth::user()->username
         ]);
 
         $destination='Uploads/Product/'.$req->id.'/uploads\\';
