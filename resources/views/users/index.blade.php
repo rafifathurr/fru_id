@@ -115,11 +115,15 @@
                                                                 data-original-title="Edit" control-id="ControlID-16">
                                                                 <i class="fa fa-edit" style="color:grey;"></i>
                                                             </a>
-                                                            <button type="submit" onclick="destroy({{$user->id}})" data-toggle="tooltip" title="Delete"
-                                                                class="btn btn-link btn-simple-danger"
-                                                                data-original-title="Delete" control-id="ControlID-17">
-                                                                <i class="fa fa-trash" style="color:red;"></i>
-                                                            </button>
+                                                            @if(Auth::user()->id == $user->id && Auth::guard('admin')->check())
+                                                                <!-- Nothing to Delete -->
+                                                            @else
+                                                                <button type="submit" onclick="destroy({{$user->id}})" data-toggle="tooltip" title="Delete"
+                                                                    class="btn btn-link btn-simple-danger"
+                                                                    data-original-title="Delete" control-id="ControlID-17">
+                                                                    <i class="fa fa-trash" style="color:red;"></i>
+                                                                </button>
+                                                            @endif
                                                         </div>
                                                     </center>
                                                 </td>

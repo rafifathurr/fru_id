@@ -103,7 +103,24 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-head-row">
-                                        <div class="card-title"><strong>{{date('M Y')}} Profit</strong> </div>
+                                        <div class="card-title"><strong>Profit of Year</strong> </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container" style="min-height: 375px">
+                                        <canvas id="statisticsChartYear"></canvas>
+                                    </div>
+                                    <div id="myChartLegend"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-head-row">
+                                        <div class="card-title"><strong>Month Profit of {{date('Y')}}</strong> </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -461,6 +478,12 @@
                 </div>
                 @include('layouts.footer')
                 <script>
+                    <?php 
+                        $mos=[];
+                        $inc=[];
+                        $profs=[];
+                        $year=range(date('Y')-4, date('Y'));
+                    ?>
                     @foreach($month as $mo)
                         <?php 
                         $mos[] = $mo->month;
@@ -496,6 +519,8 @@
                     var month = @json($mos);
                     var income = @json($inc);
                     var profit = @json($profs);
+                    var year = @json($year);
+                    console.log(year);
                 </script>
                 <script>
                     Circles.create({
@@ -595,6 +620,78 @@
                                     }
                                 }]
                             },
+                        }
+                    });
+
+                    var statisticsChartYear = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: month,
+                            datasets: [ {
+                                label: "Profit",
+                                borderColor: '#1269db',
+                                pointRadius: 0,
+                                backgroundColor: '#006EFF8E',
+                                legendColor: '#1269db',
+                                fill: true,
+                                borderWidth: 2,
+                                data: profit
+                            }]
+                        },
+                        options : {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            legend: {
+                                display: false
+                            },
+                            tooltips: {
+                                bodySpacing: 4,
+                                mode:"nearest",
+                                intersect: 0,
+                                position:"nearest",
+                                xPadding:10,
+                                yPadding:10,
+                                caretPadding:10
+                            },
+                            layout:{
+                                padding:{left:5,right:5,top:15,bottom:15}
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        fontStyle: "500",
+                                        beginAtZero: false,
+                                        maxTicksLimit: 5,
+                                        padding: 10
+                                    },
+                                    gridLines: {
+                                        drawTicks: false,
+                                        display: false
+                                    }
+                                }],
+                                xAxes: [{
+                                    gridLines: {
+                                        zeroLineColor: "transparent"
+                                    },
+                                    ticks: {
+                                        padding: 10,
+                                        fontStyle: "500"
+                                    }
+                                }]
+                            },
+                            legendCallback: function(chart) {
+                                var text = [];
+                                text.push('<ul class="' + chart.id + '-legend html-legend">');
+                                for (var i = 0; i < chart.data.datasets.length; i++) {
+                                    text.push('<li><span style="background-color:' + chart.data.datasets[i].legendColor + '"></span>');
+                                    if (chart.data.datasets[i].label) {
+                                        text.push(chart.data.datasets[i].label);
+                                    }
+                                    text.push('</li>');
+                                }
+                                text.push('</ul>');
+                                return text.join('');
+                            }
                         }
                     });
 

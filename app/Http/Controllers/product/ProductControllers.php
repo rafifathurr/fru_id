@@ -27,7 +27,7 @@ class ProductControllers extends Controller
     {
         return view('product.index', [
             "title" => "List Products",
-            "products" => Product::all()
+            "products" => Product::all()->where('is_deleted',null)
         ]);
     }
 
@@ -140,7 +140,12 @@ class ProductControllers extends Controller
     // Delete Data Function
     public function delete(Request $req)
     {
-        $exec = Product::where('id', $req->id )->delete();
+        $datenow = date('Y-m-d H:i:s');
+        $exec = Product::where('id', $req->id )->update([
+            'is_deleted'=>1,
+            'updated_at'=>$datenow,
+            'updated_by'=>Auth::user()->username
+        ]);
 
         if ($exec) {
             Session::flash('success', 'Data successfully deleted!');

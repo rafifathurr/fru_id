@@ -94,7 +94,11 @@
             <li class="nav-item dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                     <div class="avatar-sm">
-                        <img src="{{ asset('img/profile.jpg') }}" alt="..." class="avatar-img rounded-circle">
+                        @if(Auth::guard('admin')->check())
+                            <img src="{{ asset('img/admin.png') }}" style="background-color:white;" alt="..." class="avatar-img rounded-circle">
+                        @else
+                            <img src="{{ asset('img/user.png') }}" alt="..." class="avatar-img rounded-circle">
+                        @endif
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">

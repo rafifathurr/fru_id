@@ -36,18 +36,33 @@
                                 <div class="col-md-6">
                                     <input type="hidden" class="form-control" id="id" name="id"
                                         autocomplete="off" required="">
-                                    <select name="prods" id="prods" onchange="getProds()" class="form-control"
-                                        @if (isset($orders)) @endisset {{$disabled_}}>
-                                        <option value="" style="display: none;" selected="">- Choose Products -
-                                        </option>
-                                        @foreach ($products as $prod)
-                                            <option @if (isset($orders))
-                                            <?php if ($orders->product_id == $prod->id) {
-                                                echo 'selected';
-                                            } ?> @endisset
-                                            value="{{ $prod->id }}">{{ $prod->product_name }}</option>
-                                    @endforeach
-                                </select>
+                                    @if ($title == 'Edit Order')
+                                        <select name="prods" id="prods" onchange="getProds()" class="form-control"
+                                            @if (isset($orders)) @endisset {{$disabled_}} readonly>
+                                            <option value="" style="display: none;" selected="">- Choose Products -
+                                            </option>
+                                            @foreach ($products as $prod)
+                                                <option @if (isset($orders))
+                                                <?php if ($orders->product_id == $prod->id) {
+                                                    echo 'selected';
+                                                } ?> @endisset
+                                                value="{{ $prod->id }}">{{ $prod->product_name }}</option>
+                                        @endforeach
+                                        </select>
+                                    @else
+                                        <select name="prods" id="prods" onchange="getProds()" class="form-control"
+                                            @if (isset($orders)) @endisset {{$disabled_}}>
+                                            <option value="" style="display: none;" selected="">- Choose Products -
+                                            </option>
+                                            @foreach ($products as $prod)
+                                                <option @if (isset($orders))
+                                                <?php if ($orders->product_id == $prod->id) {
+                                                    echo 'selected';
+                                                } ?> @endisset
+                                                value="{{ $prod->id }}">{{ $prod->product_name }}</option>
+                                        @endforeach
+                                        </select>
+                                    @endif
                             </div>
                             <label class="col-md-2 mt-1">Qty <span style="color: red;">*</span></label>
                             <div class="col-md-5">
@@ -74,9 +89,9 @@
                             <label class="col-md-2 mt-1">Base Price <span style="color: red;">*</span></label>
                             <div class="col-md-4">
                                 <input type="hidden" name="base_price_old" id="base_price_old" class="form-control"
-                                    @if (isset($orders)) value="{{ $orders->product->base_price }}" @endisset {{$disabled_}}>
+                                    @if (isset($orders)) value="{{ $orders->base_price_product }}" @endisset readonly>
                                 <input type="text" name="base_price" id="base_price" class="form-control numeric"
-                                    @if (isset($orders)) value="{{($orders->product->base_price * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}}>
+                                    @if (isset($orders)) value="{{($orders->base_price_product * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}} readonly>
                             </div>
                         </div>
                     </div>
@@ -121,15 +136,15 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="col-md-2"></div>
-                        <label class="col-md-2">Calculation Tax <span style="color: red;">*</span></label>
+                        <label class="col-md-2">Platform Fee<span style="color: red;">*</span></label>
                         <div class="col-md-4">
                             <input type="text" name="cal_tax" id="cal_tax" class="form-control numeric"
-                                 @if (isset($orders)) value="{{ $orders->tax }}" @endisset autocomplete="off" required {{$disabled_}}>
+                                 @if (isset($orders)) value="{{ $orders->tax }}" @endisset autocomplete="off" required {{$disabled_}} readonly>
                         </div>
                         <label class="col-md-2">Calculation Profit <span style="color: red;">*</span></label>
                         <div class="col-md-4">
                             <input type="text" name="cal_profit" id="cal_profit"
-                                @if (isset($orders)) value="{{ $orders->profit }}" @endisset class="form-control numeric" autocomplete="off" required {{$disabled_}}>
+                                @if (isset($orders)) value="{{ $orders->profit }}" @endisset class="form-control numeric" autocomplete="off" required {{$disabled_}} readonly>
                         </div>
                     </div>
                 </div>
@@ -242,6 +257,7 @@
 
                 //Calculation
                 if(base_price_old == 0 || sell_price != 0){
+                    $("#base_price_old").val(base_price);  
                     if(qty > max_qty){
                         $('#save_data').attr('disabled', 'disabled');
                         alert("Item Quantity Exceed Stock Limit!");
@@ -285,7 +301,11 @@
                     }else{
                         var profit = entry - base;
                         var sell_total = sell_price * qty;
-                        var tax = sell_total - entry;
+                        if(entry > sell_total){
+                            var tax = 0;
+                        }else{
+                            var tax = sell_total - entry;
+                        }
                     }
                 }else{
                     if(entry == 0){
@@ -294,7 +314,11 @@
                     }else{
                         var profit = entry - base;
                         var sell_total = sell_price_old * qty;
-                        var tax = sell_total - entry;
+                        if(entry > sell_total){
+                            var tax = 0;
+                        }else{
+                            var tax = sell_total - entry;
+                        }
                     }
                 }
                 $("#cal_tax").val(tax);

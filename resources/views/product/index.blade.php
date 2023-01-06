@@ -28,10 +28,9 @@
                             Add Product
                         </a>
                     @else
-                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{ route('user.product.create') }}">
-                            <i class="fa fa-plus"></i>
-                            Add Product
-                        </a>
+                        <div class="mb-3"">
+                            <br>
+                        </div>
                     @endif
                     </div>
 
@@ -70,12 +69,14 @@
                                                     style="font-weight:900;">
                                                     <center>Code</center>
                                                 </th>
-                                                <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Position: activate to sort column ascending"
-                                                    style="width: 15%; font-weight:900;">
-                                                    <center>Base Price</center>
-                                                </th>
+                                                @if(Auth::guard('admin')->check())
+                                                    <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Position: activate to sort column ascending"
+                                                        style="width: 15%; font-weight:900;">
+                                                        <center>Base Price</center>
+                                                    </th>
+                                                @endif
                                                 <th width:"25%" class="sorting" tabindex="0" aria-controls="add-row"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Position: activate to sort column ascending"
@@ -115,9 +116,11 @@
                                                 <td class="sorting_1">
                                                     <center>{{$prod->code}}</center>
                                                 </td>
-                                                <td class="sorting_1">
-                                                    <center>Rp. {{number_format($prod->base_price,0,',','.')}}</center>
-                                                </td>
+                                                @if(Auth::guard('admin')->check())
+                                                    <td class="sorting_1">
+                                                        <center>Rp. {{number_format($prod->base_price,0,',','.')}}</center>
+                                                    </td>
+                                                @endif
                                                 <td class="sorting_1">
                                                     <center>Rp. {{number_format($prod->selling_price,0,',','.')}}</center>
                                                 </td>
@@ -161,11 +164,11 @@
                                                                 data-original-title="Edit" control-id="ControlID-16">
                                                                 <i class="fa fa-edit" style="color:grey;"></i>
                                                             </a>
-                                                            <button type="submit" onclick="destroy({{$prod->id}})" data-toggle="tooltip" title="Delete"
+                                                            <!-- <button type="submit" onclick="destroy({{$prod->id}})" data-toggle="tooltip" title="Delete"
                                                                 class="btn btn-link btn-simple-danger"
                                                                 data-original-title="Delete" control-id="ControlID-17">
                                                                 <i class="fa fa-trash" style="color:red;"></i>
-                                                            </button>
+                                                            </button> -->
                                                         @endif
                                                         </div>
                                                     </center>

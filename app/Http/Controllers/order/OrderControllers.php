@@ -78,6 +78,7 @@ class OrderControllers extends Controller
             'product_id' => $req->prods,
             'qty' => $req->qty,
             'entry_price' => $req->entry_price,
+            'base_price_product' => $req->base_price_old,
             'source_id' => $req->source_pay,
             'date' => $req->tgl,
             'note' => $req->note,
@@ -113,7 +114,7 @@ class OrderControllers extends Controller
         $data['disabled_'] = '';
         $data['url'] = 'update';
         $data['orders'] = Order::where('id', $id)->first();
-        $data['products'] = Product::orderBy('product_name', 'asc')->get();
+        $data['products'] = Product::orderBy('product_name', 'asc')->where('status', 'Active')->get();
         $data['sources'] = Source::orderBy('id', 'asc')->get();
         return view('order.create', $data);
     }

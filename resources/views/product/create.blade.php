@@ -45,6 +45,7 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <div class="col-md-2"></div>
+                            @if(Auth::guard('admin')->check())
                                 <label class="col-md-2">Part Code <span style="color: red;">*</span></label>
                                 <div class="col-md-3">
                                     <input type="text" name="code" id="code" class="form-control"
@@ -73,10 +74,35 @@
                                         step="1" @if (isset($products)) value="{{ $products->stock }}" @endisset autocomplete="off" required
                                         {{ $disabled_ }} style="width:100%;">
                                 </div>
+                            @else
+                                <label class="col-md-2">Part Code <span style="color: red;">*</span></label>
+                                <div class="col-md-4">
+                                    <input type="text" name="code" id="code" class="form-control"
+                                        step="1" @if (isset($products)) value="{{ $products->code }}" @endisset autocomplete="off" required
+                                        {{ $disabled_ }} style="width:100%;">
+                                </div>
+                                <label class="col-md-2 mt-1">Status <span style="color: red;">*</span></label>
+                                <div class="col-md-4">
+                                    <select class="form-control selectpicker" id="status"
+                                        name="status" data-size="8" data-show-subtext="true"
+                                        data-live-search="true" @if(isset($products)) @endisset autocomplete="off" required {{ $disabled_ }}>
+                                        <option value="" disabled hidden>- Select Status -</option>
+                                        @if(isset($products))
+                                            <option selected value="{{$products->status}}" hidden>{{$products->status}}</option>
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                        @else
+                                            <option value="Active" selected>Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                        @endisset
+                                    </select>
+                                </div>  
+                            @endif
                             </div>
                         </div>
                         <br>
                         <div class="row">
+                        @if(Auth::guard('admin')->check())
                             <div class="col-md-10">
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Base Price <span style="color: red;">*</span></label>
@@ -92,6 +118,29 @@
                                         {{ $disabled_ }} style="width:100%;">
                                 </div>
                             </div>
+                        @else
+                            <div class="col-md-10">
+                                <div class="col-md-2"></div>
+                                <label class="col-md-2">Stock <span style="color: red;">*</span></label>
+                                <div class="col-md-2">
+                                    <input type="number" style="text-align:center;" name="stock" id="stock" class="form-control"
+                                        step="1" @if (isset($products)) value="{{ $products->stock }}" @endisset autocomplete="off" required
+                                        {{ $disabled_ }} style="width:100%;">
+                                </div>
+                                <!-- <label class="col-md-2">Base Price <span style="color: red;">*</span></label>
+                                <div class="col-md-4"> -->
+                                    <input type="hidden" name="base_price" id="base_price" class="form-control numeric"
+                                        step="1" @if (isset($products)) value="{{ $products->base_price }}" @endisset autocomplete="off" required
+                                        {{ $disabled_ }} style="width:100%;">
+                                <!-- </div> -->
+                                <label class="col-md-2 mt-1">Selling Price <span style="color: red;">*</span></label>
+                                <div class="col-md-6">
+                                    <input type="text" name="selling_price" id="selling_price" class="form-control numeric"
+                                        step="1" @if (isset($products)) value="{{ $products->selling_price }}" @endisset autocomplete="off" required
+                                        {{ $disabled_ }} style="width:100%;">
+                                </div>
+                            </div>
+                        @endif
                         </div>
                         <br>
                         <div class="row">
@@ -142,7 +191,6 @@
                                         <input type="file" id="uploads" name="uploads" class="form-control"
                                             accept=".doc, .docx, .pdf, .png, .jpg, .jpeg">
                                         <br>
-                                        <br>
                                         @if(isset($products))    
                                             @if($products->upload != null)
                                                 <?php
@@ -151,10 +199,14 @@
                                                 $explode = explode("_",$products->upload);
                                                 $changename = str_replace( $explode[0]."_","",$products->upload);
                                                 ?>
-                                                <a href="{{url('/').'/Uploads/Product/'.$products->id.'/uploads/'.$products->upload}}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> &nbsp;<?php echo $changename; ?> </a><br>
+                                                <a href="{{url('/').'/Uploads/Product/'.$products->id.'/uploads/'.$products->upload}}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> &nbsp;<?php echo $changename; ?> </a>
+                                                <br>
+                                                <span style="font-size: 13px;color: red">*) .doc .docx .pdf .png .jpg .jpeg</span>
                                             @else
                                                 <span style="font-size: 13px;color: red">*) .doc .docx .pdf .png .jpg .jpeg</span>
                                             @endif
+                                        @else
+                                            <span style="font-size: 13px;color: red">*) .doc .docx .pdf .png .jpg .jpeg</span>
                                         @endif
                                     @else
                                         @if(isset($products))    
