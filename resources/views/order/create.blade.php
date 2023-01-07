@@ -240,6 +240,8 @@
                     base_price = data["base_price"];
                     sell_price = data["selling_price"];
                     max_qty = data["stock"];
+                    console.log('MAX Stock : ' + max_qty);
+                    console.log('LENGTH max Stock : ' + max_qty.length);
                     var input = document.getElementById("qty");
                     input.setAttribute("max",max_qty);
                 }
@@ -258,15 +260,17 @@
                 //Calculation
                 if(base_price_old == 0 || sell_price != 0){
                     $("#base_price_old").val(base_price);  
-                    if(qty > max_qty){
+                    if(qty > max_qty && qty.length >= max_qty.length){
                         $('#save_data').attr('disabled', 'disabled');
                         alert("Item Quantity Exceed Stock Limit!");
                         $("#qty").val(0);
+                        $("#base_price").val(0);
                     }else{
                         $('#save_data').removeAttr('disabled');
                         var result_base = base_price * qty;
                         $("#base_price").val(result_base);  
                     }
+                    
                 }else{
                     var input = document.getElementById("qty");
                     input.setAttribute("max",max_stock);

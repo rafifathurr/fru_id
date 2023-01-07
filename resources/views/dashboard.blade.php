@@ -680,9 +680,10 @@
                                 yAxes: [{
                                     ticks: {
                                         fontStyle: "500",
-                                        beginAtZero: false,
-                                        maxTicksLimit: 5,
-                                        padding: 10
+                                        beginAtZero: true,
+                                        maxTicksLimit: 10,
+                                        padding: 10,
+                                        precision:0
                                     },
                                     gridLines: {
                                         drawTicks: false,
@@ -753,8 +754,9 @@
                                     ticks: {
                                         fontStyle: "500",
                                         beginAtZero: false,
-                                        maxTicksLimit: 5,
-                                        padding: 10
+                                        maxTicksLimit: 10,
+                                        padding: 10,
+                                        min: 0
                                     },
                                     gridLines: {
                                         drawTicks: false,

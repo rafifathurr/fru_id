@@ -53,9 +53,6 @@ $('#map-example').vectorMap(
 
 //Chart
 
-var ctx = document.getElementById('statisticsChart').getContext('2d');
-
-
 
 var myLegendContainer = document.getElementById("myChartLegend");
 
