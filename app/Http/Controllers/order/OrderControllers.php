@@ -80,6 +80,7 @@ class OrderControllers extends Controller
             'qty' => $req->qty,
             'entry_price' => $req->entry_price,
             'base_price_product' => $req->base_price_old,
+            'sell_price_product' => $req->sell_price_old,
             'source_id' => $req->source_pay,
             'date' => $req->tgl,
             'note' => $req->note,

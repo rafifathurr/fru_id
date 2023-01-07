@@ -34,7 +34,7 @@
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2">Product <span style="color: red;">*</span></label>
                                 <div class="col-md-6">
-                                    <input type="hidden" class="form-control" id="id" name="id"
+                                    <input type="hidden" class="form-control" id="id" name="id" @if (isset($orders)) value="{{$orders->id}}" @endisset
                                         autocomplete="off" required="">
                                     @if ($title == 'Edit Order')
                                         <select name="prods" id="prods" onchange="getProds()" class="form-control"
@@ -80,7 +80,7 @@
                             <label class="col-md-2">Entry Price <span style="color: red;">*</span></label>
                             <div class="col-md-4">
                                 <input type="hidden" name="sell_price_old" id="sell_price_old"
-                                    @if (isset($orders)) value="{{ $orders->product->selling_price }}" @endisset class="form-control" required {{$disabled_}}
+                                    @if (isset($orders)) value="{{ $orders->sell_price_product }}" @endisset class="form-control" required {{$disabled_}}
                                     style="width:100%">
                                 <input type="text" name="entry_price" id="entry_price"
                                     @if (isset($orders)) value="{{ $orders->entry_price }}" @endisset class="form-control numeric" autocomplete="off" required="" {{$disabled_}}
@@ -309,6 +309,7 @@
 
                 //Calculation
                 if(sell_price != 0){
+                    $("#sell_price_old").val(sell_price);
                     if(entry == 0){
                         var tax = 0;
                         var profit = 0;
