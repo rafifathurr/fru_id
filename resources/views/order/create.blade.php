@@ -282,20 +282,20 @@
                     }
 
                 }else{
-                    var input = document.getElementById("qty");
-                    input.setAttribute("max",max_stock);
+                    // var input = document.getElementById("qty");
+                    // input.setAttribute("max",max_stock);
 
-                    if(qty > max_stock){
-                        $('#save_data').attr('disabled', 'disabled');
-                        alert("Item Quantity Exceed Stock Limit!");
-                    }else{
-                        $('#save_data').removeAttr('disabled');
-                        $("#entry_price").val(0);
-                        $("#cal_tax").val(0);
-                        $("#cal_profit").val(0);
+                    // if(qty > max_stock){
+                    //     $('#save_data').attr('disabled', 'disabled');
+                    //     alert("Item Quantity Exceed Stock Limit!");
+                    // }else{
+                    //     $('#save_data').removeAttr('disabled');
+                    //     $("#entry_price").val(0);
+                    //     $("#cal_tax").val(0);
+                    //     $("#cal_profit").val(0);
                         var result_base = base_price_old * qty;
                         $("#base_price").val(result_base);
-                    }
+                    // }
                 }
             });
 
