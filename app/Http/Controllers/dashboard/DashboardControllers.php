@@ -96,7 +96,7 @@ class DashboardControllers extends Controller
                                 ->whereRaw('YEAR(date) = YEAR(now())')
                                 ->sum('tax');
         $data['incomepermonth'] = Order::whereYear('date', Carbon::now()->year)
-                                ->where('is_deleted',null)  
+                                ->where('is_deleted',null)
                                 ->selectRaw('sum(entry_price) as income')
                                 ->groupBy(DB::raw('MONTH(date)'))
                                 ->orderBy(DB::raw('MONTH(date)'), 'ASC')
@@ -104,25 +104,42 @@ class DashboardControllers extends Controller
 
         foreach($year as $y){
             $data['years'][] = array(strval($y));
+            $checkstat = Order::whereYear('date', $y)
+                                ->where('is_deleted',null)
+                                ->selectRaw('sum(profit) as profit')
+                                ->orderBy(DB::raw('YEAR(date)'), 'ASC')
+                                ->groupBy(DB::raw('YEAR(date)'))
+                                ->first();
             $profityear = Order::whereYear('date', $y)
                                 ->where('is_deleted',null)
                                 ->selectRaw('sum(profit) as profit')
                                 ->orderBy(DB::raw('YEAR(date)'), 'ASC')
                                 ->groupBy(DB::raw('YEAR(date)'))
                                 ->get();
-            foreach($profityear as $profit){
-                if($profit->profit){
-                    $data['profityear'][] = array($profit->profit);
-                }else{
-                    $data['profityear'][] = array('0');
+            if($checkstat){
+                foreach($profityear as $profit){
+                    if($profit->profit){
+                        $data['profityear'][] = array($profit->profit);
+                    }else{
+                        $data['profityear'][] = array('0');
+                    }
                 }
-            }   
-        }   
+            }else{
+                $data['profityear'][] = array('0');
+            }
+        }
 
         foreach($month as $mon){
             $dateObj   = DateTime::createFromFormat('!m', $mon);
             $monthName = $dateObj->format('F');
             $data['month'][]=array('month'=>$monthName);
+            $checkstat = Order::whereYear('date', Carbon::now()->year)
+                                ->where('is_deleted',null)
+                                ->whereMonth('date', $mon)
+                                ->selectRaw('sum(profit) as profit')
+                                ->orderBy(DB::raw('MONTH(date)'), 'ASC')
+                                ->groupBy(DB::raw('MONTH(date)'))
+                                ->first();
             $profitmonth = Order::whereYear('date', Carbon::now()->year)
                                 ->where('is_deleted',null)
                                 ->whereMonth('date', $mon)
@@ -130,13 +147,17 @@ class DashboardControllers extends Controller
                                 ->orderBy(DB::raw('MONTH(date)'), 'ASC')
                                 ->groupBy(DB::raw('MONTH(date)'))
                                 ->get();
-            foreach($profitmonth as $profit){
-                if($profit->profit){
-                    $data['profitpermonth'][] = array($profit->profit);
-                }else{
-                    $data['profitpermonth'][] = array('0');
+            if($checkstat){
+                foreach($profitmonth as $profit){
+                    if($profit->profit){
+                        $data['profitpermonth'][] = array($profit->profit);
+                    }else{
+                        $data['profitpermonth'][] = array('0');
+                    }
                 }
-            }   
+            }else{
+                $data['profitpermonth'][] = array('0');
+            }
         }
 
         $data['topproduct'] = Order::whereYear('date', Carbon::now()->year)
