@@ -24,7 +24,7 @@ class SupplierControllers extends Controller
     {
         return view('supplier.index', [
             "title" => "List Supplier",
-            "suppliers" => Supplier::all()
+            "suppliers" => Supplier::all()->where('is_deleted',null)
         ]);
     }
 
@@ -88,7 +88,11 @@ class SupplierControllers extends Controller
     // Delete Data Function
     public function delete(Request $req)
     {
-        $exec = Supplier::where('id', $req->id )->delete();
+        $datenow = date('Y-m-d H:i:s');
+        $exec = Supplier::where('id', $req->id )->update([
+            'updated_at'=> $datenow,
+            'is_deleted'=> 1
+        ]);
 
         if ($exec) {
             Session::flash('success', 'Data successfully deleted!');

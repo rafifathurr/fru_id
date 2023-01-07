@@ -25,8 +25,8 @@ class UsersControllers extends Controller
     {
         return view('users.index', [
             "title" => "List User",
-            "users" => User::all(),
-            "roles" => Role::all()
+            "users" => User::all()->where('is_deleted',null),
+            "roles" => Role::all()->where('is_deleted',null)
         ]);
     }
 
@@ -117,7 +117,11 @@ class UsersControllers extends Controller
     // Delete Data Function
     public function delete(Request $req)
     {
-        $exec = User::where('id', $req->id )->delete();
+        $datenow = date('Y-m-d H:i:s');
+        $exec = User::where('id', $req->id )->update([
+            'updated_at'=> $datenow,
+            'is_deleted'=> 1
+        ]);
 
         if ($exec) {
             Session::flash('success', 'Data successfully deleted!');

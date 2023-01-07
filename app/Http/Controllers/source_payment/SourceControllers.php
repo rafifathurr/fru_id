@@ -24,7 +24,7 @@ class SourceControllers extends Controller
     {
         return view('source_payment.index', [
             "title" => "List Source Payment",
-            "sources" => Source::all()
+            "sources" => Source::all()->where('is_deleted',null)
         ]);
     }
 
@@ -88,7 +88,11 @@ class SourceControllers extends Controller
     // Delete Data Function
     public function delete(Request $req)
     {
-        $exec = Source::where('id', $req->id )->delete();
+        $datenow = date('Y-m-d H:i:s');
+        $exec = Source::where('id', $req->id )->update([
+            'updated_at'=> $datenow,
+            'is_deleted'=> 1
+        ]);
 
         if ($exec) {
             Session::flash('success', 'Data successfully deleted!');

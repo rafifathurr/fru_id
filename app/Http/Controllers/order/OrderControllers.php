@@ -27,7 +27,7 @@ class OrderControllers extends Controller
     {
         return view('order.index', [
             "title" => "List Order",
-            "orders" => Order::orderBy('date', 'DESC')->get()
+            "orders" => Order::orderBy('date', 'DESC')->where('is_deleted',null)->get()
         ]);
     }
 
@@ -147,7 +147,12 @@ class OrderControllers extends Controller
     // Delete Data Function
     public function delete(Request $req)
     {
-        $exec = Order::where('id', $req->id )->delete();
+        $datenow = date('Y-m-d H:i:s');
+        $exec = Order::where('id', $req->id )->update([
+            'is_deleted'=>1,
+            'updated_at'=>$datenow,
+            'updated_by'=>Auth::user()->username
+        ]);
 
         if ($exec) {
             Session::flash('success', 'Data successfully deleted!');
