@@ -108,6 +108,7 @@ class DashboardControllers extends Controller
                                 ->where('is_deleted',null)
                                 ->selectRaw('sum(profit) as profit')
                                 ->orderBy(DB::raw('YEAR(date)'), 'ASC')
+                                ->groupBy(DB::raw('YEAR(date)'))
                                 ->get();
             foreach($profityear as $profit){
                 if($profit->profit){
@@ -127,6 +128,7 @@ class DashboardControllers extends Controller
                                 ->whereMonth('date', $mon)
                                 ->selectRaw('sum(profit) as profit')
                                 ->orderBy(DB::raw('MONTH(date)'), 'ASC')
+                                ->groupBy(DB::raw('MONTH(date)'))
                                 ->get();
             foreach($profitmonth as $profit){
                 if($profit->profit){
