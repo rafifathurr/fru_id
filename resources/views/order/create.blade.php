@@ -69,7 +69,7 @@
                                 <input type="hidden" min="0" name="stock" id="stock" class="form-control"
                                     @if (isset($orders)) value="{{ $orders->product->stock }}" @endisset step="1" required="" style="width:35%" {{$disabled_}}>
                                 <input type="number" min="0" name="qty" id="qty" class="form-control"
-                                    @if (isset($orders)) value="{{ $orders->qty }}" @endisset step="1" required="" style="width:35%" {{$disabled_}}>
+                                    @if (isset($orders)) value="{{ $orders->qty }}" @endisset step="1" required="" style="width:35%" {{$disabled__}} {{$disabled_}}>
                             </div>
                         </div>
                     </div>
@@ -237,8 +237,11 @@
                     $("#entry_price").val(0);
                     $("#cal_tax").val(0);
                     $("#cal_profit").val(0);
+                    $('#qty').removeAttr('disabled');
                     base_price = data["base_price"];
                     sell_price = data["selling_price"];
+                    $('#qty').val(1);
+                    $('#base_price').val(base_price);
                     max_qty = data["stock"];
                     console.log('MAX Stock : ' + max_qty);
                     console.log('LENGTH max Stock : ' + max_qty.length);

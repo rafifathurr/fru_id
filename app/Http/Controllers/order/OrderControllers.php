@@ -37,6 +37,7 @@ class OrderControllers extends Controller
         $data['title'] = "Add Order";
         $data['url'] = 'store';
         $data['disabled_'] = '';
+        $data['disabled__'] = 'disabled';
         $data['products'] = Product::orderBy('product_name', 'asc')->where('status', 'Active')->get();
         $data['sources'] = Source::orderBy('id', 'asc')->get();
         return view('order.create', $data);
@@ -100,6 +101,7 @@ class OrderControllers extends Controller
     {
         $data['title'] = "Detail Order";
         $data['disabled_'] = 'disabled';
+        $data['disabled__'] = '';
         $data['url'] = 'create';
         $data['orders'] = Order::where('id', $id)->first();
         $data['products'] = Product::orderBy('product_name', 'asc')->get();
@@ -112,6 +114,7 @@ class OrderControllers extends Controller
     {
         $data['title'] = "Edit Order";
         $data['disabled_'] = '';
+        $data['disabled__'] = '';
         $data['url'] = 'update';
         $data['orders'] = Order::where('id', $id)->first();
         $data['products'] = Product::orderBy('product_name', 'asc')->where('status', 'Active')->get();
