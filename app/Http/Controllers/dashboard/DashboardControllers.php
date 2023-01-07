@@ -8,6 +8,8 @@ use App\Models\product\Product;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
+use DateTime;
+
 use Illuminate\Http\Request;
 
 class DashboardControllers extends Controller
@@ -26,6 +28,9 @@ class DashboardControllers extends Controller
         ->select(DB::raw('product_id, sum(qty) as total'))
         ->groupBy(DB::raw('product_id'))
         ->get();
+
+        $month = range(1,12);
+        $year=range(date('Y')-4, date('Y'));
 
         // RETURN DATA
         $data['title'] = "Dashboard";
@@ -90,30 +95,56 @@ class DashboardControllers extends Controller
                                 ->where('is_deleted',null)
                                 ->whereRaw('YEAR(date) = YEAR(now())')
                                 ->sum('tax');
-        $data['month'] = Order::whereYear('date', Carbon::now()->year)
-                        ->where('is_deleted',null)
-                        ->selectRaw('MONTHNAME(date) as month')
-                        ->groupBy(DB::raw('MONTHNAME(date)'))
-                        ->orderBy(DB::raw('MONTHNAME(date)'), 'DESC')
-                        ->get();
         $data['incomepermonth'] = Order::whereYear('date', Carbon::now()->year)
                                 ->where('is_deleted',null)  
                                 ->selectRaw('sum(entry_price) as income')
                                 ->groupBy(DB::raw('MONTH(date)'))
                                 ->orderBy(DB::raw('MONTH(date)'), 'ASC')
                                 ->get();
-        $data['profitpermonth'] = Order::whereYear('date', Carbon::now()->year)
+
+        foreach($year as $y){
+            $data['years'][] = array(strval($y));
+            $profityear = Order::whereYear('date', $y)
                                 ->where('is_deleted',null)
                                 ->selectRaw('sum(profit) as profit')
-                                ->groupBy(DB::raw('MONTH(date)'))
-                                ->orderBy(DB::raw('MONTH(date)'), 'DESC')
+                                ->orderBy(DB::raw('YEAR(date)'), 'ASC')
                                 ->get();
-        $data['topproduct'] = Order::whereRaw('MONTH(date) = MONTH(now())')
+            foreach($profityear as $profit){
+                if($profit->profit){
+                    $data['profityear'][] = array($profit->profit);
+                }else{
+                    $data['profityear'][] = array('0');
+                }
+            }   
+        }   
+
+        foreach($month as $mon){
+            $dateObj   = DateTime::createFromFormat('!m', $mon);
+            $monthName = $dateObj->format('F');
+            $data['month'][]=array('month'=>$monthName);
+            $profitmonth = Order::whereYear('date', Carbon::now()->year)
+                                ->where('is_deleted',null)
+                                ->whereMonth('date', $mon)
+                                ->selectRaw('sum(profit) as profit')
+                                ->orderBy(DB::raw('MONTH(date)'), 'ASC')
+                                ->get();
+            foreach($profitmonth as $profit){
+                if($profit->profit){
+                    $data['profitpermonth'][] = array($profit->profit);
+                }else{
+                    $data['profitpermonth'][] = array('0');
+                }
+            }   
+        }
+
+        $data['topproduct'] = Order::whereYear('date', Carbon::now()->year)
+                                ->whereRaw('MONTH(date) = MONTH(now())')
                                 ->where('is_deleted',null)
                                 ->select(DB::raw('product_id, sum(qty) as total'))
                                 ->groupBy(DB::raw('product_id'))
                                 ->get();
-        $data['topsource'] = Order::whereRaw('MONTH(date) = MONTH(now())')
+        $data['topsource'] = Order::whereYear('date', Carbon::now()->year)
+                                ->whereRaw('MONTH(date) = MONTH(now())')
                                 ->where('is_deleted',null)
                                 ->select(DB::raw('source_id, count(*) as total'))
                                 ->groupBy(DB::raw('source_id'))

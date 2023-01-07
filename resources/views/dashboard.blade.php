@@ -478,26 +478,46 @@
                 </div>
                 @include('layouts.footer')
                 <script>
+                    var ctx = document.getElementById('statisticsChart').getContext('2d');
+                    var ctx_2 = document.getElementById('statisticsChartYear').getContext('2d');
+
                     <?php 
+                        $year=[];
                         $mos=[];
                         $inc=[];
                         $profs=[];
-                        $year=range(date('Y')-4, date('Y'));
+                        $profsyear=[];
                     ?>
+                    @foreach($years as $y)
+                            <?php 
+                            $year[] = $y;
+                            ?>
+                    @endforeach
                     @foreach($month as $mo)
-                        <?php 
-                        $mos[] = $mo->month;
-                        ?>
+                        @foreach($mo as $m)
+                            <?php 
+                            $mos[] = $m;
+                            ?>
+                        @endforeach
                     @endforeach
                     @foreach($incomepermonth as $in)
                         <?php 
                         $inc[] = $in->income;
                         ?>
                     @endforeach
+                    @foreach($profityear as $py)
+                        @foreach($py as $p)
+                            <?php 
+                            $profsyear[] = $p;
+                            ?>
+                        @endforeach
+                    @endforeach
                     @foreach($profitpermonth as $pm)
-                        <?php 
-                        $profs[] = $pm->profit;
-                        ?>
+                        @foreach($pm as $p)
+                            <?php 
+                            $profs[] = $p;
+                            ?>
+                        @endforeach
                     @endforeach
                     @if(json_encode($dayofweeks)!='[]')
                         @foreach($dayofweeks as $day)
@@ -518,9 +538,9 @@
                     @endif
                     var month = @json($mos);
                     var income = @json($inc);
-                    var profit = @json($profs);
+                    var profitmonth = @json($profs);
                     var year = @json($year);
-                    console.log(year);
+                    var profityear = @json($profsyear);
                 </script>
                 <script>
                     Circles.create({
@@ -623,19 +643,19 @@
                         }
                     });
 
-                    var statisticsChartYear = new Chart(ctx, {
+                    var statisticsChartYear = new Chart(ctx_2, {
                         type: 'line',
                         data: {
-                            labels: month,
+                            labels: year,
                             datasets: [ {
                                 label: "Profit",
-                                borderColor: '#1269db',
+                                borderColor: '#31ce36',
                                 pointRadius: 0,
-                                backgroundColor: '#006EFF8E',
+                                backgroundColor: '#31ce3675',
                                 legendColor: '#1269db',
                                 fill: true,
                                 borderWidth: 2,
-                                data: profit
+                                data: profityear
                             }]
                         },
                         options : {
@@ -707,7 +727,7 @@
                                 legendColor: '#1269db',
                                 fill: true,
                                 borderWidth: 2,
-                                data: profit
+                                data: profitmonth
                             }]
                         },
                         options : {
@@ -767,14 +787,14 @@
                         }
                     });
 
-                    $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
-                        type: 'line',
-                        height: '70',
-                        width: '100%',
-                        lineWidth: '2',
-                        lineColor: '#ffa534',
-                        fillColor: 'rgba(255, 165, 52, .14)'
-                    });
+                    // $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
+                    //     type: 'line',
+                    //     height: '70',
+                    //     width: '100%',
+                    //     lineWidth: '2',
+                    //     lineColor: '#ffa534',
+                    //     fillColor: 'rgba(255, 165, 52, .14)'
+                    // });
                 </script>
             </div>
         </div>
