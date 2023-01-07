@@ -259,18 +259,25 @@
 
                 //Calculation
                 if(base_price_old == 0 || sell_price != 0){
-                    $("#base_price_old").val(base_price);  
-                    if(qty > max_qty && qty.length >= max_qty.length){
+                    $("#base_price_old").val(base_price);
+                    if(qty.length <= max_qty.length) {
+                        if(qty > max_qty && qty.length >= max_qty.length){
                         $('#save_data').attr('disabled', 'disabled');
                         alert("Item Quantity Exceed Stock Limit!");
-                        $("#qty").val(0);
-                        $("#base_price").val(0);
+                            $("#qty").val(1);
+                            $("#base_price").val(base_price);
+                        }else{
+                            $('#save_data').removeAttr('disabled');
+                            var result_base = base_price * qty;
+                            $("#base_price").val(result_base);
+                        }
                     }else{
-                        $('#save_data').removeAttr('disabled');
-                        var result_base = base_price * qty;
-                        $("#base_price").val(result_base);  
+                        $('#save_data').attr('disabled', 'disabled');
+                        alert("Item Quantity Exceed Stock Limit!");
+                            $("#qty").val(1);
+                            $("#base_price").val(base_price);
                     }
-                    
+
                 }else{
                     var input = document.getElementById("qty");
                     input.setAttribute("max",max_stock);
