@@ -86,13 +86,25 @@
                                     @if (isset($orders)) value="{{ $orders->entry_price }}" @endisset class="form-control numeric" autocomplete="off" required="" {{$disabled_}}
                                     style="width:100%">
                             </div>
-                            <label class="col-md-2 mt-1">Base Price <span style="color: red;">*</span></label>
-                            <div class="col-md-4">
-                                <input type="hidden" name="base_price_old" id="base_price_old" class="form-control"
-                                    @if (isset($orders)) value="{{ $orders->base_price_product }}" @endisset readonly>
-                                <input type="text" name="base_price" id="base_price" class="form-control numeric"
-                                    @if (isset($orders)) value="{{($orders->base_price_product * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}} readonly>
-                            </div>
+                            @if(Auth::guard('admin')->check())
+                                <label class="col-md-2 mt-1">Base Price <span style="color: red;">*</span></label>
+                                <div class="col-md-4">
+                                    <input type="hidden" name="base_price_old" id="base_price_old" class="form-control"
+                                        @if (isset($orders)) value="{{ $orders->base_price_product }}" @endisset readonly>
+                                    <input type="text" name="base_price" id="base_price" class="form-control numeric"
+                                        @if (isset($orders)) value="{{($orders->base_price_product * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}} readonly>
+                                </div>
+                            @else
+                                <label class="col-md-2 mt-1">Sell Price <span style="color: red;">*</span></label>
+                                <div class="col-md-4">
+                                    <input type="hidden" name="base_price_old" id="base_price_old" class="form-control"
+                                        @if (isset($orders)) value="{{ $orders->base_price_product }}" @endisset readonly>
+                                    <input type="hidden" name="base_price" id="base_price" class="form-control numeric"
+                                        @if (isset($orders)) value="{{($orders->base_price_product * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}} readonly>
+                                    <input type="text" name="sell_price" id="sell_price" class="form-control numeric"
+                                        @if (isset($orders)) value="{{($orders->sell_price_product * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}} readonly>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <br>
@@ -149,6 +161,34 @@
                     </div>
                 </div>
                 <br>
+                @if(isset($orders))
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="col-md-2"></div>
+                        <label class="col-md-2"> <i><b>Created By</b></i> </label>
+                        <div class="col-md-2">
+                            <label for=""><i><b>{{$orders->createdby->name}}</b></i></label>
+                        </div>
+                        <div class="col-md-4">
+                            <label for=""><i><b>{{$orders->created_at}}</b></i></label>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="col-md-2"></div>
+                        <label class="col-md-2"> <i><b>Updated By</b></i> </label>
+                        <div class="col-md-2">
+                            <label for=""><i><b>{{$orders->updatedby->name}}</b></i></label>
+                        </div>
+                        <div class="col-md-4">
+                            <label for=""><i><b>{{$orders->updated_at}}</b></i></label>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                @endif
                 <div class="modal-footer">
                     <div style="float:right;">
                     @if ($title == 'Add Order')
@@ -242,6 +282,9 @@
                     sell_price = data["selling_price"];
                     $('#qty').val(1);
                     $('#base_price').val(base_price);
+                    $("#base_price_old").val(base_price);
+                    $('#sell_price').val(sell_price);
+                    $("#sell_price_old").val(sell_price);
                     max_qty = data["stock"];
                     console.log('MAX Stock : ' + max_qty);
                     console.log('LENGTH max Stock : ' + max_qty.length);
@@ -259,19 +302,22 @@
                 var max_stock = $("#stock").val();
                 var base = $("#base_price").val();
                 var base_price_old = $("#base_price_old").val();
+                var sell_price_old = $("#sell_price_old").val();
 
                 //Calculation
-                if(base_price_old == 0 || sell_price != 0){
-                    $("#base_price_old").val(base_price);
+                if(sell_price != 0){
                     if(qty.length <= max_qty.length) {
                         if(qty > max_qty && qty.length >= max_qty.length){
                         $('#save_data').attr('disabled', 'disabled');
                         alert("Item Quantity Exceed Stock Limit!");
                             $("#qty").val(1);
                             $("#base_price").val(base_price);
+                            $("#sell_price").val(sell_price);
                         }else{
                             $('#save_data').removeAttr('disabled');
                             var result_base = base_price * qty;
+                            var result_sell = sell_price * qty;
+                            $("#sell_price").val(result_sell);
                             $("#base_price").val(result_base);
                         }
                     }else{
@@ -279,6 +325,7 @@
                         alert("Item Quantity Exceed Stock Limit!");
                             $("#qty").val(1);
                             $("#base_price").val(base_price);
+                            $("#sell_price").val(sell_price);
                     }
 
                 }else{
@@ -294,7 +341,9 @@
                     //     $("#cal_tax").val(0);
                     //     $("#cal_profit").val(0);
                         var result_base = base_price_old * qty;
+                        var result_sell = sell_price_old * qty;
                         $("#base_price").val(result_base);
+                        $("#sell_price").val(result_sell);
                     // }
                 }
             });
@@ -309,7 +358,6 @@
 
                 //Calculation
                 if(sell_price != 0){
-                    $("#sell_price_old").val(sell_price);
                     if(entry == 0){
                         var tax = 0;
                         var profit = 0;

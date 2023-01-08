@@ -671,7 +671,10 @@
                                 position:"nearest",
                                 xPadding:10,
                                 yPadding:10,
-                                caretPadding:10
+                                caretPadding:10,
+                                callbacks: {
+                                    label: (item) => `Rp. ${item.yLabel} ,-`,
+                                },
                             },
                             layout:{
                                 padding:{left:5,right:5,top:15,bottom:15}
@@ -744,7 +747,10 @@
                                 position:"nearest",
                                 xPadding:10,
                                 yPadding:10,
-                                caretPadding:10
+                                caretPadding:10,
+                                callbacks: {
+                                    label: (item) => `Rp. ${item.yLabel} ,-`,
+                                },  
                             },
                             layout:{
                                 padding:{left:5,right:5,top:15,bottom:15}

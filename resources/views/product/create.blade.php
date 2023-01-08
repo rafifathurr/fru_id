@@ -227,6 +227,34 @@
                             </div>
                         </div>
                         <br>
+                        @if(isset($products))
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="col-md-2"></div>
+                                <label class="col-md-2"> <i><b>Created By</b></i> </label>
+                                <div class="col-md-2">
+                                    <label for=""><i><b>{{$products->createdby->name}}</b></i></label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for=""><i><b>{{$products->created_at}}</b></i></label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="col-md-2"></div>
+                                <label class="col-md-2"> <i><b>Updated By</b></i> </label>
+                                <div class="col-md-2">
+                                    <label for=""><i><b>{{$products->updatedby->name}}</b></i></label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for=""><i><b>{{$products->updated_at}}</b></i></label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        @endif
                         <div class="modal-footer">
                             <div style="float:right;">
                                 @if ($title == 'Add Products')

@@ -52,6 +52,8 @@ Route::namespace('App\Http\Controllers')->group(function (){
             Route::get('edit/{id}', 'OrderControllers@edit')->name('edit');
             Route::post('update', 'OrderControllers@update')->name('update');
             Route::post('delete', 'OrderControllers@delete')->name('delete');
+            Route::post('getMonth', 'OrderControllers@getMonth')->name('getMonth');
+            Route::post('export', 'OrderControllers@export')->name('export');
         });
 
         // ROUTE TO PRODUCT CONTROLLERS

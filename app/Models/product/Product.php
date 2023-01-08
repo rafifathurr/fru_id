@@ -24,4 +24,14 @@ class Product extends Model
       {
         return $this->belongsTo('App\Models\supplier\Supplier', 'supplier_id', 'id');
       }
+
+      public function createdby()
+      {
+        return $this->belongsTo('App\Models\users\User', 'created_by', 'username');
+      }
+
+      public function updatedby()
+      {
+        return $this->belongsTo('App\Models\users\User', 'updated_by', 'username');
+      }
   }

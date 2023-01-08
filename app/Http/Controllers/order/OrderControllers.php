@@ -7,6 +7,7 @@ use App\Models\order\Order;
 use App\Models\source_payment\Source;
 use App\Models\product\Product;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Http\Request;
 use Auth;
@@ -27,8 +28,15 @@ class OrderControllers extends Controller
     {
         return view('order.index', [
             "title" => "List Order",
+            "years" => Order::select(DB::raw('YEAR(date) as tahun'))->orderBy(DB::raw('YEAR(date)'))->where('is_deleted',null)->get(),
+            "months" => Order::select(DB::raw('MONTH(date) as bulan'))->orderBy(DB::raw('MONTH(date)'))->where('is_deleted',null)->get(),
             "orders" => Order::orderBy('date', 'DESC')->where('is_deleted',null)->get()
         ]);
+    }
+
+    public function getMonth(Request $req){
+        $months = Order::select(DB::raw('MONTH(date) as bulan, MONTHNAME(date) as nama_bulan'))->whereYear('date', $req->tahun)->orderBy(DB::raw('MONTH(date)'))->where('is_deleted',null)->get();
+        return json_encode($months);
     }
 
     // Create View Data
@@ -163,5 +171,20 @@ class OrderControllers extends Controller
           } else {
             Session::flash('gagal', 'Error Data');
           }
+    }
+
+    // Index View and Scope Data
+    public function export(Request $req)
+    {
+        if($req->bulan == 0){
+            return view('order.export', [
+                "orders" => Order::orderBy('date', 'DESC')->whereYear('date', $req->tahun)->where('is_deleted',null)->get()
+            ])->render();
+        }else{
+            return view('order.export', [
+                "orders" => Order::orderBy('date', 'DESC')->whereYear('date', $req->tahun)->whereMonth('date',$req->bulan)->where('is_deleted',null)->get()
+            ]);
+        }
+        
     }
 }

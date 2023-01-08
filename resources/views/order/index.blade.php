@@ -23,7 +23,11 @@
                     <!-- Button -->
                     <div class="d-flex">
                     @if(Auth::guard('admin')->check())
-                        <a class="btn btn-primary btn-round ml-auto mb-3" href="{{route('admin.order.create')}}">
+                        <button id="export" class="btn btn-primary btn-round ml-auto mb-3" style="background-color:green !important;" href="">
+                            <i class="fa fa-file-excel"></i>
+                            Export Excel
+                        </button>
+                        <a class="btn btn-primary btn-round mb-3" style="margin-left:10px;" href="{{route('admin.order.create')}}">
                             <i class="fa fa-plus"></i>
                             Add Order
                         </a>
@@ -190,6 +194,57 @@
     </div>
 </body>
 <script>
+$(document).ready(function() {
+    $('#export').on('click', function(){
+        const div = document.createElement("form");
+        div.method='POST';
+        div.action='{{route("admin.order.export")}}';
+        $(div).html(
+            "<select id='tahun' name='tahun' onchange='getMonth()' class='form-control'>"+
+            "<option value='' style='display: none;' selected=''>- Choose Year -</option>"+
+            "@foreach($years as $year)" +
+            "<option value='{{$year->tahun}}'>{{ $year->tahun }}</option>"+
+            "@endforeach"+
+            "</select><br><br>"+
+            "<select id='bulan' name='bulan' class='form-control'>"+
+            "<option value='' style='display: none;' selected=''>- Choose Month -</option>"+
+            "</select><br><br>"
+        );
+        swal({
+            title: "Export Report Order",
+            content: div,
+            buttons: [true, "Export"]
+        }).then(value => {
+            div.submit();
+        });
+    })
+})
+
+    function getMonth(){
+        var tahun = document.getElementById("tahun").value;
+        var token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            url: "{{ route('admin.order.getMonth') }}",
+            type: "POST",
+            data: {
+                '_token': token,
+                'tahun': tahun
+            },
+        }).done(function(result){
+            $('#bulan').empty();
+            $('#bulan').append($('<option>', { 
+                value: '0',
+                text : 'All' 
+            }));
+            $.each(JSON.parse(result), function(i, item) {
+                $('#bulan').append($('<option>', { 
+                    value: item.bulan,
+                    text : item.nama_bulan 
+                }));
+            });
+        });
+    }
+    
     function destroy(id) {
     var token = $('meta[name="csrf-token"]').attr('content');
 
