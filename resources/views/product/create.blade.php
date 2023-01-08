@@ -245,12 +245,21 @@
                             <div class="col-md-10">
                                 <div class="col-md-2"></div>
                                 <label class="col-md-2"> <i><b>Updated By</b></i> </label>
+                                @if($products->updated_by != null)
                                 <div class="col-md-2">
                                     <label for=""><i><b>{{$products->updatedby->name}}</b></i></label>
                                 </div>
                                 <div class="col-md-4">
                                     <label for=""><i><b>{{$products->updated_at}}</b></i></label>
                                 </div>
+                                @else
+                                <div class="col-md-2">
+                                    <label for=""><i><b>-</b></i></label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for=""><i><b>-</b></i></label>
+                                </div>
+                                @endif
                             </div>
                         </div>
                         <br>
