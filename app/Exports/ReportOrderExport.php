@@ -4,20 +4,17 @@ namespace App\Exports;
 
 use App\Models\order\Order;
 use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Ramsey\Uuid\Type\Integer;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class ReportOrderExport implements FromCollection
+class ReportOrderExport implements FromView
 {
     
-    protected $year, $month;
-
-    public function __construct($year){
-        $this->year = $year;
+    public function __construct($data) {
+        $this->data = $data;
     }
 
-    public function collection()
-    {
-        return Order::all();
+    public function view(): View
+    { 
+        return view('order.export', $this->data);
     }
 }

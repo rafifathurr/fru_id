@@ -177,13 +177,27 @@ class OrderControllers extends Controller
     // Index View and Scope Data
     public function export(Request $req)
     {
-        $year = $req->tahun;
-        $month = $req->month;
-
-        if($month == 0){
-            return Excel::download(new ReportOrderExport($year), 'Reports_Order.xlsx');
+        if($req->bulan==0){
+            $orders= Order::whereYear('date', $req->tahun)->orderBy('date', 'ASC')->get();
+            $sum= Order::selectRaw(DB::raw("SUM(base_price_product) as total_base, SUM(qty) as total_qty, SUM(tax) as total_tax, SUM(profit) as total_profit"))->whereYear('date', $req->tahun)->first();
+            $data =  [
+                'success' => 'success',
+                'orders' => $orders,
+                'sum' => $sum,
+                'year' => $req->tahun
+            ];
+            return Excel::download(new ReportOrderExport($data), 'Reports_Order_'.$req->tahun.'.xlsx');
         }else{
-            return Excel::download(new ReportOrderExport($year), 'Reports_Order.xlsx');
+            $orders= Order::whereMonth('date', $req->bulan)->whereYear('date', $req->tahun)->get();
+            $sum= Order::selectRaw(DB::raw("SUM(base_price_product) as total_base, SUM(qty) as total_qty, SUM(tax) as total_tax, SUM(profit) as total_income, SUM(profit) as total_profit"))->whereMonth('date', $req->bulan)->whereYear('date', $req->tahun)->orderBy('date', 'ASC')->first();
+            $data =  [
+                'success' => 'success',
+                'orders' => $orders,
+                'sum' => $sum,
+                'year' => $req->tahun,
+                'month' => $req->bulan
+            ];
+            return Excel::download(new ReportOrderExport($data), 'Reports_Order_'.date("F", mktime(0, 0, 0, $req->month, 10)).'_'.$req->tahun.'.xlsx');
         }
         
     }

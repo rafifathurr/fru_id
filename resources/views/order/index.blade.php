@@ -23,11 +23,11 @@
                     <!-- Button -->
                     <div class="d-flex">
                     @if(Auth::guard('admin')->check())
-                        <button id="export" class="btn btn-primary btn-round ml-auto mb-3" style="display:none;background-color:green !important;" href="">
+                        <button id="export" class="btn btn-primary btn-round ml-auto mb-3" style="background-color:green !important;" href="">
                             <i class="fa fa-file-excel"></i>
                             Export Excel
                         </button>
-                        <a class="btn btn-primary btn-round ml-auto mb-3" style="margin-left:10px;" href="{{route('admin.order.create')}}">
+                        <a class="btn btn-primary btn-round mb-3" style="margin-left:10px;" href="{{route('admin.order.create')}}">
                             <i class="fa fa-plus"></i>
                             Add Order
                         </a>

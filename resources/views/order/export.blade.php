@@ -1,11 +1,3 @@
-<?php 
-    header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
-    header("Content-Disposition: attachment; filename=Export-Report.xls");  //File name extension was wrong
-    header("Expires: 0");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Cache-Control: private",false);
-?>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,6 +5,17 @@
     </head>
     <body>
         <table width="100%">
+            <thead>
+                <tr>
+                    <th colspan="10" style="text-align:center;">
+                    @if(isset($month))
+                        <h3>Report Order Of {{date("F", mktime(0, 0, 0, $month, 10))}} {{$year}}</h3> 
+                    @else
+                        <h3>Report Order Of {{$year}}</h3>
+                    @endif
+                    </th>
+                </tr>
+            </thead>
             <thead>
                 <tr>
                     <th>No</th>
@@ -28,13 +31,13 @@
                 </tr>
             </thead>
             <tbody>
-            <?php $num = 0; ?>
+            <?php 
+                $num = 0; 
+                $base_all = 0;
+            ?>
             @foreach($orders as $order)
                 <?php
-                $base_price_all[] = array($order->base_price_product*$order->qty);
-                $income_all[] = array($order->entry_price);
-                $tax_all[] = array($order->tax);
-                $profit[] = array($order->profit);
+                $base_all += $order->base_price_product*$order->qty;
                 ?>
                 <tr>
                     <td>
@@ -69,6 +72,23 @@
                     </td>
                 </tr>
             @endforeach
+            <tr style="background-color:green;">
+                <td colspan="6" style="text-align:right;">
+                   <center><h3>Total</h3></center> 
+                </td>
+                <td style="text-align:right">
+                <center><h3>Rp. {{ number_format($base_all,0,',','.')}},-</h3></center> 
+                </td>
+                <td style="text-align:right">
+                <center><h3>Rp. {{ number_format($sum->total_income,0,',','.')}},-</h3></center> 
+                </td>
+                <td style="text-align:right">
+                <center><h3>Rp. {{ number_format($sum->total_tax,0,',','.')}},-</h3></center> 
+                </td>
+                <td style="text-align:right">
+                <center><h3>Rp. {{ number_format($sum->total_profit,0,',','.')}},-</h3></center> 
+                </td>
+            </tr>
             </tbody>
         </table>
     </body>
