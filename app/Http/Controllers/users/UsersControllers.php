@@ -96,22 +96,30 @@ class UsersControllers extends Controller
     // Update Function to Database
     public function update(Request $req)
     {
-        if($req->password == $req->repassword){
-            date_default_timezone_set("Asia/Bangkok");
-            $datenow = date('Y-m-d H:i:s');
-            $user_pay = User::where('id', $req->id)->update([
-                'username' => $req->username,
-                'email' => $req->email,
-                'phone' => $req->phone,
-                'password' => bcrypt($req->password),
-                'name' => $req->name,
-                'role_id' => $req->role,
-                'address' => $req->address,
-                'updated_at' => $datenow
-            ]);
-            return redirect()->route('admin.users.index')->with(['success' => 'Data successfully updated!']);
+        $exec = User::where('email', $req->email)->first();
+        $exec_2 = User::where('username', $req->username)->first();
+        $exec_3 = User::where('phone', $req->phone)->first();
+
+        if($exec || $exec_2 || $exec_3){
+            return back()->with(['gagal' => 'Your Email, Username or Phone Already Exist!']);
         }else{
-            return back()->with(['gagal' => 'Password Not Match!']);
+            if($req->password == $req->repassword){
+                date_default_timezone_set("Asia/Bangkok");
+                $datenow = date('Y-m-d H:i:s');
+                $user_pay = User::where('id', $req->id)->update([
+                    'username' => $req->username,
+                    'email' => $req->email,
+                    'phone' => $req->phone,
+                    'password' => bcrypt($req->password),
+                    'name' => $req->name,
+                    'role_id' => $req->role,
+                    'address' => $req->address,
+                    'updated_at' => $datenow
+                ]);
+                return redirect()->route('admin.users.index')->with(['success' => 'Data successfully updated!']);
+            }else{
+                return back()->with(['gagal' => 'Password Not Match!']);
+            }
         }
     }
 
