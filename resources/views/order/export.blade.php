@@ -69,14 +69,6 @@
                     </td>
                 </tr>
             @endforeach
-            <tr>
-                <td colspan="6" style="text-align:right; background-color:green;">
-                   <center><h3>Total</h3></center> 
-                </td>
-                <td style="text-align:right">
-                @dd($order)
-                </td>
-            </tr>
             </tbody>
         </table>
     </body>

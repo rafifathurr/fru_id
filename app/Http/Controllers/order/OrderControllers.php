@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\order\Order;
 use App\Models\source_payment\Source;
 use App\Models\product\Product;
+use App\Exports\ReportOrderExport;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -28,14 +29,14 @@ class OrderControllers extends Controller
     {
         return view('order.index', [
             "title" => "List Order",
-            "years" => Order::select(DB::raw('YEAR(date) as tahun'))->orderBy(DB::raw('YEAR(date)'))->where('is_deleted',null)->get(),
-            "months" => Order::select(DB::raw('MONTH(date) as bulan'))->orderBy(DB::raw('MONTH(date)'))->where('is_deleted',null)->get(),
+            "years" => Order::select(DB::raw('YEAR(date) as tahun'))->orderBy(DB::raw('YEAR(date)'))->where('is_deleted',null)->groupBy(DB::raw("YEAR(date)"))->get(),
+            "months" => Order::select(DB::raw('MONTH(date) as bulan'))->orderBy(DB::raw('MONTH(date)'))->where('is_deleted',null)->groupBy(DB::raw("MONTH(date)"))->get(),
             "orders" => Order::orderBy('date', 'DESC')->where('is_deleted',null)->get()
         ]);
     }
 
     public function getMonth(Request $req){
-        $months = Order::select(DB::raw('MONTH(date) as bulan, MONTHNAME(date) as nama_bulan'))->whereYear('date', $req->tahun)->orderBy(DB::raw('MONTH(date)'))->where('is_deleted',null)->get();
+        $months = Order::select(DB::raw('MONTH(date) as bulan, MONTHNAME(date) as nama_bulan'))->whereYear('date', $req->tahun)->orderBy(DB::raw('MONTH(date)'))->where('is_deleted',null)->groupBy(DB::raw("MONTHNAME(date)"))->groupBy(DB::raw("MONTH(date)"))->get();
         return json_encode($months);
     }
 
@@ -176,15 +177,14 @@ class OrderControllers extends Controller
     // Index View and Scope Data
     public function export(Request $req)
     {
-        if($req->bulan == 0){
-            $order =Order::orderBy('date', 'DESC')->whereYear('date', $req->tahun)->where('is_deleted',null);
-        }else{
-            $order = Order::orderBy('date', 'DESC')->whereYear('date', $req->tahun)->whereMonth('date',$req->bulan)->where('is_deleted',null);
-        }
+        $year = $req->tahun;
+        $month = $req->month;
 
-        return view('order.export', [
-            "orders" => $order->get()
-        ])->render();
+        if($month == 0){
+            return Excel::download(new ReportOrderExport($year), 'Reports_Order.xlsx');
+        }else{
+            return Excel::download(new ReportOrderExport($year), 'Reports_Order.xlsx');
+        }
         
     }
 }

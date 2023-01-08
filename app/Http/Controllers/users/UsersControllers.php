@@ -45,9 +45,10 @@ class UsersControllers extends Controller
     {
         $exec = User::where('email', $request->email)->first();
         $exec_2 = User::where('username', $request->username)->first();
+        $exec_3 = User::where('phone', $request->phone)->first();
 
-        if($exec || $exec_2){
-            return back()->with(['gagal' => 'Your Email or Username Already Exist!']);
+        if($exec || $exec_2 || $exec_3){
+            return back()->with(['gagal' => 'Your Email, Username or Phone Already Exist!']);
         }else{
             if($request->password == $request->repassword){
                 date_default_timezone_set("Asia/Bangkok");
