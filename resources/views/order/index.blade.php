@@ -23,7 +23,7 @@
                     <!-- Button -->
                     <div class="d-flex">
                     @if(Auth::guard('admin')->check())
-                        <button id="export" class="btn btn-primary btn-round ml-auto mb-3" style="background-color:green !important;" href="">
+                        <button id="export" class="btn btn-primary btn-round ml-auto mb-3" style="display:none;background-color:green !important;" href="">
                             <i class="fa fa-file-excel"></i>
                             Export Excel
                         </button>
@@ -200,6 +200,7 @@ $(document).ready(function() {
         div.method='POST';
         div.action='{{route("admin.order.export")}}';
         $(div).html(
+            "<input name='_token' value='{{ csrf_token() }}' type='hidden'>"+
             "<select id='tahun' name='tahun' onchange='getMonth()' class='form-control'>"+
             "<option value='' style='display: none;' selected=''>- Choose Year -</option>"+
             "@foreach($years as $year)" +

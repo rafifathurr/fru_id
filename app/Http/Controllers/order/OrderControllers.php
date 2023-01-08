@@ -177,14 +177,14 @@ class OrderControllers extends Controller
     public function export(Request $req)
     {
         if($req->bulan == 0){
-            return view('order.export', [
-                "orders" => Order::orderBy('date', 'DESC')->whereYear('date', $req->tahun)->where('is_deleted',null)->get()
-            ])->render();
+            $order =Order::orderBy('date', 'DESC')->whereYear('date', $req->tahun)->where('is_deleted',null);
         }else{
-            return view('order.export', [
-                "orders" => Order::orderBy('date', 'DESC')->whereYear('date', $req->tahun)->whereMonth('date',$req->bulan)->where('is_deleted',null)->get()
-            ]);
+            $order = Order::orderBy('date', 'DESC')->whereYear('date', $req->tahun)->whereMonth('date',$req->bulan)->where('is_deleted',null);
         }
+
+        return view('order.export', [
+            "orders" => $order->get()
+        ])->render();
         
     }
 }
