@@ -4,10 +4,7 @@
 
 <body>
     <div class="wrapper">
-        <div class="main-header">
-            @include('layouts.navbar')
-            @include('layouts.sidebar')
-        </div>
+        @include('layouts.sidebar')
         <div class="main-panel">
             <div class="content">
                 <div class="panel-header bg-primary-gradient">
@@ -187,9 +184,9 @@
                         </div>
                     </div>
                 </div>
-                @include('layouts.footer')
-                <script src="{{ asset('js/app/table.js') }}"></script>
             </div>
+            @include('layouts.footer')
+            <script src="{{ asset('js/app/table.js') }}"></script>
         </div>
     </div>
 </body>
@@ -207,17 +204,29 @@ $(document).ready(function() {
             "<option value='{{$year->tahun}}'>{{ $year->tahun }}</option>"+
             "@endforeach"+
             "</select><br><br>"+
-            "<select id='bulan' name='bulan' class='form-control'>"+
+            "<select id='bulan' name='bulan' class='form-control' disabled>"+
             "<option value='' style='display: none;' selected=''>- Choose Month -</option>"+
-            "</select><br><br>"
+            "</select><br>"
         );
         swal({
             title: "Export Report Order",
             content: div,
             buttons: [true, "Export"]
-        }).then(value => {
-            div.submit();
-        });
+        }).then((result) => {
+            if(result == true){
+                if($('#tahun').val() != ''){
+                    div.submit();
+                }else{
+                    swal({
+                        icon: 'warning',
+                        title: 'Oops !',
+                        button: false,
+                        text: 'Please Choose Year or Month First!',
+                        timer: 1500
+                    });
+                }
+            }
+        })
     })
 })
 
@@ -233,6 +242,7 @@ $(document).ready(function() {
             },
         }).done(function(result){
             $('#bulan').empty();
+            $('#bulan').removeAttr('disabled');
             $('#bulan').append($('<option>', { 
                 value: '0',
                 text : 'All' 

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 // ALL CONTROLLERS
 
 Route::get('/', function () {
-    return view('login.login');
+    return view('auth.login');
 });
 
 Route::namespace('App\Http\Controllers')->group(function (){

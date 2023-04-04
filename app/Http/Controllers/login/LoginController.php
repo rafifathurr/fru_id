@@ -11,7 +11,7 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('login.login');
+        return view('auth.login');
     }
     public function authenticate(Request $request){
         $this->validate($request, [
@@ -19,14 +19,14 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
         if (Auth::check()) { }
-// dd(Auth::guard('user')->check(), Auth::guard('admin')->check());
+        // dd(Auth::guard('user')->check(), Auth::guard('admin')->check());
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password, 'role_id' => 1])) {
             return redirect()->route('admin.dashboard.index');
         } else if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password, 'role_id' => 2])) {
             return redirect()->route('user.dashboard.index');
         } else {
             // Session::flash('loginError', 'Login Failed!');
-            return redirect()->route('login.index')->with(['gagal' => 'Login Failed!']);
+            return redirect()->back()->with(['gagal' => 'These credentials do not match our records.']);
         }
     }
     public function logout(){
@@ -38,6 +38,6 @@ class LoginController extends Controller
         } elseif (Auth::guard('web')->check()) {
             Auth::guard('web')->logout();
         }
-        return redirect('/auth/login');
+        return redirect('/');
     }
 }

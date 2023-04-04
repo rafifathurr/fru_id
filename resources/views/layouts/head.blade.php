@@ -24,6 +24,12 @@
             }
         });
     </script>
+    <style>
+        .box-primary{
+            margin:20px;
+            padding:5px;
+        }
+    </style>
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('dist/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/atlantis.min.css') }}">

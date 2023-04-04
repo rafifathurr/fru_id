@@ -17,7 +17,7 @@ class ForgotControllers extends Controller
     // Index View and Scope Data
     public function index()
     {
-        return view('forgot.forgot');
+        return view('auth.forgot');
     }
 
     // Store Function to Database
@@ -35,12 +35,12 @@ class ForgotControllers extends Controller
                     'updated_at' => $datenow
                 ]);
 
-                return redirect()->route('login.index')->with(['success' => 'Success Change Password!']);
+                return redirect('/')->with(['success' => 'Success Change Password!']);
             }else{
                 return redirect()->route('forgot.index')->with(['gagal' => 'Unmatch Password!']);
             }
         }else{
-            return redirect()->route('forgot.index')->with(['gagal' => 'Incorrect Email!']);
+            return redirect()->route('forgot.index')->with(['gagal' => 'Email Not Exist!']);
         }
     }
 

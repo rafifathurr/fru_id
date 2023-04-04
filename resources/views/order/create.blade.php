@@ -4,10 +4,7 @@
 
 <body>
     <div class="wrapper">
-        <div class="main-header">
-            @include('layouts.navbar')
-            @include('layouts.sidebar')
-        </div>
+        @include('layouts.sidebar')
         <div class="main-panel">
             <div class="content">
                 <div class="panel-header bg-primary-gradient">
@@ -19,252 +16,270 @@
                         </div>
                     </div>
                 </div>
-                <section class="container">
-                    @if(Auth::guard('admin')->check())
-                    <form id="form_add" action="{{ route('admin.order.' . $url) }}" method="POST" enctype="multipart/form-data"
-                        style="margin-right:100px;">
-                    @else
-                    <form id="form_add" action="{{ route('user.order.' . $url) }}" method="POST" enctype="multipart/form-data"
-                        style="margin-right:100px;">
-                    @endif
-                        {{ csrf_field() }}
-                        <br>
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="col-md-2"></div>
-                                <label class="col-md-2">Product <span style="color: red;">*</span></label>
-                                <div class="col-md-6">
-                                    <input type="hidden" class="form-control" id="id" name="id" @if (isset($orders)) value="{{$orders->id}}" @endisset
-                                        autocomplete="off" required="">
-                                    @if ($title == 'Edit Order')
-                                        <select name="prods" id="prods" onchange="getProds()" class="form-control"
-                                            @if (isset($orders)) @endisset {{$disabled_}} readonly>
-                                            <option value="" style="display: none;" selected="">- Choose Products -
-                                            </option>
-                                            @foreach ($products as $prod)
-                                                <option @if (isset($orders))
-                                                <?php if ($orders->product_id == $prod->id) {
-                                                    echo 'selected';
-                                                } ?> @endisset
-                                                value="{{ $prod->id }}">{{ $prod->product_name }}</option>
-                                        @endforeach
-                                        </select>
-                                    @else
-                                        <select name="prods" id="prods" onchange="getProds()" class="form-control"
-                                            @if (isset($orders)) @endisset {{$disabled_}}>
-                                            <option value="" style="display: none;" selected="">- Choose Products -
-                                            </option>
-                                            @foreach ($products as $prod)
-                                                <option @if (isset($orders))
-                                                <?php if ($orders->product_id == $prod->id) {
-                                                    echo 'selected';
-                                                } ?> @endisset
-                                                value="{{ $prod->id }}">{{ $prod->product_name }}</option>
-                                        @endforeach
-                                        </select>
-                                    @endif
-                            </div>
-                            <label class="col-md-2 mt-1">Qty <span style="color: red;">*</span></label>
-                            <div class="col-md-5">
-                                <input type="hidden" min="0" name="stock" id="stock" class="form-control"
-                                    @if (isset($orders)) value="{{ $orders->product->stock }}" @endisset step="1" required="" style="width:35%" {{$disabled_}}>
-                                <input type="number" min="0" name="qty" id="qty" class="form-control"
-                                    @if (isset($orders)) value="{{ $orders->qty }}" @endisset step="1" required="" style="width:35%" {{$disabled__}} {{$disabled_}}>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="col-md-2"></div>
-                            <label class="col-md-2">Entry Price <span style="color: red;">*</span></label>
-                            <div class="col-md-4">
-                                <input type="hidden" name="sell_price_old" id="sell_price_old"
-                                    @if (isset($orders)) value="{{ $orders->sell_price_product }}" @endisset class="form-control" required {{$disabled_}}
-                                    style="width:100%">
-                                <input type="text" name="entry_price" id="entry_price"
-                                    @if (isset($orders)) value="{{ $orders->entry_price }}" @endisset class="form-control numeric" autocomplete="off" required="" {{$disabled_}}
-                                    style="width:100%">
-                            </div>
-                            @if(Auth::guard('admin')->check())
-                                <label class="col-md-2 mt-1">Base Price <span style="color: red;">*</span></label>
-                                <div class="col-md-4">
-                                    <input type="hidden" name="base_price_old" id="base_price_old" class="form-control"
-                                        @if (isset($orders)) value="{{ $orders->base_price_product }}" @endisset readonly>
-                                    <input type="text" name="base_price" id="base_price" class="form-control numeric"
-                                        @if (isset($orders)) value="{{($orders->base_price_product * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}} readonly>
-                                </div>
-                            @else
-                                <label class="col-md-2 mt-1">Sell Price <span style="color: red;">*</span></label>
-                                <div class="col-md-4">
-                                    <input type="hidden" name="base_price_old" id="base_price_old" class="form-control"
-                                        @if (isset($orders)) value="{{ $orders->base_price_product }}" @endisset readonly>
-                                    <input type="hidden" name="base_price" id="base_price" class="form-control numeric"
-                                        @if (isset($orders)) value="{{($orders->base_price_product * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}} readonly>
-                                    <input type="text" name="sell_price" id="sell_price" class="form-control numeric"
-                                        @if (isset($orders)) value="{{($orders->sell_price_product * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}} readonly>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="col-md-2"></div>
-                            <label class="col-md-2">Source Payment <span style="color: red;">*</span></label>
-                            <div class="col-md-4">
-                                <select name="source_pay" id="source_pay" class="form-control" required {{$disabled_}}>
-                                    <option value="" style="display: none;" selected="">- Choose Sources -
-                                    </option>
-                                    @foreach ($sources as $source)
-                                        <option @if (isset($orders))
-                                        <?php if ($orders->source_id == $source->id) {
-                                            echo 'selected';
-                                        } ?> @endisset
-                                        value="{{ $source->id }}">{{ $source->source }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <label class="col-md-2 mt-1">Date Order <span style="color: red;">*</span></label>
-                        <div class="col-md-4">
-                            <input type="date" name="tgl" id="tgl" class="form-control tgl_date"
-                                autocomplete="off" data-date="" data-date-format="DD/MM/YYYY"
-                                @isset($orders) value="{{ $orders->date }}" @endisset
-                                required {{$disabled_}}>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="col-md-2"></div>
-                        <label class="col-md-2">Note </label>
-                        <div class="col-md-10">
-                            <textarea class="form-control" name="note" id="note" rows="5" cols="10" style="width:100%" {{$disabled_}}>@if (isset($orders)) {{ $orders->desc }} @endisset</textarea>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="col-md-2"></div>
-                        <label class="col-md-2">Platform Fee<span style="color: red;">*</span></label>
-                        <div class="col-md-4">
-                            <input type="text" name="cal_tax" id="cal_tax" class="form-control numeric"
-                                 @if (isset($orders)) value="{{ $orders->tax }}" @endisset autocomplete="off" required {{$disabled_}} readonly>
-                        </div>
-                        <label class="col-md-2">Calculation Profit <span style="color: red;">*</span></label>
-                        <div class="col-md-4">
-                            <input type="text" name="cal_profit" id="cal_profit"
-                                @if (isset($orders)) value="{{ $orders->profit }}" @endisset class="form-control numeric" autocomplete="off" required {{$disabled_}} readonly>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                @if(isset($orders))
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="col-md-2"></div>
-                        <label class="col-md-2"> <i><b>Created By</b></i> </label>
-                        <div class="col-md-2">
-                            <label for=""><i><b>{{$orders->createdby->name}}</b></i></label>
-                        </div>
-                        <div class="col-md-4">
-                            <label for=""><i><b>{{$orders->created_at}}</b></i></label>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="col-md-2"></div>
-                        <label class="col-md-2"> <i><b>Updated By</b></i> </label>
-                        @if($orders->updated_by != null)
-                            <div class="col-md-2">
-                                <label for=""><i><b>{{$orders->updatedby->name}}</b></i></label>
-                            </div>
-                            <div class="col-md-4">
-                                <label for=""><i><b>{{$orders->updated_at}}</b></i></label>
-                            </div>
-                            @else
-                            <div class="col-md-2">
-                                <label for=""><i><b>-</b></i></label>
-                            </div>
-                            <div class="col-md-4">
-                                <label for=""><i><b>-</b></i></label>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-                <br>
-                @endif
-                <div class="modal-footer">
-                    <div style="float:right;">
-                    @if ($title == 'Add Order')
-                                    <div class="col-md-10" style="margin-right: 20px;">
-                                    @if(Auth::guard('admin')->check())
-                                        <a href="{{route('admin.order.index')}}" type="button" class="btn btn-danger">
-                                            <i class="fa fa-arrow-left"></i>&nbsp;
-                                            Back
-                                        </a>
-                                        <button id="save_data" type="submit" class="btn btn-primary" style="margin-left:10px;">
-                                            <i class="fa fa-check"></i>&nbsp;
-                                            Save
-                                        </button>
-                                    @else
-                                        <a href="{{route('user.order.index')}}" type="button" class="btn btn-danger">
-                                            <i class="fa fa-arrow-left"></i>&nbsp;
-                                            Back
-                                        </a>
-                                        <button type="submit" class="btn btn-primary" style="margin-left:10px;">
-                                            <i class="fa fa-check"></i>&nbsp;
-                                            Save
-                                        </button>
-                                    @endif
-                                    </div>
-                                @elseif ($title == 'Edit Order')
-                                    <div class="col-md-10" style="margin-right: 20px;">
-                                        @if(Auth::guard('admin')->check())
-                                        <a href="{{route('admin.order.index')}}" type="button" class="btn btn-danger">
-                                            <i class="fa fa-arrow-left"></i>&nbsp;
-                                            Back
-                                        </a>
-                                        <button type="submit" class="btn btn-primary" style="margin-left:10px;">
-                                            <i class="fa fa-check"></i>&nbsp;
-                                            Save
-                                        </button>
-                                    @else
-                                        <a href="{{route('user.order.index')}}" type="button" class="btn btn-danger">
-                                            <i class="fa fa-arrow-left"></i>&nbsp;
-                                            Back
-                                        </a>
-                                        <button id="save_data" type="submit" class="btn btn-primary" style="margin-left:10px;">
-                                            <i class="fa fa-check"></i>&nbsp;
-                                            Save
-                                        </button>
-                                    @endif
-                                    </div>
+                <section class="content container-fluid">
+                    <section class="content container-fluid">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                @if(Auth::guard('admin')->check())
+                                <form id="form_add" action="{{ route('admin.order.' . $url) }}" method="POST" enctype="multipart/form-data"
+                                    style="margin-right:100px;">
                                 @else
-                                    <div class="col-md-10" style="margin-right: 20px;">
-                                        @if(Auth::guard('admin')->check())
-                                        <a href="{{route('admin.order.index')}}" type="button" class="btn btn-danger">
-                                            <i class="fa fa-arrow-left"></i>&nbsp;
-                                            Back
-                                        </a>
-                                        @else
-                                            <a href="{{route('user.order.index')}}" type="button" class="btn btn-danger">
-                                                <i class="fa fa-arrow-left"></i>&nbsp;
-                                                Back
-                                            </a>
+                                <form id="form_add" action="{{ route('user.order.' . $url) }}" method="POST" enctype="multipart/form-data"
+                                    style="margin-right:100px;">
+                                @endif
+                                    {{ csrf_field() }}
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-8">
+                                            <label class="col-md-6">Product <span style="color: red;">*</span></label>
+                                            <div class="col-md-12">
+                                                <input type="hidden" class="form-control" id="id" name="id" @if (isset($orders)) value="{{$orders->id}}" @endisset
+                                                    autocomplete="off" required="">
+                                                @if ($title == 'Edit Order')
+                                                    <select name="prods" id="prods" onchange="getProds()" class="form-control"
+                                                        @if (isset($orders)) @endisset {{$disabled_}} readonly>
+                                                        <option value="" style="display: none;" selected="">- Choose Products -
+                                                        </option>
+                                                        @foreach ($products as $prod)
+                                                            <option @if (isset($orders))
+                                                            <?php if ($orders->product_id == $prod->id) {
+                                                                echo 'selected';
+                                                            } ?> @endisset
+                                                            value="{{ $prod->id }}">{{ $prod->product_name }}</option>
+                                                    @endforeach
+                                                    </select>
+                                                @else
+                                                    <select name="prods" id="prods" onchange="getProds()" class="form-control"
+                                                        @if (isset($orders)) @endisset {{$disabled_}}>
+                                                        <option value="" style="display: none;" selected="">- Choose Products -
+                                                        </option>
+                                                        @foreach ($products as $prod)
+                                                            <option @if (isset($orders))
+                                                            <?php if ($orders->product_id == $prod->id) {
+                                                                echo 'selected';
+                                                            } ?> @endisset
+                                                            value="{{ $prod->id }}">{{ $prod->product_name }}</option>
+                                                    @endforeach
+                                                    </select>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="col-md-6">Qty <span style="color: red;">*</span></label>
+                                            <div class="col-md-12">
+                                                <input type="hidden" min="0" name="stock" id="stock" class="form-control"
+                                                @if (isset($orders)) value="{{ $orders->product->stock }}" @endisset step="1" required="" style="width:35%" {{$disabled_}}>
+                                                <input type="number" min="0" name="qty" id="qty" class="form-control"
+                                                @if (isset($orders)) value="{{ $orders->qty }}" @endisset step="1" required="" style="width:35%" {{$disabled__}} {{$disabled_}}>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-6">
+                                            <label class="col-md-6">Entry Price <span style="color: red;">*</span></label>
+                                            <div class="col-md-12">
+                                                <input type="hidden" name="sell_price_old" id="sell_price_old"
+                                                    @if (isset($orders)) value="{{ $orders->sell_price_product }}" @endisset class="form-control" required {{$disabled_}}
+                                                    style="width:100%">
+                                                <input type="text" name="entry_price" id="entry_price"
+                                                    @if (isset($orders)) value="{{ $orders->entry_price }}" @endisset class="form-control numeric" autocomplete="off" required="" {{$disabled_}}
+                                                    style="width:100%">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            @if(Auth::guard('admin')->check())
+                                                <label class="col-md-6">Base Price <span style="color: red;">*</span></label>
+                                                <div class="col-md-12">
+                                                    <input type="hidden" name="base_price_old" id="base_price_old" class="form-control"
+                                                        @if (isset($orders)) value="{{ $orders->base_price_product }}" @endisset readonly>
+                                                    <input type="text" name="base_price" id="base_price" class="form-control numeric"
+                                                        @if (isset($orders)) value="{{($orders->base_price_product * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}} readonly>
+                                                </div>
+                                            @else
+                                                <label class="col-md-6">Sell Price <span style="color: red;">*</span></label>
+                                                <div class="col-md-12">
+                                                    <input type="hidden" name="base_price_old" id="base_price_old" class="form-control"
+                                                        @if (isset($orders)) value="{{ $orders->base_price_product }}" @endisset readonly>
+                                                    <input type="hidden" name="base_price" id="base_price" class="form-control numeric"
+                                                        @if (isset($orders)) value="{{($orders->base_price_product * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}} readonly>
+                                                    <input type="text" name="sell_price" id="sell_price" class="form-control numeric"
+                                                        @if (isset($orders)) value="{{($orders->sell_price_product * $orders->qty)}}" @endisset autocomplete="off" required="" style="width:100%" {{$disabled_}} readonly>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-6">
+                                            <label class="col-md-6">Source Payment <span style="color: red;">*</span></label>
+                                            <div class="col-md-12">
+                                                <select name="source_pay" id="source_pay" class="form-control" required {{$disabled_}}>
+                                                    <option value="" style="display: none;" selected="">- Choose Sources -
+                                                    </option>
+                                                    @foreach ($sources as $source)
+                                                        <option @if (isset($orders))
+                                                        <?php if ($orders->source_id == $source->id) {
+                                                            echo 'selected';
+                                                        } ?> @endisset
+                                                        value="{{ $source->id }}">{{ $source->source }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <label class="col-md-6">Date Order <span style="color: red;">*</span></label>
+                                            <div class="col-md-12">
+                                                <input type="date" name="tgl" id="tgl" class="form-control tgl_date"
+                                                    autocomplete="off" data-date="" data-date-format="DD/MM/YYYY"
+                                                    @isset($orders) value="{{ $orders->date }}" @endisset
+                                                    required {{$disabled_}}>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-11">
+                                        <label class="col-md-6">Note </label>
+                                        <div class="col-md-12">
+                                            <textarea class="form-control" name="note" id="note" rows="5" cols="10" style="width:100%" {{$disabled_}}>@if (isset($orders)) {{ $orders->desc }} @endisset</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-6">
+                                        <label class="col-md-6">Platform Fee<span style="color: red;">*</span></label>
+                                        <div class="col-md-12">
+                                            <input type="text" name="cal_tax" id="cal_tax" class="form-control numeric"
+                                                @if (isset($orders)) value="{{ $orders->tax }}" @endisset autocomplete="off" required {{$disabled_}} readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label class="col-md-6">Calculation Profit <span style="color: red;">*</span></label>
+                                        <div class="col-md-12">
+                                            <input type="text" name="cal_profit" id="cal_profit"
+                                                @if (isset($orders)) value="{{ $orders->profit }}" @endisset class="form-control numeric" autocomplete="off" required {{$disabled_}} readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                @if(isset($orders))
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-11">
+                                        <div class="col-md-2"></div>
+                                        <label class="col-md-2"> <i><b>Created By</b></i> </label>
+                                        <div class="col-md-2">
+                                            <label for=""><i><b>{{$orders->createdby->name}}</b></i></label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for=""><i><b>{{$orders->created_at}}</b></i></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-11">
+                                        <div class="col-md-2"></div>
+                                        <label class="col-md-2"> <i><b>Updated By</b></i> </label>
+                                        @if($orders->updated_by != null)
+                                            <div class="col-md-2">
+                                                <label for=""><i><b>{{$orders->updatedby->name}}</b></i></label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for=""><i><b>{{$orders->updated_at}}</b></i></label>
+                                            </div>
+                                            @else
+                                            <div class="col-md-2">
+                                                <label for=""><i><b>-</b></i></label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for=""><i><b>-</b></i></label>
+                                            </div>
                                         @endif
                                     </div>
+                                </div>
+                                <br>
                                 @endif
-                    </div>
-                </div>
-            </form>
-        </section>
+                            <div class="modal-footer">
+                                <div style="float:right;">
+                                @if ($title == 'Add Order')
+                                                <div class="col-md-10" style="margin-right: 20px;">
+                                                @if(Auth::guard('admin')->check())
+                                                    <a href="{{route('admin.order.index')}}" type="button" class="btn btn-danger">
+                                                        <i class="fa fa-arrow-left"></i>&nbsp;
+                                                        Back
+                                                    </a>
+                                                    <button id="save_data" type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                                        <i class="fa fa-check"></i>&nbsp;
+                                                        Save
+                                                    </button>
+                                                @else
+                                                    <a href="{{route('user.order.index')}}" type="button" class="btn btn-danger">
+                                                        <i class="fa fa-arrow-left"></i>&nbsp;
+                                                        Back
+                                                    </a>
+                                                    <button type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                                        <i class="fa fa-check"></i>&nbsp;
+                                                        Save
+                                                    </button>
+                                                @endif
+                                                </div>
+                                            @elseif ($title == 'Edit Order')
+                                                <div class="col-md-10" style="margin-right: 20px;">
+                                                    @if(Auth::guard('admin')->check())
+                                                    <a href="{{route('admin.order.index')}}" type="button" class="btn btn-danger">
+                                                        <i class="fa fa-arrow-left"></i>&nbsp;
+                                                        Back
+                                                    </a>
+                                                    <button type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                                        <i class="fa fa-check"></i>&nbsp;
+                                                        Save
+                                                    </button>
+                                                @else
+                                                    <a href="{{route('user.order.index')}}" type="button" class="btn btn-danger">
+                                                        <i class="fa fa-arrow-left"></i>&nbsp;
+                                                        Back
+                                                    </a>
+                                                    <button id="save_data" type="submit" class="btn btn-primary" style="margin-left:10px;">
+                                                        <i class="fa fa-check"></i>&nbsp;
+                                                        Save
+                                                    </button>
+                                                @endif
+                                                </div>
+                                            @else
+                                                <div class="col-md-10" style="margin-right: 20px;">
+                                                    @if(Auth::guard('admin')->check())
+                                                    <a href="{{route('admin.order.index')}}" type="button" class="btn btn-danger">
+                                                        <i class="fa fa-arrow-left"></i>&nbsp;
+                                                        Back
+                                                    </a>
+                                                    @else
+                                                        <a href="{{route('user.order.index')}}" type="button" class="btn btn-danger">
+                                                            <i class="fa fa-arrow-left"></i>&nbsp;
+                                                            Back
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </div>
+            @include('layouts.footer')
+        </div>
     </div>
-    @include('layouts.footer')
     <script>
         var sell_price = 0;
         var base_price = 0;
@@ -410,8 +425,6 @@
             }).trigger("change");
         });
     </script>
-</div>
-</div>
 </body>
 
 </html>

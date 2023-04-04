@@ -99,13 +99,11 @@ class UsersControllers extends Controller
         $exec = User::where('email', $req->email)->first();
         $exec_2 = User::where('username', $req->username)->first();
         $exec_3 = User::where('phone', $req->phone)->first();
+        date_default_timezone_set("Asia/Bangkok");
+        $datenow = date('Y-m-d H:i:s');
 
-        if($exec || $exec_2 || $exec_3){
-            return back()->with(['gagal' => 'Your Email, Username or Phone Already Exist!']);
-        }else{
+        if($req->password && $req->repassword){
             if($req->password == $req->repassword){
-                date_default_timezone_set("Asia/Bangkok");
-                $datenow = date('Y-m-d H:i:s');
                 $user_pay = User::where('id', $req->id)->update([
                     'username' => $req->username,
                     'email' => $req->email,
@@ -120,6 +118,17 @@ class UsersControllers extends Controller
             }else{
                 return back()->with(['gagal' => 'Password Not Match!']);
             }
+        }else{
+            $user_pay = User::where('id', $req->id)->update([
+                'username' => $req->username,
+                'email' => $req->email,
+                'phone' => $req->phone,
+                'name' => $req->name,
+                'role_id' => $req->role,
+                'address' => $req->address,
+                'updated_at' => $datenow
+            ]);
+            return redirect()->route('admin.users.index')->with(['success' => 'Data successfully updated!']);
         }
     }
 

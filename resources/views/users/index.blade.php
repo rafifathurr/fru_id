@@ -4,10 +4,7 @@
 
 <body>
     <div class="wrapper">
-        <div class="main-header">
-            @include('layouts.navbar')
-            @include('layouts.sidebar')
-        </div>
+        @include('layouts.sidebar')
         <div class="main-panel">
             <div class="content">
                 <div class="panel-header bg-primary-gradient">
@@ -144,9 +141,9 @@
                         </div>
                     </div>
                 </div>
-                @include('layouts.footer')
-                <script src="{{ asset('js/app/table.js') }}"></script>
             </div>
+            @include('layouts.footer')
+            <script src="{{ asset('js/app/table.js') }}"></script>
         </div>
     </div>
 </body>
