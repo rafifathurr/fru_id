@@ -22,10 +22,10 @@
                             <div class="box-body">
                                 @if(Auth::guard('admin')->check())
                                 <form id="form_add" action="{{ route('admin.order.' . $url) }}" method="POST" enctype="multipart/form-data"
-                                    style="margin-right:100px;">
+                                    >
                                 @else
                                 <form id="form_add" action="{{ route('user.order.' . $url) }}" method="POST" enctype="multipart/form-data"
-                                    style="margin-right:100px;">
+                                    >
                                 @endif
                                     {{ csrf_field() }}
                                     <br>

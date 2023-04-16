@@ -19,7 +19,7 @@
                     <section class="content container-fluid">
                         <div class="box box-primary">
                             <div class="box-body">
-                                <form id="form_add" action="{{ route('admin.users.' . $url) }}" method="post" enctype="multipart/form-data" style="margin-right:100px;">
+                                <form id="form_add" action="{{ route('admin.users.' . $url) }}" method="post" enctype="multipart/form-data" >
                                     {{ csrf_field() }}
                                     <br>
                                     <div class="row">
